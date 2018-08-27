@@ -1,0 +1,75 @@
+.bookshelf-item {
+  text-align:center;
+  font-size:12px;
+}
+.bookshelf-item-selectable {
+  cursor:pointer;
+}
+.book-section {
+  clear:both;
+  border-bottom:1px dotted green;
+}
+.bookshelf-item img {
+  width:150px;
+}
+.selection-mark-bg {
+  position:absolute;
+  top:5px;
+  left:3px;
+  background-color:white;
+  width:20px;
+  height:20px;
+  border-radius:10px;
+}
+.selection-mark {
+  position:absolute;
+  top:160px;
+  left:115px;
+  z-index:100;
+  color:#09f;
+  font-size:25px;
+}
+.book-selected {
+  opacity: 1;
+  animation-name: fadeIn;
+  animation-duration: 1s;
+}
+.book-unselected {
+  opacity: 0.5;
+  animation-name: fadeOut;
+  animation-duration:.5s;
+}
+.hide-checkmark {
+  display:none;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: .5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}
+.reader-fullwindow {
+  position: absolute;
+  width: 100%;
+  // height: ~'calc(100% - 180px)';
+  min-height: 600px;
+  top: 0;
+  left: 0;
+  padding-left: 0;
+  padding-right: 0;
+  background: white;
+  z-index: 1000;
+  display: table;
+}

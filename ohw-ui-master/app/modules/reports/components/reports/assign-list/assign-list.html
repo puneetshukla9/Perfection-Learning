@@ -1,0 +1,92 @@
+<div id="rightPanel">
+
+	<nav class="navbar navbar-inverse">
+		<!-- Class dropdown -->
+		<div class="footerGroup pull-left">
+			<div class="navbar-brand">Class:</div>
+			<div class="class-menu" class-menu></div>
+		</div>
+
+		<filter-bar type1="category" type2="student"></filterbar>
+	</nav>
+
+	<div ng-if="graph.noData" class="panel-body missingData">{{graph.emptyReportMsg}}</div>
+
+	<div ng-if="!graph.noData" class="panel-body flexHeight fullSize short-top dataTable">
+		<table class="table">
+			<thead><tr>
+				<th>
+					<span ng-click="graph.sortClick('assignNameSort')" class="clickable">
+						Assignment
+						<kb-sort-icon state="graph.sort" key="assignNameSort"></kb-sort-icon>
+					</span>
+				</th>
+
+				<th ng-if="graph.multiStudent()">
+					Performance
+				</th>
+
+				<th ng-if="!graph.multiStudent()">
+					<span ng-click="graph.sortClick('average')" class="clickable">
+						Performance
+						<kb-sort-icon state="graph.sort" key="average"></kb-sort-icon>
+					</span>
+				</th>
+
+				<th class="skinnyCol">
+					<span ng-if="graph.multiStudent()" ng-click="graph.sortClick('points')" class="clickable">
+						Points&nbsp;Possible
+						<kb-sort-icon state="graph.sort" key="points"></kb-sort-icon>
+					</span>
+					<span ng-if="!graph.multiStudent()" ng-click="graph.sortClick('points')" class="clickable">
+						Points&nbsp;Correct
+						<kb-sort-icon state="graph.sort" key="points"></kb-sort-icon>
+					</span>
+				</th>
+
+				<th ng-if="graph.multiStudent()" class="skinnyCol">
+					<span ng-click="graph.sortClick('average')" class="clickable">
+						Average
+						<kb-sort-icon state="graph.sort" key="average"></kb-sort-icon>
+					</span>
+				</th>
+			</tr></thead>
+
+			<tbody>
+				<tr ng-repeat="assign in graph.reportData.assigns | filter: graph.studentHasAssign | orderBy: graph.sort " ng-click="graph.toStudentList(assign)">
+
+					<!-- Name -->
+					<td><span class="pointer">
+						<span class="{{assign.icon}}" uib-tooltip="{{assign.type}}" tooltip-placement="top" tooltip-append-to-body="true"></span>
+						{{assign.name}}
+					</span></td>
+
+					<!-- Performance -->
+					<td>
+						<kb-triple-bar ng-if="graph.multiStudent()" class="bar" ng-model="assign.bar"></kb-triple-bar>
+
+						<kb-single-bar ng-if="!graph.multiStudent()" class="bar" ng-model="assign" ranges="graph.reportData.ranges"></kb-single-bar>
+					</td>
+
+					<!-- Points -->
+					<td class="centered">
+						<span ng-if="graph.multiStudent()">{{assign.points}}</span>
+						<span ng-if="!graph.multiStudent()">{{assign.score}} / {{assign.points}}</span>
+					</td>
+
+					<!-- Average -->
+					<td ng-show="graph.multiStudent()" class="centered">
+						{{assign.average | percentage}}
+					</td>
+
+				</tr>
+
+			</tbody>
+		</table>
+
+		<div ng-if="graph.reportData.assigns.length" class="page-summary">
+			Overall average: {{graph.reportData.assignAvg | percentage}}
+		</div>
+
+	</div>
+</div>

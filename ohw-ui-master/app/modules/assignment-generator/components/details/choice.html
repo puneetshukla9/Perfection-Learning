@@ -1,0 +1,50 @@
+<div id="myModal" class="modal fade choiceWrapper" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="details.closePopup()" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Topic Choice</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="panel-heading accordianSubHeading row margin0">
+                        <h4 class="panel-title">
+                            Assignment Audience
+                        </h4>
+                    </div>
+                    <div class="row margin0">
+                        <div class="col-sm-12">
+                            <div class="col-sm-6" ng-repeat="check in details.topicChoice.assignAudience">
+                                <div class="form-group">
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" ng-model="check.isCheck" value="check.label"> {{check.label}} </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-heading accordianSubHeading row margin0">
+                        <h4 class="panel-title">
+                            Assignment Purpose
+                        </h4>
+                    </div>
+                    <div class="row margin0">
+                            <div class="col-sm-12">
+                                <div class="col-sm-6" ng-repeat="check in details.topicChoice.assignPurpose">
+                                    <div class="form-group">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" ng-model="check.isCheck" value="check.label"> {{check.label}} </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"  ng-click="details.closePopup()" >Done</button>
+            </div>
+        </div>
+
+    </div>
+</div>

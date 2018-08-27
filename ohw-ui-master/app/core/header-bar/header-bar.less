@@ -1,0 +1,88 @@
+@import './../../core/less/definitions.less';
+
+.ohw-header {
+  width: 600px;
+}
+.no-margin {
+	margin: 0!important;
+}
+.ohw-logo {
+  width: 100px;
+	left: 45px;
+	top: 15px;
+	margin: 0!important;
+	position: absolute;
+	padding: 0;
+  img {
+		width: 100%; // edge
+    margin-top: 1px;
+  }
+}
+
+.ohw-module {
+	color: #fff!important;
+	font-weight: 100;
+	font-size: 22px;
+	cursor: default;
+//  position: absolute;
+//	left: 266px;
+	margin: 0!important;
+	padding-left: 17px;
+	&>img {
+		position: relative;
+		margin-top: -3px;
+		display: inline;
+	}
+}
+
+
+// Done
+
+#doneBtn {
+	margin-right: 8px;
+}
+
+
+// Prefs
+
+#prefs {
+	color: #E1E1E1;
+	font-size: 24px;
+	cursor: pointer;
+
+	margin-left: 16px;
+	margin-top: 13px;
+}
+
+#prefs:hover {
+	color: white;
+	text-shadow: 0 0 16px yellow;
+}
+
+@check-width: 20px;
+.optCheck {
+	min-width: @check-width;
+	display: block;
+}
+
+.optionNoCheck {
+	padding-left: @check-width !important;
+}
+
+div.navbar-collapse.collapse {
+	display: block;
+	overflow: hidden;
+	max-height: 0px;
+	-webkit-transition: max-height .3s ease;
+	-moz-transition: max-height .3s ease;
+	-o-transition: max-height .3s ease;
+	transition: max-height .3s ease;
+
+	&.in {
+		max-height: 2000px;
+	}
+}
+
+.navbar {
+	max-height: 60px;
+}

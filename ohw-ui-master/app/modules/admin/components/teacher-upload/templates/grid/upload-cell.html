@@ -1,0 +1,17 @@
+<div
+	class="ui-grid-cell-contents ui-grid-cellNav"
+	ng-class="{ 'grid-correct-invalid': !grid.appScope.isValid(row.entity, col) }">
+	<div class="grid-correct-popover-container"
+		ng-if="!grid.appScope.isValid(row.entity, col)"
+		uib-popover-html="grid.appScope.getPopover(row.entity, col)"
+		popover-placement="bottom"
+		popover-trigger="mouseenter"><span class="pull-left">{{COL_FIELD}}</span>
+		<div
+			ng-click="grid.appScope.resolve(row.entity, col)"
+			ng-if="grid.appScope.canResolve(row.entity, col)"
+			class="grid-correct-flash pull-right">
+			<i class="glyphicon glyphicon-flash"></i>
+		</div>
+	</div>
+	<span ng-if="grid.appScope.isValid(row.entity, col)" class="pull-left">{{COL_FIELD}}</span>
+</div>

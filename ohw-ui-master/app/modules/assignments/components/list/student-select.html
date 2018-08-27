@@ -1,0 +1,39 @@
+<div id="modalPanel" class="container-fluid">
+
+	<div class="flexWrapper">
+		<div class="flexHeight panel panel-primary">
+
+			<!-- HEADER -->
+			<div class="panel-heading">
+				Adjust Due Date
+			</div>
+
+			<!-- BODY -->
+			<div class="panel-body">
+
+				<div ng-if="!ctrl.students.length">
+					There aren't any students currently enrolled in this course.
+				</div>
+
+				<div ng-if="ctrl.students.length">
+					<div id="dueHead1">Select one or more students.</div>
+				</div>
+
+				<div ng-repeat="student in ctrl.students track by student.id | orderBy:student.last+student.first" class="checkbox">
+					<label>
+						<input ng-model="ctrl.selections[student.id]" type="checkbox" value="" />
+						{{student.last}}, {{student.first}}
+					</label>
+				</div>
+
+			</div>
+
+			<div class="panel-footer clearfix">
+				<button ng-click="$dismiss()" class="btn btn-primary pull-right"><span class="glyphicon glyphicon-thumbs-down"></span> Cancel</button>
+				<button ng-if="ctrl.count()" ng-click="$close({list: ctrl.getResults(), assign: ctrl.assignment})" class="btn btn-info pull-right prButtonSpacer"><span class="glyphicon glyphicon-thumbs-up"></span> Okay</button>
+			</div>
+
+		</div>
+	</div>
+
+</div>

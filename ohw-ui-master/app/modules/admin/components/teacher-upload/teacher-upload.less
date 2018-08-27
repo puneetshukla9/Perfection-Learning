@@ -1,0 +1,150 @@
+@VALID_COLOR: #8AEC98;
+@NOT_MODIFIED_COLOR: red;
+@INVALID_COLOR: orange;
+
+.changes {
+  i {
+    margin-right: 10px;
+    &.modified {
+      color: @VALID_COLOR;
+    }
+    &.not-modified {
+      color: @NOT_MODIFIED_COLOR;
+    }
+  }
+  .valid-color {
+    color: @VALID_COLOR;
+  }
+  .invalid-color {
+    color: @INVALID_COLOR;
+  }
+}
+
+.instructions {
+  margin-left: 15px;
+  margin-right: 15px;
+  .instruction-container {
+    @media only screen and (max-width: 1300px) {
+      button, a {
+        text-overflow: ellipsis;
+        max-width: 500px;
+        overflow: hidden;
+      }
+    }
+    background: #fefefe;
+    border: 1px solid #cdcdcd;
+    &.dashed {
+      border: 1px dashed #cdcdcd;
+    }
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 40px;
+    height:210px;
+    h4 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    .drag-and-drop-text {
+      padding: 0;
+      position: absolute;
+      left: 50%;
+      text-align: center;
+      font-size: 20px;
+      color: #cdcdcd;
+      font-size: 20px;
+      margin-left: -50%;
+      padding-top: 30px;
+      width: 100%;
+    }
+    table {
+      thead {
+        tr {
+          background: #f1f1f1;
+          text-align: center;
+        }
+      }
+      tr {
+        border-bottom: 1px solid #cdcdcd;
+        td {
+          border-right: 1px solid #cdcdcd;
+        }
+        td:first-of-type {
+          border-left: 1px solid #cdcdcd;
+        }
+      }
+    }
+  }
+}
+
+.progress { background: #bbb; }
+.progress-bar-inner-text {
+  font-size: 20px;
+  display: block;
+  color: #fff;
+  margin-top: 15px;
+  position: absolute;
+  width: 100%;
+}
+
+.bubble {
+  position: relative;
+  width: 285px;
+  height: 135px;
+  padding: 0px;
+  background: #fefefe;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+  border: #7F7F7F solid 1px;
+  &:after {
+    content: '';
+    position: absolute;
+    border-style: solid;
+    border-width: 0 20px 18px;
+    border-color: #fefefe transparent;
+    display: block;
+    width: 0;
+    z-index: 1;
+    top: -18px;
+    left: 27px;
+  }
+  &:before {
+    content: '';
+    position: absolute;
+    border-style: solid;
+    border-width: 0 20px 18px;
+    border-color: #7F7F7F transparent;
+    display: block;
+    width: 0;
+    z-index: 0;
+    top: -19px;
+    left: 27px;
+  }
+}
+
+.student-upload {
+  // unsure why this is necessary here, maybe some interference from the defaults?
+  .ui-grid-column-menu {
+    top: 40px!important;
+  }
+
+  &.grid-container {
+    height: ~'calc(100vh - 250px)';
+  }
+  // some weird issue with the grid on the upload page not respecting "when needed" value
+  // for enableVerticalScrollbar
+  .ui-grid .ui-grid-render-container-body .ui-grid-viewport {
+    overflow-y: auto !important;
+  }
+
+  .row-validity {
+	  left: 10px;
+	  top: 13px;
+  }
+  .green {
+	  color: @VALID_COLOR;
+  }
+  .red {
+	  color: @NOT_MODIFIED_COLOR;
+  }
+}

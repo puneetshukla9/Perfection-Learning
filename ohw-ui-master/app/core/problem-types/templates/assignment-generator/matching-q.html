@@ -1,0 +1,14 @@
+<div ng-if="problem.prefix" class="previewPrefix" ng-bind-html="problem.vtp.prefix"></div>
+
+<div class="previewProb" ng-bind-html="problem.vtp.q"></div>
+
+<qimg ng-if="problem.qImg" qi-data="problem.vtp.overlays" ng-src="{{problem.qImg}}"></qimg>
+<!--
+<div class="previewChoices">
+	<div ng-repeat="choice in ::problem.vtp.choices" class="mcSpacer">
+		<div class="mcPreview pull-left">{{numToLetter($index)}}.</div>
+		<span ng-bind-html="choice.a"></span>
+		<span ng-bind-html="choice.text"></span>
+	</div>
+-->
+</div>

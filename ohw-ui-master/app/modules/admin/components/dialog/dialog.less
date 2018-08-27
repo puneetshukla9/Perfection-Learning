@@ -1,0 +1,34 @@
+.dialog {
+	.modal-header {
+		border-bottom: none;
+	}
+	.modal-body {
+		&.constrained {
+			max-height: 300px;
+			overflow-y: auto;
+			overflow-x: hidden;
+		}
+	}
+	.modal-footer {
+		border-top: none;
+	}
+	&.dialog-print {
+		.dialog-print-container {
+			padding: 10px 5px 5px 5px;
+			border-right: 1px dotted gray;
+			border-left: 1px dotted gray;
+			.unformatted {
+				list-style-type: none;
+			}
+		}
+		.dialog-print-border {
+			border-top: 2px dotted gray;
+		}
+	}
+	.attention {
+		border: 1px solid #e1e1e8;
+		border-radius: 4px;
+		background-color: #f0f0f0;
+		padding:10px;
+	}
+}

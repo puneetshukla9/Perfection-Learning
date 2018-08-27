@@ -1,0 +1,76 @@
+<div class="actions" ng-class="{ clearfix: ctrl.showMakeSelection }">
+	<!-- this replaces the left click on the grid since the grid is selectable -->
+	<!-- <div class="navbar-btn pull-left">
+		<button type="button" ng-class = "ctrl.rowsSelected && ctrl.selectedRows.length === 1 ? class='btn btn-sm btn-info active' : 'btn btn-sm disabled'"
+						style="margin:3px;"
+						ng-click="ctrl.gridOptions.appScopeProvider.drill(ctrl.selectedRows[0])"
+						data-toggle="tooltip" title="Select items in the table below to use these buttons">
+			<span>Edit Detail</span>
+		</button>
+	</div> -->
+
+	<div class="form form-inline navbar-btn pull-left" ng-if="ctrl.actionBar.assignClass">
+		<input 	class="pull-left form-control" type="text" ng-model="courseSelect"
+						style="height: 30px; margin-top: 3px;"
+						placeholder="Select Class"
+						uib-typeahead="action.course_id as action.name for action in actionBarCtrl.courses | filter:$viewValue | limitTo:8"
+						class="form-control"
+						typeahead-input-formatter="actionBarCtrl.formatLabel($model)">
+		<button ng-class="courseSelect.length ? 'active' : 'disabled'"
+						style="margin-left: 6px; margin-top: 3px; margin-right: 2px;"
+						class="btn btn-sm btn-primary pull-left"
+						ng-click="actionBarCtrl.setAction({id: 'assignClass', param: courseSelect })">Transfer Students</button>
+	</div>
+
+	<div class="form-inline pull-left" ng-if="ctrl.showSchoolDropdown()">
+		<schooldropdown ng-if="ctrl.isPLCAdmin" show-label="false"></schooldropdown>
+		<select
+				ng-if="!ctrl.isPLCAdmin"
+				name="school"
+				class="form-control"
+				ng-change="actionBarCtrl.setAction({id: 'selectSchool', param: selected.school_id })"
+				ng-options="school.school_id as school.name for school in actionBarCtrl.schoolsInDistrict"
+				ng-model="selected.school_id">
+				<option value="">{{actionBarCtrl.nullSelectLabel}}</option>
+		</select>
+	</div>
+
+	<div class="navbar-btn pull-left">
+		<button type="button" ng-class = "ctrl.rowsSelected?class='btn btn-sm btn-primary active' : 'btn btn-sm disabled'"
+						ng-disabled="!ctrl.rowsSelected"
+						ng-repeat="action in ctrl.actionBar.actions track by $index"
+						style="margin:3px;"
+						ng-click="actionBarCtrl.setAction({id:action.action})"
+						data-toggle="tooltip" title="Select items in the table below to use these buttons">
+			<span>{{action.label}}</span>
+		</button>
+		<br>
+	</div>
+
+	<div class="navbar-btn pull-left" uib-dropdown ng-if="ctrl.actionBar.assignSchool">
+		<button type="button" ng-class = "ctrl.rowsSelected?class='btn btn-sm btn-primary active' : 'btn btn-sm disabled'" uib-dropdown-toggle style="margin:3px;" data-toggle="tooltip" title="Select items in the table below to use these buttons">
+			<span>Transfer To School</span>
+			<span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu dropdown-menu-left" role="menu" aria-labelledby="split-button">
+      <li ng-repeat="action in actionBarCtrl.schools track by $index">
+        <a href ng-click="actionBarCtrl.setAction({id: 'assignSchool', param: action.school_id })">{{action.name}}</a>
+      </li>
+		</ul>
+	</div>
+
+	<div class="navbar-btn pull-left" uib-dropdown ng-if="ctrl.actionBar.moreActions">
+		<button type="button" ng-class = "ctrl.rowsSelected?class='btn btn-sm btn-primary active' : 'btn btn-sm disabled'" uib-dropdown-toggle style="margin:3px;" data-toggle="tooltip" title="Select items in the table below to use these buttons">
+			<span>More Actions</span>
+			<span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu dropdown-menu-left shortened-menu" role="menu" aria-labelledby="split-button">
+      <li ng-repeat="action in ctrl.actionBar.moreActions track by $index">
+        <a href ng-click="actionBarCtrl.setAction({id: action.action, params: action })">{{action.label}}</a>
+      </li>
+		</ul>
+	</div>
+
+  <searchfilter ng-if="!!ctrl.showSearchFilter"></searchfilter>
+
+</div>

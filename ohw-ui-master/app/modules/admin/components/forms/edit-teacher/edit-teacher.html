@@ -1,0 +1,132 @@
+<div>
+
+	<nav class="navbar navbar-inverse">
+		<a class="navbar-brand">Update Teacher {{teacher.first}} {{teacher.last}}</a>
+	</nav>
+
+	<div ng-form="updateUser" class="col-md-offset-2 form-horizontal override-label-error" role="form">
+
+		<div class="form-group">
+			<label for="fNameField" class="col-sm-2 control-label">School:</label>
+			<div class="col-sm-6">
+				<input ng-if="canSwitchSchools !== true" ng-model="thisUser.school_name" type="text" class="form-control" placeholder="School" readonly>
+				<select
+					ng-if="canSwitchSchools === true"
+					required
+					ng-disabled="oneRosterLockout"
+					name="school"
+					ng-change="checkSaveForSchool()"
+					class="form-control"
+					ng-options="school.school_id as school.name for school in schools"
+					ng-model="thisUser.school_id">
+					<option value="">Select a school</option>
+				</select>
+				<div ng-if="canSwitchSchools === true && updateUser.school.$invalid && updateUser.school.$touched" class="validation-message col-md-2 col-xs-2">
+					<span>You must select a school.</span>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group" ng-class="{ 'has-error': updateUser.firstName.$invalid && updateUser.firstName.$touched }">
+			<label id="label-first" for="fNameField" class="col-sm-2 control-label">First Name:</label>
+			<div class="col-sm-6">
+				<input required ng-pattern="validation.name.regex"
+					   ng-model="thisUser.first"
+						 ng-disabled="oneRosterLockout"
+					   ng-blur="checkSave('firstName')"
+					   name="firstName"
+					   type="text"
+					   class="form-control"
+					   placeholder="">
+				<span class="glyphicon"
+							ng-class="{ 'glyphicon-ok' 	 : updateUser.firstName.$valid,
+													'glyphicon-remove' : updateUser.firstName.$invalid,
+													'form-control-valid': updateUser.firstName.$valid,
+													'form-control-feedback': updateUser.firstName.$invalid }">
+				</span>
+			</div>
+			<div ng-show="updateUser.firstName.$invalid && updateUser.firstName.$touched" class="validation-message col-md-2 col-xs-2">
+				<span>A first name is required. {{validation.name.text}}</span>
+			</div>
+
+		</div>
+
+		<div class="form-group" ng-class="{ 'has-error': updateUser.lastName.$invalid && updateUser.lastName.$touched }">
+			<label for="lNameField" class="col-sm-2 control-label">Last Name:</label>
+			<div class="col-sm-6">
+				<input required ng-pattern="validation.name.regex"
+					   ng-model="thisUser.last"
+						 ng-disabled="oneRosterLockout"
+					   ng-blur="checkSave('lastName')"
+					   name="lastName"
+					   type="text"
+					   class="form-control"
+					   placeholder="">
+				<span class="glyphicon"
+							ng-class="{ 'glyphicon-ok' 	 : updateUser.lastName.$valid,
+							 					  'glyphicon-remove' : updateUser.lastName.$invalid,
+													'form-control-valid': updateUser.lastName.$valid,
+													'form-control-feedback': updateUser.lastName.$invalid }">
+				</span>
+			</div>
+			<div ng-show="updateUser.lastName.$invalid && updateUser.lastName.$touched" class="validation-message col-md-2 col-xs-2">
+				<span>A last name is required. {{validation.name.text}}</span>
+			</div>
+		</div>
+
+		<div class="form-group" ng-class="{ 'has-error': updateUser.username.$invalid && updateUser.username.$touched }">
+			<label for="emailField" class="col-sm-2 control-label">Username:</label>
+			<div class="col-sm-6">
+				<input required
+					   ng-model="thisUser.email"
+						 ng-disabled="oneRosterLockout"
+					   ng-blur="checkSave('username')"
+					   name="username"
+					   type="text"
+					   class="form-control"
+					   placeholder="">
+				<span class="glyphicon"
+							ng-class="{ 'glyphicon-ok' 	 : updateUser.username.$valid,
+							 					  'glyphicon-remove' : updateUser.username.$invalid,
+													'form-control-valid': updateUser.username.$valid,
+													'form-control-feedback': updateUser.username.$invalid }">
+				</span>
+			</div>
+			<div ng-show="updateUser.username.$invalid && updateUser.username.$touched" class="validation-message col-md-2 col-xs-2">
+				<span>A username is required. All characters are valid.</span>
+			</div>
+		</div>
+
+		<div ng-if="true">
+	    <div class="form-group">
+	 	    <div class="col-sm-6 col-sm-offset-2">
+	 		    <p class="help-text center-text" style="border-radius: 2px;">{{validation.password.text}}</p>
+	 	    </div>
+	    </div>
+
+	    <div class="form-group" ng-class="{ 'has-error': updateStudent.password.$invalid && updateStudent.password.$touched }">
+	 	    <label for="numField" class="col-sm-2 control-label">Password:</label>
+	 	    <div class="col-sm-6">
+	 		    <input
+	 						password-hide-show
+	 						ng-pattern="validation.password.regex"
+	 						ng-model-options="{ allowInvalid: true }"
+	 						ng-model="student.password"
+	 						ng-blur="checkSave('password')"
+	 						name="password"
+	 						type="text" class="form-control" placeholder="" />
+	 		    <span class="glyphicon"
+	 					 ng-if="updateStudent.password.$touched"
+	 					 ng-class="{ 'glyphicon-ok' 	 : updateStudent.password.$valid,
+	 											 'glyphicon-remove' : updateStudent.password.$invalid,
+	 											 'form-control-valid': updateStudent.password.$valid,
+	 											 'form-control-feedback': updateStudent.password.$invalid }">
+	 		    </span>
+
+	 		  </div>
+	 		</div>
+	  </div>
+
+	</div>
+
+</div>

@@ -1,0 +1,57 @@
+// do stuff
+@import './../../core/less/definitions.less';
+@import './../../core/less/anims.less';
+
+.module-menu {
+
+	.hide-accordion {
+		display: none;
+	}
+
+	.titlePad {
+		padding: 10px 15px;
+	}
+
+  .list-group-item {
+    border-radius: 0px;
+  }
+
+  .panel {
+  	border-left: none;
+    margin: 0;
+    &.list-group-item {
+  	  cursor: pointer;
+    }
+    &.panel-primary {
+      border-radius: 0!important;
+    }
+  }
+
+    div.panel-heading, .panel-body {
+    	padding: 0;
+    }
+
+    .shortBottom {
+    	margin-bottom: 0;
+    }
+
+    .panel {
+    	margin-top: 0 !important;
+    	border-radius: 0 !important;
+    	border-top: none;
+    }
+
+    .active-header {
+    	background-color: @active-bar-bg;
+			:not(.disabled-option) {
+				color: @active-bar-color;
+			}
+			.disabled-option {
+				color: white;
+			}
+    }
+
+		.disabled-option {
+			color: gray;
+		}
+}

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="0" width="0" style="position:absolute">
+	<defs>
+
+		<!-- Drop shadow -->
+		<filter id="drop-shadow" height="200%" width="200%">
+			<feGaussianBlur in="SourceAlpha" stdDeviation="4" result="blur"></feGaussianBlur>
+			<feOffset in="blur" dx="4" dy="4" result="offsetBlur"></feOffset>
+			<feMerge>
+				<feMergeNode in="offsetBlur"></feMergeNode>
+				<feMergeNode in="SourceGraphic"></feMergeNode>
+			</feMerge>
+		</filter>
+
+		<!-- Animated gradient -->
+		<linearGradient id="anim-gradient" x1="-0.2" x2=".2" y1="0.005" spreadMethod="reflect">
+			<stop offset="0%" stop-color="yellow"></stop>
+			<stop offset="50%" stop-color="#F40"></stop>
+			<stop offset="100%" stop-color="yellow"></stop>
+			<animate attributeName="x1" from="-0.2" to="1" dur="30s" repeatCount="indefinite"></animate>
+			<animate attributeName="x2" from=".2" to="1.4" dur="30s" repeatCount="indefinite"></animate>
+			<animate id="grad1" attributeName="y1" begin="0s;grad2.end" from="-0.005" to="0.005" dur="2.5s"></animate>
+			<animate id="grad2" attributeName="y1" begin="grad1.end" from="0.005" to="-0.005" dur="2.5s"></animate>
+		</linearGradient>
+
+	</defs>
+</svg>

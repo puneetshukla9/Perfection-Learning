@@ -1,0 +1,25 @@
+{
+  "main" : {
+    "defAssign" : "11:00",
+    "defDue" : "18:00",
+    "autoAssignDate": true,
+    "listFilter": "All",
+    "sortOrder": "due",
+    "gradeWeights" : { "enabled" : false, "hw" : 25, "quiz": 25, "test" : 25, "ip": 25 },
+    "dropLowest" : { "count" : 0, "hw" : true, "quiz" : true, "test" : true, "ip": true },
+    "showQuestions": true,
+    "showStandards": false
+  },
+  "map": [
+    {
+     "preference" : "showStandards",
+     "text" : "Show Standards"
+    }, {
+     "preference" : "showImages",
+     "text" : "Show Images"
+    }, {
+     "preference" : "showQuestions",
+     "text" : "Show Questions"
+    }
+  ]
+}

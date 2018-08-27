@@ -1,0 +1,15 @@
+<div ng-if="showQuestions" style="float:left">
+	<div ng-if="problem.prefix" class="changePrefix" ng-bind-html="problem.prefix"></div>
+
+	<div class="changeProb" ng-bind-html="problem.q"></div>
+
+	<qimg ng-if="problem.qImg" qi-data="problem.qImgOverlay" ng-src="{{problem.qImg}}"></qimg>
+
+	<kb-graph options="{eqs:problem.graph.eqs, axis:problem.graph.axis}"></kb-graph>
+</div>
+<div ng-if="showStandards" style="float:right">
+  <span ng-repeat="std in ::problem.standards" xng-if="edit.showStd(std.classid)" class="badge badgeAlign">
+  {{std.code}}
+  </span>
+</div>
+<div style="clear:both">

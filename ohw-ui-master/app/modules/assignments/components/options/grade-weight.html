@@ -1,0 +1,72 @@
+<div id="modalPanel" class="container-fluid">
+
+	<div class="flexWrapper">
+		<div class="flexHeight panel panel-primary">
+
+			<!-- HEADER -->
+			<div class="panel-heading">
+				Grade Weighting
+			</div>
+
+			<!-- BODY -->
+			<div class="panel-body">
+
+				<div id="gradeWeight">
+					<div class="checkbox weightEnable">
+						<label>
+							<input type="checkbox" ng-change="ctrl.validate()" ng-model="ctrl.weights.enabled">
+							Enable grade weighting
+						</label>
+					</div>
+
+					<div ng-if="ctrl.weights.enabled" id="tableWrapper" class="container-fluid">
+						<div class="col-xs-5">
+							<table>
+								<tr ng-repeat="entry in ::ctrl.weightList">
+									<td>
+										<span class="weightLabel">{{entry.name}}</span>
+									</td>
+
+									<td class="weightBox">
+										<div class="input-group">
+											<input type="number" ng-blur="ctrl.validate()" ng-model="ctrl.weights[entry.model]" pattern="[\d\.]+" class="form-control" />
+											<div class="input-group-addon">%</div>
+										</div>
+									</td>
+								</tr>
+							</table>
+						</div>
+
+						<div class="col-xs-7">
+							<div id="weightInfo">The total must add up to <b>100%</b>.</div>
+
+							<div id="weightSum" ng-class="{true: 'weightGood', false: 'weightBad'}[ctrl.checkSum()===100]">
+								Current total: <b>{{ctrl.checkSum()}}%</b>.
+							</div>
+
+							<div id="weightImage">
+								<span class="glyphicon glyphicon-stats emboss"></span>
+							</div>
+
+						</div>
+					</div>
+
+				</div>
+
+				<!-- Instructions -->
+				<div class="popupInstructions">
+					<span class="glyphicon glyphicon-info-sign instructIcon"></span>
+					Set the relative weight for each type of assignment.
+				</div>
+
+			</div>
+
+			<!-- OKAY / CANCEL -->
+			<div class="panel-footer clearfix">
+				<button ng-click="ctrl.close()" class="btn btn-sm btn-info pull-right prButtonSpacer">Done</button>
+			</div>
+
+		</div>
+	</div>
+
+</div>

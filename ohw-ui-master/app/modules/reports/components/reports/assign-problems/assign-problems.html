@@ -1,0 +1,80 @@
+<div id="rightPanel">
+	<nav class="navbar navbar-inverse">
+		<!-- Class dropdown -->
+		<div class="footerGroup pull-left">
+			<div class="navbar-brand">Class:</div>
+			<div class="class-menu" class-menu></div>
+		</div>
+
+		<filter-bar type1="assignShort" type2="student"></filterbar>
+	</nav>
+
+	<!-- ====================== BODY ====================== -->
+	<div ng-if="graph.noData" class="panel-body missingData">{{graph.emptyReportMsg}}</div>
+	<div ng-if="!graph.noData" class="panel-body flexHeight fullSize short-top dataTable">
+		<table class="table">
+			<thead><tr>
+				<th>
+					<span ng-click="graph.sortClick('num')" class="clickable">
+						Question
+						<kb-sort-icon state="graph.sort" key="num"></kb-sort-icon>
+					</span>
+				</th>
+
+				<th ng-if="graph.multiStudent()" class="compressedText">
+					<span ng-click="graph.sortClick('average')" class="clickable">
+						Avg.
+						<kb-sort-icon state="graph.sort" key="average"></kb-sort-icon>
+					</span>
+				</th>
+
+				<th ng-if="!graph.multiStudent()" class="compressedText">
+					<span ng-click="graph.sortClick('average')" class="clickable">
+						Score
+						<kb-sort-icon state="graph.sort" key="average"></kb-sort-icon>
+					</span>
+				</th>
+
+				<th ng-if="graph.multiStudent()" class="compressedText">Breakdown</th>
+			</tr></thead>
+
+			<tbody mathjax>
+				<tr ng-repeat="quest in graph.reportData.assignProbs | orderBy: graph.sort" ng-click="graph.showNames(quest)" mathjax-repeat>
+
+					<!-- Question -->
+					<td class="compressedText">
+<!--					<div class="pull-left badge qnum">{{quest.num + 1}}</div> -->
+						<div class="faintHeader">
+							Question {{quest.num+1}}
+						</div>
+
+						<span ng-bind-html="quest.prefix"></span>
+						<span ng-bind-html="quest.q"></span>
+						<div ng-if="quest.qImg">
+							<img ng-if="quest.qImg" src="{{quest.qImg}}">
+						</div>
+
+						<div ng-if="quest.choices" class="mult-choices" ng-bind-html="graph.formatChoices(quest.choices)"></div>
+					</td>
+
+					<!-- Average -->
+					<td ng-if="graph.multiStudent()" class="centered">
+						{{quest.average | percentage}}
+					</td>
+					<td ng-if="!graph.multiStudent()">
+						<kb-single-bar class="smallerBar" ng-model="quest" options="noAnim" ranges="graph.reportData.ranges"></kb-single-bar>
+					</td>
+
+					<!-- Student list -->
+					<td class="nameListCol" ng-if="graph.multiStudent()">
+						<div>
+							<kb-triple-bar class="smallestBar" ng-model="quest.bar"></kb-triple-bar>
+						</div>
+					</td>
+
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+</div>

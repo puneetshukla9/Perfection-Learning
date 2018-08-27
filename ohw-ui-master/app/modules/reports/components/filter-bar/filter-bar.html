@@ -1,0 +1,75 @@
+<div>
+	<div class="filterBar clearfix">
+		<!-- Primary -->
+		<div ng-if="ctrl.list1" ng-switch="ctrl.list1.isEmpty()">
+			<div ng-switch-when="false" class="footerGroup pull-left">
+				<span class="footerTitle">{{ctrl.list1.header}}:</span>
+				<span class="form-group form-inline">
+					<select ng-options="item.id as item.text for item in ctrl.list1.list | filter:ctrl.filterBlank | filter:ctrl.list1.filter" ng-change="ctrl.saveFilter()" ng-model="ctrl.curFilters[ctrl.list1.field]" class="form-control btn-info filter-pd"></select>
+				</span>
+			</div>
+
+			<div ng-switch-when="true" class="footerGroup pull-left filter-no-list-box">
+				<span class="footerTitle">{{ctrl.list1.header}}:</span>
+				<span class="filter-no-list">
+					<i>No entries</i>
+				</span>
+			</div>
+		</div>
+
+		<!-- Secondary -->
+		<div ng-if="ctrl.list2" ng-switch="ctrl.list2.isEmpty()">
+			<div ng-switch-when="false" class="footerGroup pull-left">
+				<span class="footerTitle">{{ctrl.list2.header}}:</span>
+				<span class="form-group form-inline">
+					<select ng-options="item.id as item.text for item in ctrl.list2.list | filter: ctrl.list2.filter" ng-change="ctrl.saveFilter()" ng-model="ctrl.curFilters[ctrl.list2.field]" class="form-control btn-info filter-pd"></select>
+				</span>
+			</div>
+
+			<div ng-switch-when="true" class="footerGroup pull-left filter-no-list-box">
+				<span class="footerTitle">{{ctrl.list2.header}}:</span>
+				<span class="filter-no-list">
+					<i>No entries</i>
+				</span>
+			</div>
+		</div>
+
+		<!-- More Filters -->
+		<div ng-if="ctrl.filterTitle() !== 'None' && options !== 'none'" class="footerGroup pull-left">
+			<span class="footerTitle footerTitleButton">Filters:</span>
+			<div class="btn-group filterButton" dropdown>
+				<button type="button" class="btn btn-info btn-sm dropdown-toggle" dropdown-toggle>
+					{{ctrl.filterTitle()}} <span class="caret"></span>
+				</button>
+
+				<ul class="dropdown-menu" ng-class="{'dropdown-menu-right': ctrl.list1 || ctrl.list2}" role="menu">
+					<li ng-if="ctrl.curFilters.section || ctrl.curFilters.range" class="dropdown-header">Active Filters</li>
+					<li ng-if="ctrl.curFilters.section" class="disabled">
+						<a class="noCursor" href>
+							<span ng-click="ctrl.removeFilter($event, 'section')" class="glyphicon glyphicon-remove-circle filter-clear"></span>
+							{{ctrl.sectionText()}}
+						</a>
+					</li>
+
+					<li ng-if="ctrl.curFilters.range" class="disabled">
+						<a class="noCursor" href>
+							<span ng-click="ctrl.removeFilter($event, 'range')" class="glyphicon glyphicon-remove-circle filter-clear"></span>
+							{{ctrl.rangeText()}}
+						</a>
+					</li>
+
+					<li ng-if="ctrl.curFilters.section || ctrl.curFilters.range" class="divider"></li>
+
+					<li>
+						<a ng-click="ctrl.filterMenu()" href>
+							<span class="glyphicon glyphicon-filter"></span>
+							Set filters
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+	</div>
+
+</div>

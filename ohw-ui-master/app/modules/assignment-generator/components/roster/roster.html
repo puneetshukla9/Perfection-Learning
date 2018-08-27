@@ -1,0 +1,98 @@
+<nav class="navbar navbar-inverse">
+  <a class="navbar-brand">Customize</a>
+</nav>
+
+<!-- Main Panel -->
+<div id="rightPanel" class="col-md-12">
+  <button class="btn btn-info" ng-click="roster.addAll()">Select All</button>
+  <button class="btn btn-info" ng-click="roster.removeAll()">Deselect All</button>
+			<div ng-if="!!roster.rosterData.length">
+				<table id="rosterTable" ng-if="roster.rosterData.length" class="table zebra table-bordered">
+					<thead><tr>
+            <th class="col-md-1"></th>
+						<th class="col-md-2">
+								First
+						</th>
+
+            <th class="col-md-2">
+								Last
+						</th>
+
+            <th class="col-md-3">
+								Email
+						</th>
+
+						<th class="col-md-2">
+								Assigned
+						</th>
+
+            <th class="col-md-2">
+								Due
+						</th>
+					</tr></thead>
+
+					<tr ng-repeat="entry in roster.rosterData track by $index"
+              ng-class="{selectedRow : entry.checked }" id="{{entry.id}}">
+            <td class="col-md-1" ng-click="roster.addToAssignment(entry.id)"><span ng-class="{ rosterRowSelected: entry.checked, rosterRowUnselected: !entry.checked }" class="glyphicon glyphicon-ok"></span></td>
+						<td class="col-md-2">{{entry.first}}</td>
+            <td class="col-md-2">{{entry.last}}</td>
+            <td class="col-md-3">{{entry.email}}</td>
+
+						<td class="col-md-2">
+							<div class="col-md-12" style="padding:0;">
+								<!-- assigned date -->
+								<div class="pull-right input-group datepicker-right-align">
+									<input
+										type="text"
+										class="datepicker-widget datepicker-table-input form-control input-sm"
+										datetime-picker="MM/dd/yyyy HH:mm"
+										ng-model="entry.assigned"
+										readonly
+										datepicker-mode="max-mode"
+										close-on-date-selection="true"
+										button-bar="roster.buttonBarConfig"
+										datepicker-options="roster.calendar.options"
+										min-date="roster.calendar.today"
+										placeholder="Unassigned"
+										ng-change="updateDate(entry)"
+										is-open="roster.calendar.data[entry.id + '-assigned']"
+										when-closed="whenAssignedClosed($event, entry)" />
+									<span class="input-group-btn">
+										<button type="button" class="btn btn-default btn-sm" ng-click="toggleAssigned($event, entry)"><i class="glyphicon glyphicon-calendar"></i></button>
+									</span>
+								</div>
+							</div>
+						</td>
+
+						<td class="col-md-2">
+							<div class="col-md-12" style="padding:0;">
+							<!-- due date -->
+								<div class="pull-right input-group datepicker-right-align">
+									<input
+										type="text"
+										class="datepicker-widget datepicker-table-input form-control input-sm"
+										datetime-picker="MM/dd/yyyy HH:mm"
+										ng-model="entry.due"
+										close-on-date-selection="false"
+										button-bar="roster.buttonBarConfig"
+										readonly
+										datepicker-options="roster.calendar.options"
+										min-date="roster.calendar.today"
+										placeholder="Unassigned"
+										ng-change="updateDate(entry)"
+										is-open="roster.calendar.data[entry.id + '-due']"
+										when-closed="whenDueClosed($event, entry)" />
+									<span class="input-group-btn">
+										<button type="button" class="btn btn-default btn-sm" ng-click="toggleDue($event, entry)"><i class="glyphicon glyphicon-calendar"></i></button>
+									</span>
+								</div>
+							</div>
+						</td>
+
+					</tr>
+				</table>
+
+			</div>
+
+	</div>
+</div>

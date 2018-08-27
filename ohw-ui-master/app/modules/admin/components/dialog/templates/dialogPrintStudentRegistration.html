@@ -1,0 +1,63 @@
+<div>
+    <div class="dialog" ng-if="view.isModal">
+    <div class="modal-header">
+      <h4 class="center">{{ctrl.dlg.title}}</h4>
+    </div>
+    <div class="modal-body constrained">
+      <div class="row">
+        <div class="col-md-1"><span class="glyphicon glyphicon-info-sign"></span></div>
+        <div class="col-md-11">
+          <p>Below is a sample email explaining how students can register for a product. Copy and paste the below text into an email, then use the continue button to print out registration hand-outs.</p>
+          <p><b>Note:</b> If usernames and passwords have already been created, you do not need to send the registration codes.</p>
+        </div>
+      </div>
+      <hr>
+      <div ng-repeat="class in data">
+        <div>
+          <p>To register for:</p>
+          <p>
+            <b>Class</b>:
+            {{class.name}}
+            <br/>
+            <b>Teacher</b>:
+            {{class.teacher}}
+            <br/>
+          </p>
+          <p>Go to <a href="//mathx.perfectionlearning.com">http://mathx.perfectionlearning.com</a>.</p>
+          <p>Enter the following registration code:
+            <b>{{class.registration}}</b>
+          </p>
+          <hr>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer center">
+      <button type="button" class="btn btn-success" ng-click="continue()">Continue to Print</button>
+      <button type="button" class="btn btn-primary" ng-click="cancel()">Cancel</button>
+    </div>
+  </div>
+
+  <div class="dialog dialog-print" ng-if="view.isPrint">
+    <div>
+      <div ng-repeat="class in data">
+        <div class="row" style="margin: 0; padding: 0" ng-repeat="i in getNumber(15) track by $index">
+          <div class="col-xs-4 dialog-print-container" ng-if="class.registration">
+            <p>Go to <a href="//mathx.perfectionlearning.com">http://mathx.perfectionlearning.com</a><br>
+              <b>Registration code: {{class.registration}}</b>
+            </p>
+          </div>
+
+          <div class="col-xs-8">
+            <br>
+            <p>This registration code will add and give you access to the class <b>{{class.name}}</b> with teacher {{class.teacher}}.</p>
+          </div>
+
+          <div class="clearfix dialog-print-border"></div>
+          <div class="clearfix"></div>
+        </div>
+      </div>
+      <div class="clearfix dialog-print-border"></div>
+    </div>
+  </div>
+
+</div>

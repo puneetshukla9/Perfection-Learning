@@ -1,0 +1,32 @@
+<div class="modal-header">
+  <div class="panel-heading">
+    <h4 class="panel-title text-center">Import Assignment</h4>
+  </div>
+
+  <div class="modal-body">
+    <p class="dialog text-center">Assign To Classes:</p>
+    <tags-input
+      ng-model="data.pickedCourses"
+      add-from-autocomplete-only="true"
+      placeholder="Begin typing the name of a course"
+    >
+      <auto-complete
+        source="getCourseList($query)"
+        min-length="0"
+        load-on-empty="true"
+        load-on-focus="true"
+        add-on-blur="false"
+        placeholder="Begin typing the name of a course"
+      ></auto-complete>
+    </tags-input>
+  </div>
+
+  <p>Assignments will not be imported into classes which already contain an assignment with the same name, if the assigned date has already passed.</p>
+
+  <p>If a chosen class contains an assignment with the same name, but whose assigned date has not yet passed, the assignment already in the class will be overwritten.</p>
+
+  <div class="model-footer center">
+    <button type="button" class="btn btn-success" ng-disabled="data.pickedCourses.length < 1" ng-click="$close(data)">Continue</button>
+    <button type="button" class="btn btn-primary" ng-click="$dismiss('cancel')">Cancel</button>
+  </div>
+</div>

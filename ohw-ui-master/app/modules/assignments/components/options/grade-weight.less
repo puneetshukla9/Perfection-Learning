@@ -1,0 +1,70 @@
+@import './../../../../core/less/definitions.less';
+
+#gradeWeight {
+
+	margin-bottom: 20px;
+
+	.weightEnable {
+		font: @large-text @base-font;
+	}
+
+	#tableWrapper {
+		margin-left: 20px;
+		margin-right: 20px;
+		border: solid 1px #CCF;
+		border-radius: 8px;
+		padding: 8px 0px;
+
+		#weightInfo {
+			font: @medium-text @base-font;
+			margin-bottom: 10px;
+
+			text-align: right;
+		}
+
+		#weightSum {
+			text-align: right;
+
+			font: @medium-text @base-font;
+
+			&.weightGood {
+				color: green;
+			}
+
+			&.weightBad {
+				color: red;
+			}
+		}
+	}
+
+	.weightLabel {
+		font-weight: bold;
+		font-size: @medium-text;
+
+		padding-right: 8px;
+	}
+
+	.weightBox {
+		min-width: 90px;
+		padding-bottom: 4px;
+
+		input[type="text"] {
+			padding: 2px 4px;
+			height: 30px;
+		}
+
+		.input-group-addon {
+			padding: 2px 6px;
+		}
+	}
+
+	#weightImage {
+		text-align: right;
+		margin-top: 20px;
+		padding-right: 6px;
+	}
+}
+
+.modal-weight {
+	width: 560px;
+}

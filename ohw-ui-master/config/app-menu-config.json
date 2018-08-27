@@ -1,0 +1,10 @@
+{
+  "libraryApp" : "Digital Library",
+  "adminApp" : "Admin",
+  "assignApp" : "Assignments",
+  "assignGenApp" : "Assignment Generator",
+  "reportsApp" : "Reports",
+  "gradeChangeApp" : "Assignments and Grades",
+  "settingsApp" : "Settings",
+  "supportApp" : "Support"
+}

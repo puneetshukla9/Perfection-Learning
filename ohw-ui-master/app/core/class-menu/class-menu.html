@@ -1,0 +1,12 @@
+<div ng-class="{'footerGroup pull-left': !assignmentdetails}">
+		<select ng-show="assignmentdetails" ng-readonly="readonly" ng-select="curCourse.name"
+		ng-options="course as course.name for course in courses track by course.id"
+		ng-change="handleClassChange()"
+		ng-model="curCourse"
+		class="form-control"></select>
+		<select ng-show="!assignmentdetails" ng-readonly="readonly" ng-select="curCourse.name"
+		ng-options="course as course.name for course in courses track by course.id"
+		ng-change="handleClassChange()"
+		ng-model="curCourse"
+		ng-class="{'list-heading-dropdown': !assignmentdetails, 'list-heading-dropdown-asg-details': assignmentdetails, 'form-control btn-info filter-pd': !assignmentdetails}"></select>
+</div>

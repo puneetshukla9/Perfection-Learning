@@ -1,0 +1,16 @@
+language: node_js
+sudo: false
+node_js:
+- 6.1.0
+script:
+- npm run ci
+notifications:
+  slack:
+    secure: el848HFgwmcQGS2M5+uTZ7/yJMDymSdJHCXLyFbUEOIl5f/1mKF5Aj1j8aTj+5mUPMsAhlSld8UrLPhjCjkXyeXEUpa6GjlKMEXpRbl6Z/LJgUJEQJTyzStm+SZtIGoTFBTDMXvb9KGHUmo3ZG060nqIGHw3itYdPR1nmdpG3c3g/K9gwqFJKBq5eZT/rwmyfIQxr0udgI6vL32vdWyzccpZA4jspOZB7fUTgZ/0g/WHyL0GjdYch7225KOzgwGaoBdLVS3Kw6GvWqPV19Mx01pN+2C5LHZ+8j26+GBBsN2Eeeq5zV0CJcoDU4gIoPOYHj93vkKVTk9ENtoYLjlN4aaMDNHrKO8c0gJbGv6aO0KW1ULNcpq5pjfRjFXsg+AFUei/MBvkI6Fk9FALCyUGLxfxSDYijjlru/C+brtF95VT70TC34+xX1BhxHmeCwBv2QXVaxdINrD8pUlPIZMhIWQrxM2SQF5w46UO2mi8nq5u2EgUEI4afFzZdvvBFQEPCbnYVurOEuPaQyXXUZt8d+tiCUFwBXFXTW92I5Fmlc0XcB8BYczYzx1ezM6qxtaxsksYU1X/gh7xRqGSUVWbnyJ21cnfkt1gV9XINsH9LrWbcoN440h5L7vctVp8ccvGV3PfV3/rPgXHrtWzOnK5FryDQ21GonwEGuuvTxpK7ZI=
+  webhooks:
+    urls:
+      - https://qa1.kineticmath.com/build-notifications
+      - https://qa2.kineticmath.com/build-notifications
+    on_success: always
+    on_failure: never
+    on_start: never

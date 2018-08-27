@@ -1,0 +1,14 @@
+minumum width fix:
+1. in each framework.html, add "col-xs-*" in front of each "col-sm-*", where the "*" is the same number
+   that col-sm specifies.
+
+2. In each index.html, remove the line of 
+<meta name="viewport" content="width=device-width, initial-scale=1">, 
+this disables the zooming aspect of sites in mobile devices. 
+
+3. In each index.html, change the bootstrap.min.css reference to
+	<link rel="stylesheet" href="../css/bootstrap-3.3.5.kb.min.css">
+
+4. in shared/less folder, add the file nonResponsive.less and import it into the common.less:
+   @import "@{sharedPath}nonResponsive
+   

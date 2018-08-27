@@ -1,0 +1,15 @@
+<nav class="navbar navbar-inverse">
+	<!-- Class dropdown -->
+	<div class="footerGroup pull-left">
+		<div class="navbar-brand">Class:</div>
+		<div class="class-menu" class-menu></div>
+	</div>
+
+	<filter-bar type1="student"></filterbar>
+</nav>
+
+<div ng-if="graph.noData" class="panel-body missingData">{{graph.emptyReportMsg}}</div>
+
+<div ng-if="graph.reportData.categories.length" class="panel-body fullSize short-top dataTable" data-height="{{graph.graphHeight}}">
+	<bar-chart ng-model="graph.reportData.categories" ranges="graph.reportData.ranges" click="graph.toAssignList" left-margin="80"></bar-chart>
+</div>

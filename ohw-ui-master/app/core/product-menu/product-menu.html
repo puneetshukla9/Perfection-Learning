@@ -1,0 +1,22 @@
+<div>
+  <div class="navbar-brand" ng-click="handleClick()">
+    <i class="product-menu-icon glyphicon glyphicon-menu-hamburger"></i>
+  </div>
+
+  <div class="product-menu">
+    <div class="product-menu-body">
+      <div class="product-menu-center list-group">
+        <button
+			    ng-disabled="isDisabled(item)"
+			    ng-click="navigateTo(item)"
+          class="list-group-item"
+			    ng-class="{ 'disabled' : isDisabled(item) }"
+          ng-show="showMenuOption(item)"
+			    ng-repeat="item in menuOptions" >
+            <i class="glyphicon glyphicon-{{item.glyph}}"></i>
+            <span class="text-uppercase">{{item.text}}</span>
+	  	</button>
+      </div>
+    </div>
+  </div>
+</div>

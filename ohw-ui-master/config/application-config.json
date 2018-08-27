@@ -1,0 +1,16 @@
+{
+  "url": {
+    "curCourse": "",
+    "login": "/auth/main",
+    "studentView": "",
+    "grades" : "../grades",
+    "view" : "/"
+  },
+  "class-menu": {
+    "adminApp": false,
+    "assignApp": true,
+    "assignGenApp": true,
+    "reportsApp": true,
+    "supportApp": false
+  }
+}

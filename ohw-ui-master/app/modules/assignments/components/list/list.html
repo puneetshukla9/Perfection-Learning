@@ -1,0 +1,241 @@
+<!-- Main Panel -->
+<div id="rightPanel" class="full-height col-md-12">
+		<nav class="navbar navbar-inverse {{list.showOnlyShared ? 'shared-list' : ''}}">
+
+			<div ng-if="!list.showOnlyShared" class="footerGroup pull-left filter-no-list-box">
+				<div class="navbar-brand">Assignments for</div>
+				<div class="class-menu" class-menu></div>
+			</div>
+
+			<div ng-if="list.showOnlyShared && !list.importFailed" class="footerGroup pull-left filter-no-list-box">
+					<div id="prod-selector" class="class-menu" product-list-menu></div>
+			</div>
+
+			<div ng-if="list.showOnlyShared" class="footerGroup pull-left filter-no-list-box">
+				<div class="navbar-brand">Assignment library by</div>
+				<div class="class-menu" shared-by-menu></div>
+			</div>
+
+			<div ng-if="!list.showOnlyShared" class="btn-group pull-right" uib-dropdown>
+				<button type="button" class="navbar-btn btn-info btn-sm uib-dropdown-toggle" uib-dropdown-toggle>
+					Date: {{list.curFilter}}
+					<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu dropdown-menu-right" datepickerrole="menu">
+					<li ng-repeat="filter in ::list.filterList track by $index"
+						ng-click="list.setFilter(filter)">
+						<a href>{{filter}}</a></li>
+				</ul>
+				<div preference-menu items="['showStandards']"></div>
+			</div>
+		</nav>
+
+			<div class="navbar-btn" ng-if="list.showOnlyShared && !list.importFailed">
+				<button type="button" class="btn btn-sm {{list.asgnSelected? 'btn-primary active': 'disabled'}}" ng-disabled='!list.asgnSelected' ng-click="list.importAssign()">Assign To Class</button>
+			</div>
+
+			<div ng-if="!list.assignments.length && !list.loading && !list.importFailed">
+				<h4 ng-if="list.showOnlyShared">This class doesn't have any shared assignments yet. Set an assignment to <b>Shared</b> on its <b>Details</b> screen to get started.</h4>
+			</div>
+
+			<div class="grid-wrapper full-height">
+				<div id="shared-assignments-list" ng-if="!!list.ready && list.showOnlyShared && !!list.assignments.length" style="margin-top: 10px;" class="grid-container">
+					<div
+						ng-if="!list.loading"
+						id="grid"
+						ui-grid="gridOptions"
+						ui-grid-pinning
+						ui-grid-selection
+						class="grid ">
+						<div class="grid-no-results-container" ng-if="!gridOptions.data.length">
+							<h2 class="grid-no-results">There are not currently any assignments shared to you.</h2>
+						</div>
+					</div>
+				</div>
+				<div id="shared-assignments-list" ng-if="list.importFailed" style="margin-top: 10px;" class="grid-container">
+					<div
+						id="grid"
+						ui-grid="gridOptions"
+						ui-grid-pinning
+						ui-grid-selection
+						class="grid ">
+						<div class="grid-no-results-container">
+							<h2 class="grid-no-results">There was a problem loading the shared assignments.</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div ng-if="!list.showOnlyShared && !!list.assignments.length">
+				<table id="assignmentTable" ng-if="list.assignments.length" class="table zebra table-bordered">
+					<thead><tr>
+						<th ng-class="(list.showStandards || list.showOnlyShared)? 'col-md-3' : 'col-md-6'">
+							<span ng-click="list.setSort('name')" class="clickable">
+								Assignment
+								<kb-sort-icon state="list.sortOrder" key="name"></kb-sort-icon>
+							</span>
+						</th>
+
+						<th ng-class="list.showStandards ? 'col-md-3' : ''"
+								ng-show="list.showStandards">Standards</th>
+
+						<th ng-if="list.showOnlyShared" class="col-md-3">
+							<span ng-click="list.setSort('sharedBy')" class="clickable">
+								Shared By
+								<kb-sort-icon state="list.sortOrder" key="sharedBy"></kb-sort-icon>
+							</span>
+						</th>
+
+						<th ng-if="!list.isAMSCO">
+							<span ng-click="list.setSort('assigned')" class="clickable">
+								<span>Assigned</span>
+								<kb-sort-icon state="list.sortOrder" key="assigned"></kb-sort-icon>
+							</span>
+						</th>
+
+						<th>
+							<span ng-click="list.setSort('due')" class="clickable">
+								<span>Due</span>
+								<kb-sort-icon state="list.sortOrder" key="due"></kb-sort-icon>
+							</span>
+						</th>
+						<th class="col-md-1"></th>
+					</tr></thead>
+	<!--@jd
+
+		<div class="pull-right input-group datepicker-right-align">
+					<input
+						type="text"
+						class="datepicker-table-input form-control input-sm"
+						datetime-picker="MM/dd/yyyy HH:mm"
+						ng-model="list.dates.date3"
+						readonly
+						placeholder="Unassigned"
+						is-open="list.open.date3" />
+			<span class="input-group-btn">
+					<button type="button" class="btn btn-default btn-sm" ng-click="list.openCalendar($event, 'date3')"><i class="glyphicon glyphicon-calendar"></i></button>
+			</span>
+			<div>
+	-->
+					<tr ng-repeat="entry in list.filtered = (list.assignments | filter:list.canShowEntry | AssignmentListSort:[list.sortOrder, 'sortOrder']) track by $index"
+							ng-class="{compactTable: list.showStandards, selectedRow: entry.selected}" id="{{entry.id}}">
+
+						<!-- ASSIGNMENT NAME centerTable -->
+						<td ng-click="list.edit(entry)" style="cursor: pointer;">
+							<span class="pointer">
+									<span ng-if="!list.isAMSCO" class="typeIcon icon {{list.getIcon(entry.type)}}"
+												uib-tooltip="{{entry.type}}" uib-tooltip-placement="top" ></span>
+									{{entry.name}}
+									<span ng-if="entry.pending && !list.isAMSCO" ng-click="list.adjustGrades($event, entry)"
+												class="glyphicon glyphicon-exclamation-sign redIcon"
+												uib-tooltip="Requires grading" uib-tooltip-placement="top" ></span>
+								</span>
+						</td>
+
+						<!-- STANDARDS standardCol -->
+						<td ng-show="list.showStandards" ng-click="list.edit(entry)" style="cursor: pointer;" class="">
+							<span ng-repeat="item in entry.standards track by $index">
+								<span class="noWrap" tooltip-append-to-body="true" uib-tooltip-html="list.getStdDescription(item)">{{item}}{{$last?'':','}}</span>
+							</span>
+						</td>
+
+						<!-- SHARED BY column, if this is for the shared list -->
+						<td ng-if="list.showOnlyShared" style="cursor: pointer;" class="">
+							<span class="noWrap">{{ entry.sharedByName }}</span>
+						</td>
+
+						<td ng-if="!list.isAMSCO">
+							<div class="col-md-12" style="padding:0;">
+								<!-- assigned date -->
+								<div class="pull-right input-group datepicker-right-align">
+									<input
+										type="text"
+										class="datepicker-widget datepicker-table-input form-control input-sm"
+										datetime-picker="MM/dd/yyyy HH:mm"
+										ng-model="entry.assigned"
+										readonly
+										datepicker-mode="max-mode"
+										close-on-date-selection="true"
+										button-bar="list.buttonBarConfig"
+										datepicker-options="list.calendar.options"
+										min-date="list.calendar.today"
+										placeholder="Unassigned"
+										ng-change="updateDate(entry)"
+										is-open="list.calendar.data[entry.id + '-assigned']"
+										when-closed="whenAssignedClosed($event, entry)" />
+									<span class="input-group-btn">
+										<button type="button" class="btn btn-default btn-sm" ng-click="toggleAssigned($event, entry)"><i class="glyphicon glyphicon-calendar"></i></button>
+									</span>
+								</div>
+							</div>
+						</td>
+
+						<td>
+							<div class="col-md-12" style="padding:0;">
+							<!-- due date -->
+								<div class="pull-right input-group datepicker-right-align">
+									<input
+										type="text"
+										class="datepicker-widget datepicker-table-input form-control input-sm"
+										datetime-picker="MM/dd/yyyy HH:mm"
+										ng-model="entry.due"
+										close-on-date-selection="false"
+										button-bar="list.buttonBarConfig"
+										readonly
+										datepicker-options="list.calendar.options"
+										min-date="list.calendar.today"
+										placeholder="Unassigned"
+										ng-change="updateDate(entry)"
+										is-open="list.calendar.data[entry.id + '-due']"
+										when-closed="whenDueClosed($event, entry)" />
+									<span class="input-group-btn">
+										<button type="button" class="btn btn-default btn-sm" ng-click="toggleDue($event, entry)"><i class="glyphicon glyphicon-calendar"></i></button>
+									</span>
+								</div>
+							</div>
+						</td>
+
+						<!-- ACTION MENU skinnyCol -->
+						<td>
+							<div class="btn-group pull-right" uib-dropdown>
+								<button type="button" class="btn btn-info btn-sm dropdown-toggle" uib-dropdown-toggle>Action
+									<span class="caret"></span>
+								</button>
+
+								<ul class="dropdown-menu dropdown-menu-right" role="menu">
+									<li><a href ng-click="list.edit(entry);">Edit</a></li>
+									<li><a href ng-click="list.print(entry)">Print</a></li>
+									<li><a href ng-click="list.customize(entry)">Customize</a></li>
+
+									<li ng-if="entry.problemCount > 0"><a href ng-click="list.studentView(entry)">
+										<span ng-if="!list.isAMSCO">Student view</span>
+										<span ng-if="list.isAMSCO">Preview Math<sup>X</sup></span>
+									</a></li>
+
+									<li ><a href ng-click="list.deleteResetAssign(entry)">
+										<span ng-if="!entry.isTemplate">Delete</span>
+										<span ng-if="entry.isTemplate">Reset</span>
+									</a></li>
+
+									<li ng-if="entry.pending"><a href ng-click="list.adjustGrades($event, entry)">Grade assignment</a></li>
+
+									<li ng-if="list.showOnlyShared">
+										<a href ng-click="list.importAssign(entry)">Import</a>
+									</li>
+								</ul>
+							</div>
+
+						</td>
+					</tr>
+				</table>
+
+				<h4 ng-if="!list.filtered.length && list.assignments.length">No assignments match the current filter: <i>{{list.curFilter}}</i>.</h4>
+
+			</div>
+
+
+
+
+
+	</div>
+</div>

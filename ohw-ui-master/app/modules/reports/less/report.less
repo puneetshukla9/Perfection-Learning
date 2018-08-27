@@ -1,0 +1,372 @@
+/* =========================== Panel Definitions =========================== */
+#leftPanel {
+	padding-left: 0;
+	padding-right: 6px;
+	min-width: 250px;
+}
+
+#rightPanel {
+	padding-left: 6px;
+}
+
+/* =========================== Report route =========================== */
+select.form-control {
+	margin-right: 8px;
+}
+
+.missingStd {
+	color: red;
+}
+
+span.success {
+	color: green;
+}
+span.warning {
+	color: orange;
+}
+
+span.danger {
+	color: red;
+}
+
+.pointer {
+	cursor: pointer;
+
+	-webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.3s;
+	transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.3s;
+}
+
+//.pointer:hover {
+//	color: #337ab7;
+//}
+
+.studentName {
+	font: 16px Arial;
+	color: white;
+	padding: 6px;
+	border-radius: 4px;
+}
+
+.footerTitle {
+	font: bold 16px Arial;
+}
+
+.footerTitleButton {
+	margin-right: 4px;
+}
+
+.redIcon {
+	color: red;
+	margin-left: 3px;
+}
+
+.blackText {
+	color: black;
+}
+
+#gradeAll {
+	margin-left: 12px;
+}
+
+span.rightSpacer {
+	margin-right: 4px;
+}
+
+.filterButton {
+}
+
+.detailCategory {
+	margin-bottom: 6px;
+}
+.stdDetailTitle {
+	font-weight: bold;
+}
+
+.line1 {
+	font-weight: bold;
+	color: #31b0d5;
+}
+
+.line2 {
+	font-weight: bold;
+	color: green;
+}
+
+h4.graphTitle {
+	margin-left: 64px;
+}
+
+h4.tableTitle {
+	margin-left: 9px;
+}
+
+.shortImage {
+	height: 400px;
+}
+
+.alert-section {
+	background-color: #CAEDE1;
+	border: 1px solid #B4D1C7;
+	color: #157564;
+}
+
+.bar {
+	width: 250px;
+	height: 24px;
+}
+
+.smallBar {
+	width: 180px;
+	height: 24px;
+}
+
+.smallerBar {
+	width: 100px;
+	height: 20px;
+}
+
+.smallestBar {
+	width: 82px;
+	height: 20px;
+}
+
+.barContainer {
+	border: solid 1px black;
+	cursor: default;
+}
+
+div.success {
+	background-color: green;
+	color: white;
+	padding-left: 4px;
+}
+div.warning {
+	background-color: #FFEA00;
+	padding-left: 4px;
+}
+div.danger {
+	background-color: #F76E19;
+	color: white;
+	padding-left: 4px;
+}
+
+.coverageSpacer {
+	margin-left: 8px;
+	padding-top: 3px;
+
+	color: red;
+}
+
+.tdMax {
+	width: 70%;
+}
+
+.detailTitle {
+	font: 18px Arial;
+	border-bottom: solid 1px black;
+	margin-bottom: 6px;
+}
+
+.detailHead {
+	font: bold 14px Arial;
+	padding-right: 6px;
+}
+
+.detailData {
+	font: 14px Arial;
+}
+
+.nameToggle {
+	margin-top: 8px;
+}
+
+.page-summary {
+	font: bold 16px Arial;
+
+	background-color: #d9edf7;
+	border-radius: 6px;
+	padding: 8px;
+	border: 1px solid transparent;
+	border-color: #bce8f1;
+	margin-bottom: 10px;
+}
+
+.filterRow {
+/*	margin-bottom: 10px; */
+}
+
+.compressedText {
+	font-size: 13px;
+}
+
+.faintHeader {
+	font-size: 11px;
+	color: gray;
+	margin-bottom: 3px;
+}
+
+.missingData {
+	font-size: @large-text;
+}
+
+.qnum {
+	margin-right: 4px;
+}
+
+.mult-choices {
+	margin-top: 4px;
+}
+
+/* =========================== Filter Bar =========================== */
+.filterBar {
+	padding: 14px;
+//	margin-bottom: 12px;
+//	border: 1px solid transparent;
+//	border-radius: 4px;
+//	border-color: #bce8f1;
+
+	color: white;
+//	background-color: #d9edf7;
+
+	.whiteBG {
+		background-color: white;
+		color: black;
+	}
+
+	.filter-pd {
+		padding: 0 6px;
+		font-size: 13px;
+
+		height: 30px;
+		max-width: 250px;
+
+		&>option {
+			background-color: white;
+			color: black;
+		}
+	}
+
+	.filter-no-list-box {
+		margin-top: 4px;
+//		line-height: 26px;
+//		vertical-align: middle;
+
+		margin-right: 10px;
+	}
+
+	@noListColor: lighten(#5bc0de, 10%);
+	.filter-no-list {
+		border: 1px solid #46b8da;
+		border-radius: 4px;
+		padding: 6px;
+
+		background-color: @noListColor;
+		color: #FFF;	//contrast(@noListColor);
+//		line-height: 26px;
+	}
+}
+
+/* =========================== Instruction text =========================== */
+.reportInstructions {
+	font-weight: bold;
+	margin-top: 24px;
+	padding-bottom: 8px;
+}
+
+.popupInstructions {
+	font-weight: bold;
+}
+
+.instructIcon {
+	color: #337ab7;
+	font-size: 1.2em;
+	vertical-align: text-bottom;
+}
+
+// =========================== Container ===========================
+.dataTable {
+//	padding: 0px 8px;
+
+//	border: solid 1px #CCC;
+//	border-radius: 4px;
+
+	tbody>tr {
+		cursor: pointer;
+
+		&:hover {
+			background-color: #EEE;
+		}
+
+		border-bottom:1px solid #ccc;
+	}
+}
+
+// ======================================================
+// Name list
+// ======================================================
+.nameList {
+	font: 13px Arial;
+	margin-left: 4px;
+}
+
+.nameListBox {
+	border: solid 1px black;
+	border-radius: 4px;
+
+	padding: 4px;
+	padding-bottom: 8px;
+}
+
+.listHead {
+	font-weight: bold;
+	font-size: 12px;
+
+	background-color: @active-bar-bg;
+	color: black;
+
+	display: inline-block;
+	position: relative;
+	top: -5px;
+	left: -4px;
+	border-right: solid 1px black;
+	border-bottom: solid 1px black;
+	border-bottom-right-radius: 4px;
+	border-top-left-radius: 4px;
+	padding: 2px 5px;
+}
+
+.excelList {
+	background-color: @excelBG;
+	color: @excelFG;
+	margin-bottom: 10px;
+}
+
+.passList {
+	background-color: @passBG;
+	color: @passFG;
+	margin-bottom: 10px;
+}
+
+.failList {
+	background-color: @failBG;
+	color: @failFG;
+}
+
+.name-list-line {
+
+	font: 18px Arial;
+	margin-bottom: 15px;
+
+	&>.name-list-info-head {
+		font-weight: bold;
+	}
+
+//	&>.name-list-info {
+//	}
+}
+
+.name-list-title {
+	font: 18px Arial;
+	margin-bottom: 7px;
+	border-bottom: solid 1px black;
+}

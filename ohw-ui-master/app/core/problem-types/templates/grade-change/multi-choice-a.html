@@ -1,0 +1,6 @@
+<div class="changeChoices">
+	<div ng-repeat="choice in ::answer" class="mcSpacer clearfix">
+		<span ng-class="{true: 'glyphicon-check', false: 'glyphicon-unchecked'}[!!choice.check]" class="glyphicon"></span>
+		<span ng-class="choice.style" ng-bind-html="choice.text"></span>
+	</div>
+</div>

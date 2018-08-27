@@ -1,0 +1,16 @@
+<div ng-if="!hideProductName" class="subject-dropdown-container">
+  <div class="subject-dropdown">
+    <span ng-if="!showDropdownArrow()" ng-bind-html="product.nameDisplay" class="subject-label-noselect"></span>
+    <span ng-if="showDropdownArrow()" ng-click="showSubjectDropdown($event)"><span ng-bind-html="product.nameDisplay" class="subject-label"></span><i class="glyphicon glyphicon-triangle-bottom subject-dropdown-icon"></i><span>
+  </div>
+  <div class="subject-dropdown-wrap">
+    <div ng-repeat="product in products track by $index"
+         ng-click="selectSubject($event)"
+         class="subject-button"
+         data-product-id="{{product.productId}}"
+         data-type="product-option"
+         data-name="{{product.name}}"
+         data-name-display="{{product.nameDisplay}}"
+         data-state="{{product.state}}"><span ng-bind-html="product.nameDisplay" class="subject-button-label"></span></div>
+  </div>
+</div>

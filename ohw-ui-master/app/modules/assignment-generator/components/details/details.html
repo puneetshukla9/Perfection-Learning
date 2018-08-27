@@ -1,0 +1,393 @@
+<nav class="navbar navbar-inverse">
+	<a class="navbar-brand">Assignment Details</a>
+</nav>
+
+<!-- Main Panel -->
+<!-- <div class="panel panel-primary fullSize flexWrapper">
+		<div class="panel-heading">Assignment Details</div>
+ -->
+<div class="">
+
+	<form class="form-horizontal">
+		<!-- assigned and due dates -->
+		<div ng-if="details.setDates()" class="form-group">
+			<label class="col-sm-2 control-label">Assigned: </label>
+
+			<div class="col-sm-3">
+				<div class="pull-right input-group datepicker-right-align">
+					<input type="text" class="datepicker-widget datepicker-table-input form-control input-sm" datetime-picker="MM/dd/yyyy HH:mm"
+					 ng-model="details.assigned" close-on-date-selection="true" button-bar="details.buttonBarConfig" datepicker-options="details.calendar.options"
+					 min-date="details.calendar.today" placeholder="Unassigned" ng-change="details.updateDate(details)" is-open="details.calendar.data['details-assigned']"
+					 when-closed="details.calendar.open($event, 'details-due')" />
+					<span class="input-group-btn">
+						<button type="button" class="btn btn-default btn-sm" ng-click="details.calendar.toggle($event, 'details-assigned'); details.calendar.close($event, 'details-due');">
+							<i class="glyphicon glyphicon-calendar"></i>
+						</button>
+					</span>
+				</div>
+			</div>
+
+			<label class="col-sm-2 control-label">Due: </label>
+			<div class="col-sm-3">
+				<div class="pull-right input-group datepicker-right-align">
+					<input type="text" class="datepicker-widget datepicker-table-input form-control input-sm" datetime-picker="MM/dd/yyyy HH:mm"
+					 ng-model="details.due" close-on-date-selection="true" button-bar="details.buttonBarConfig" datepicker-options="details.calendar.options"
+					 min-date="details.calendar.today" placeholder="Unassigned" ng-change="details.updateDate(details)" is-open="details.calendar.data['details-due']"
+					/>
+					<span class="input-group-btn">
+						<button type="button" class="btn btn-default btn-sm" ng-click="details.calendar.toggle($event, 'details-due'); details.calendar.close($event, 'details-assigned');">
+							<i class="glyphicon glyphicon-calendar"></i>
+						</button>
+					</span>
+				</div>
+			</div>
+
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">Engage homework: </label>
+			<div class="col-sm-10">
+				<label class="radio-inline">
+					<input type="radio" ng-model="details.engage" ng-change="details.homeworkChange()" value="itemBasedAssignment">Item-based assignment
+				</label>
+				<label class="radio-inline">
+					<input type="radio" ng-model="details.engage" ng-change="details.homeworkChange()" value="writing_assigment">Writing assignment
+				</label>
+			</div>
+		</div>
+		<div class="form-group" ng-if="details.engage == 'itemBasedAssignment' ">
+			<div ng-if="!details.isDistAdmin" class="form-group">
+				<label class="col-sm-2 control-label">*Class: </label>
+				<div class="col-sm-10">
+					<div ng-if="!className" class="class-menu" details="true" class-menu></div>
+					<div ng-if="className" style="margin-top:11px">{{className}}</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label">*Assignment Name: </label>
+				<div class="col-sm-10">
+					<input ng-model="details.name" ng-keyup="details.captureEnter($event)" ng-change="details.setNameUI();" ng-blur="details.checkValid(details.name, details.curMode); details.setName()"
+					 type="input" class="form-control">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">*Category: </label>
+				<div class="col-sm-10">
+					<select ng-options="id as mode.name for (id, mode) in details.modes" ng-model="details.curMode" ng-change="details.setMode(); details.checkValid(details.name, details.curMode);"
+					 class="form-control">
+					</select>
+					<div ng-if="!details.isAMSCO" id="modeInstruct">
+						{{details.getInstruct(details.curMode)}}
+					</div>
+					<div ng-if="details.isAMSCO && details.curMode=='ipractice'">
+						i-Practice is a Math
+						<sup>X</sup> feature that allows students to keep trying until they've mastered a problem. To preview i-Practice in Math
+						<sup>X</sup>, navigate to the assignment list and click on the action dropdown.
+					</div>
+				</div>
+			</div>
+			<div ng-if="details.showTries()" class="form-group">
+				<label class="col-sm-2 control-label">Tries Allowed: </label>
+				<div class="col-sm-10">
+					<select ng-model="details.submissions" ng-change="details.setSubmits()" ng-options="option.setting as option.text for option in details.tries"
+					 class="form-control">
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Notes to Self: </label>
+				<div class="col-sm-10">
+					<textarea ckeditor ng-model="details.notes" ng-blur="details.setNotes()" class="form-control" rows="3" placeholder="Write notes about the assignment. These can only be viewed by you."></textarea>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Sharing: </label>
+				<div class="col-sm-10">
+					<select ng-model="details.sharing" ng-change="details.setSharing()" ng-options="option.setting as option.text for option in details.sharingOptions"
+					 class="form-control">
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Standards: </label>
+				<div class="col-sm-10 details-note">
+					<div>{{details.stdNote}}</div>
+				</div>
+			</div>
+		</div>
+		<div class="panel-group" id="accordionWrapper" ng-if="details.engage == 'writing_assigment' ">
+
+			<!-- Organizational Strategies End-->
+			<div class="panel panel-default">
+				<div class="panel-heading accordianHeading" data-target="#collapse1">
+					<h4 class="panel-title">
+						Assignment Type
+					</h4>
+				</div>
+				<div id="collapse1" class="panel-collapse collapse " ng-class="{'in': details.collapseId == '#collapse1'}">
+					<div class="panel-body">
+						<form class="form-horizontal">
+							<div class="form-group">
+								<label class="col-sm-2 control-label">*Form of Writing</label>
+								<div class="col-sm-10">
+									<select ng-model="details.formOfWriting" ng-change="details.setFow()" ng-options=" option.text for option in details.fOwOptions"
+									 class="form-control"></select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label"></label>
+								<div class="col-sm-10 ">
+									<div class="notification">If "Teacher Selects Topic" is not checked, students will brainstorm a topic and evaluate it. </div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label"></label>
+								<div class="col-sm-10">
+									<label class="checkbox-inline">
+										<input type="checkbox" ng-model="details.teacherSelect" value="details.teacherSelect">Teacher Selects Topic </label>
+									<label class="checkbox-inline" ng-class="{'disabled': details.teacherSelect == true}">
+										<a href="" ng-click="details.showPopup()" data-toggle="modal" data-target="#myModal" class="assignAudience" id="config_link">Assign Audience and Purpose</a>
+									</label>
+
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">*Template</label>
+								<div class="col-sm-10">
+									<select ng-model="details.TemplateModel" ng-change="details.setFow()" ng-options=" option.text for option in details.template"
+									 class="form-control"></select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">*Assignment title: </label>
+								<div class="col-sm-10">
+									<input ng-model="details.name" ng-keyup="details.captureEnter($event)" ng-change="details.setNameUI();" ng-blur="details.checkValid(details.name, details.curMode); details.setName()"
+									 type="input" class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Purpose: </label>
+								<div class="col-sm-10">
+									<input ng-model="details.name" ng-keyup="details.captureEnter($event)" ng-change="details.setNameUI();" ng-blur="details.checkValid(details.name, details.curMode); details.setName()"
+									 type="input" class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Audience: </label>
+								<div class="col-sm-10">
+									<input ng-model="details.name" ng-keyup="details.captureEnter($event)" ng-change="details.setNameUI();" ng-blur="details.checkValid(details.name, details.curMode); details.setName()"
+									 type="input" class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">*Assignment Instructions: </label>
+								<div class="col-sm-10">
+									<textarea ckeditor name="instructions" id="instructions" class="mceEditor" rows="5" cols="30" aria-hidden="true"></textarea>
+								</div>
+							</div>
+
+						</form>
+					</div>
+				</div>
+			</div>
+			<!-- Organizational Strategies End-->
+
+			<!-- Organizational Strategies Start-->
+			<div class="panel panel-default">
+				<div class="panel-heading accordianHeading" data-target="#collapse2">
+					<h4 class="panel-title">
+						Organizational Strategies
+					</h4>
+				</div>
+				<div id="collapse2" class="panel-collapse collapse">
+					<div class="panel-body">
+						<div ng-if="details.assignmentData.orgStrategies.length" class="col-sm-12" ng-repeat="ques in details.assignmentData.orgStrategies">
+							<div class="col-sm-12 padding0" ng-if="ques.type=='check'">
+								<div class="col-sm-10 padding0">
+									<label class="checkbox-inline">
+										<input type="checkbox" ng-model="ques.checked" value="ques.checked">
+										<span ng-bind-html="ques.value"></span>
+									</label>
+
+								</div>
+							</div>
+							<div class="col-sm-12" ng-if="ques.type=='radio'">
+								<div class="col-sm-10">
+									<label class="checkbox-inline">
+										<input type="radio" ng-model="ques.check" value="ques.check">
+										<span ng-bind-html="ques.value"></span>
+									</label>
+
+								</div>
+							</div>
+							<div class="col-sm-12" ng-if="ques.type=='text'">
+								<div class="col-sm-10">
+									<label class="checkbox-inline">
+										<input type="radio" ng-model="ques.check" value="ques.check">
+										<span ng-bind-html="ques.value"></span>
+									</label>
+
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-12" ng-if="!details.assignmentData.orgStrategies.length">No Record Found</div>
+					</div>
+				</div>
+			</div>
+			<!-- Organizational Strategies End-->
+
+
+			<!-- Student Self Assessment Start-->
+			<div class="panel panel-default">
+				<div class="panel-heading accordianHeading" data-target="#collapse3">
+					<h4 class="panel-title">
+						Student Self-assessment Questions
+					</h4>
+				</div>
+				<div id="collapse3" class="panel-collapse collapse bgWhite">
+					<div class="panel-body" ng-include src="'./app/modules/assignment-generator/components/details/selfAssessment.html'">
+					</div>
+				</div>
+			</div>
+			<!-- Student Self Assessment End-->
+
+
+			<!-- Collaboration Start-->
+			<div class="panel panel-default">
+				<div class="panel-heading accordianHeading" data-target="#collapse4">
+					<h4 class="panel-title">
+						Collaboration
+					</h4>
+				</div>
+				<div id="collapse4" class="panel-collapse collapse">
+					<div class="panel-body">
+						<div ng-if="details.assignmentData.collaboration.length" class="col-sm-12" ng-repeat="ques in details.assignmentData.collaboration">
+							<div class="col-sm-12 padding0" ng-if="ques.type=='check'">
+								<div class="col-sm-10 padding0" ng-if="!ques.edit">
+									<label class="checkbox-inline">
+										<input type="checkbox" ng-model="ques.checked" value="ques.checked">
+										<span class="chkLabel" ng-bind-html="ques.value"></span>
+									</label>
+
+								</div>
+								<div class="col-sm-10 padding0 paddingRigh15" ng-if="ques.edit">
+										<input class="form-control height35 marginTop10" ng-model="ques.editValue" type="input">
+								</div>
+								<div class="col-sm-2" ng-if="ques.custom && !ques.edit">
+									<a class="editBtn right glyphicon glyphicon-trash" href="" ng-click="details.deleteCustomQuest('collaboration','',$index)"></a>
+									<a class="editBtn right glyphicon glyphicon-pencil" href="" ng-click="details.editCustomQuest('collaboration','',$index)"></a>
+								</div>
+								<div class="col-sm-2" ng-if="ques.edit">
+										<a class="customBtn marginRight10" href="" ng-click="details.updateCustomQuest('collaboration','',$index)">Update</a>
+										<a class="customBtn" href="" ng-click="details.cancelCustomQuest('collaboration','',$index)">Cancel</a>
+								</div>
+							</div>
+
+						</div>
+						<div class="col-sm-12 padding0 ">
+							<div class="col-sm-12 padding0" ng-if="details.assignmentData.collaboration.length">
+								<div class="col-sm-10">
+									<input class="form-control height35 marginTop10" ng-model="details.collaborationCustomQues.value" type="input">
+								</div>
+
+								<a class="addBtn" href="" ng-click="details.addCustomQuest('collaboration')">Add</a>
+
+							</div>
+						</div>
+						<div class="col-sm-12" ng-if="!details.assignmentData.collaboration.length">No Record Found</div>
+					</div>
+				</div>
+			</div>
+			<!-- Collaboration End-->
+
+			<!-- Grading Assignment Start-->
+			<div class="panel panel-default">
+				<div class="panel-heading accordianHeading" data-target="#collapse5">
+					<h4 class="panel-title">
+						Grading Assessment
+					</h4>
+				</div>
+				<div id="collapse5" class="panel-collapse collapse">
+					<div class="panel-body">
+						<div class="col-sm-12">
+							<div class="row form-group ">
+								<div class="col-sm-6">Graded Scores</div>
+								<div class="col-sm-6">Maximum Score</div>
+							</div>
+							<div class="row form-group ">
+								<div class="col-sm-6">
+									<label class="checkbox-inline">
+										<input type="checkbox" ng-model="details.assignmentData.planOrg" value="">Share and mceEditor</label>
+								</div>
+								<div class="col-sm-2 ">
+									<input class="form-control height34" ng-model="details.assignmentData.planOrgPoint" type="text">
+
+								</div>
+							</div>
+							<div class="row form-group ">
+								<div class="col-sm-6">
+									<label class="checkbox-inline">
+										<input type="checkbox" ng-model="details.assignmentData.writeFirst" value="">Write first draft</label>
+								</div>
+								<div class="col-sm-2 ">
+									<input class="form-control height34" ng-model="details.assignmentData.writeFirstPoint" id="ex1" type="text">
+
+								</div>
+							</div>
+							<div class="row form-group ">
+								<div class="col-sm-6">
+									<label class="checkbox-inline">
+										<input type="checkbox" ng-model="details.assignmentData.evaluate" value="">Evaluate and Revise</label>
+								</div>
+								<div class="col-sm-2 ">
+									<input class="form-control height34" ng-model="details.assignmentData.evaluatePoint" id="ex1" type="text">
+
+								</div>
+							</div>
+							<div class="row form-group ">
+								<div class="col-sm-6">
+									<label class="checkbox-inline">
+										<input type="checkbox" ng-model="details.assignmentData.share" value="">Share and mceEditor</label>
+								</div>
+								<div class="col-sm-2 ">
+									<input class="form-control height34" ng-model="details.assignmentData.sharePoint" type="text">
+
+								</div>
+							</div>
+							<div class="row form-group ">
+								<div class="col-sm-6">
+									<label class="checkbox-inline">
+										<input type="checkbox" ng-model="details.assignmentData.publish" value="">Publish</label>
+								</div>
+								<div class="col-sm-2 ">
+									<input class="form-control height34" ng-model="details.assignmentData.publishPoint" id="ex1" type="text">
+
+								</div>
+							</div>
+							<div class="row form-group ">
+								<div class="col-sm-6" style="height:34px;line-height: 34px">
+									<label class="right"> Total Points</label>
+								</div>
+								<div class="col-sm-2 ">
+									<input class="form-control height34" ng-model="details.assignmentData.totalPoint" id="ex1" type="text">
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Grading Assignment End-->
+		</div>
+
+
+	</form>
+
+	<div class="row"></div>
+
+</div>
+</div>
+<div  ng-include src="'./app/modules/assignment-generator/components/details/choice.html'">
+
+</div>

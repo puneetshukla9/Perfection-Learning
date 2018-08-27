@@ -1,0 +1,197 @@
+<div>
+
+	<nav class="navbar navbar-inverse">
+		<a class="navbar-brand">Update Student {{student.first}} {{student.last}}</a>
+	</nav>
+
+	<div ng-form="updateStudent" class="col-md-offset-2 form-horizontal override-label-error" role="form">
+
+		<div class="form-group">
+			<label for="fNameField" class="col-sm-2 control-label">School:</label>
+			<div class="col-sm-6">
+				<input ng-model="student.school_name" type="text" class="form-control" placeholder="School" readonly>
+			</div>
+		</div>
+
+		<div class="form-group" ng-class="{ 'has-error': updateStudent.firstName.$invalid && updateStudent.firstName.$touched }">
+			<label id="label-first" for="fNameField" class="col-sm-2 control-label">First Name:</label>
+			<div class="col-sm-6">
+				<input required ng-pattern="validation.name.regex"
+					   ng-model="student.first"
+						 ng-disabled="oneRosterLockout"
+					   ng-blur="checkSave('firstName')"
+					   name="firstName"
+					   type="text"
+					   class="form-control"
+					   placeholder="">
+				<span class="glyphicon"
+							ng-class="{ 'glyphicon-ok' 	 : updateStudent.firstName.$valid,
+													'glyphicon-remove' : updateStudent.firstName.$invalid,
+													'form-control-valid': updateStudent.firstName.$valid,
+													'form-control-feedback': updateStudent.firstName.$invalid }">
+				</span>
+			</div>
+			<div ng-show="updateStudent.firstName.$invalid && updateStudent.firstName.$touched" class="validation-message col-md-2 col-xs-2">
+				<span>A first name is required. {{validation.name.text}}</span>
+			</div>
+
+		</div>
+
+		<div class="form-group" ng-class="{ 'has-error': updateStudent.lastName.$invalid && updateStudent.lastName.$touched }">
+			<label for="lNameField" class="col-sm-2 control-label">Last Name:</label>
+			<div class="col-sm-6">
+				<input required ng-pattern="validation.name.regex"
+					   ng-model="student.last"
+						 ng-disabled="oneRosterLockout"
+					   ng-blur="checkSave('lastName')"
+					   name="lastName"
+					   type="text"
+					   class="form-control"
+					   placeholder="">
+				<span class="glyphicon"
+							ng-class="{ 'glyphicon-ok' 	 : updateStudent.lastName.$valid,
+							 					  'glyphicon-remove' : updateStudent.lastName.$invalid,
+													'form-control-valid': updateStudent.lastName.$valid,
+													'form-control-feedback': updateStudent.lastName.$invalid }">
+				</span>
+			</div>
+			<div ng-show="updateStudent.lastName.$invalid && updateStudent.lastName.$touched" class="validation-message col-md-2 col-xs-2">
+				<span>A last name is required. {{validation.name.text}}</span>
+			</div>
+		</div>
+
+		<div class="form-group" ng-class="{ 'has-error': updateStudent.studentNumber.$invalid && updateStudent.studentNumber.$touched }">
+			<label for="numField" class="col-sm-2 control-label">Student ID:</label>
+			<div class="col-sm-6">
+				<input required
+					   ng-model="student.student_num"
+						 ng-disabled="oneRosterLockout"
+						 ng-blur="checkSave('studentNumber')"
+					   name="studentNumber"
+					   type="text"
+					   class="form-control"
+					   placeholder="">
+				<span class="glyphicon"
+							ng-class="{ 'glyphicon-ok' 	 : updateStudent.studentNumber.$valid,
+							 					  'glyphicon-remove' : updateStudent.studentNumber.$invalid,
+													'form-control-valid': updateStudent.studentNumber.$valid,
+													'form-control-feedback': updateStudent.studentNumber.$invalid }">
+				</span>
+			</div>
+			<div ng-show="updateStudent.studentNumber.$invalid && updateStudent.studentNumber.$touched" class="validation-message col-md-2 col-xs-2">
+				<span>A student ID is requred. Use any characters you like.</span>
+			</div>
+		</div>
+
+		<div class="form-group" ng-class="{ 'has-error': updateStudent.username.$invalid && updateStudent.username.$touched }">
+			<label for="emailField" class="col-sm-2 control-label">Username:</label>
+			<div class="col-sm-6">
+				<input required
+					   ng-model="student.email"
+					   ng-blur="checkSave('username')"
+						 ng-disabled="oneRosterLockout"
+					   name="username"
+					   type="text"
+					   class="form-control"
+					   placeholder="">
+				<span class="glyphicon"
+							ng-class="{ 'glyphicon-ok' 	 : updateStudent.username.$valid,
+							 					  'glyphicon-remove' : updateStudent.username.$invalid,
+													'form-control-valid': updateStudent.username.$valid,
+													'form-control-feedback': updateStudent.username.$invalid }">
+				</span>
+			</div>
+			<div ng-show="updateStudent.username.$invalid && updateStudent.username.$touched" class="validation-message col-md-2 col-xs-2">
+				<span>A username is required. All characters are valid.</span>
+			</div>
+		</div>
+
+    <div ng-if="true">
+		<div class="form-group">
+			<div class="col-sm-6 col-sm-offset-2">
+				<p class="help-text center-text" style="border-radius: 2px;">{{validation.password.text}}</p>
+			</div>
+		</div>
+
+		<div class="form-group" ng-class="{ 'has-error': updateStudent.password.$invalid && updateStudent.password.$touched }">
+			<label for="numField" class="col-sm-2 control-label">Password:</label>
+			<div class="col-sm-6">
+				<input
+							 password-hide-show
+							 ng-pattern="validation.password.regex"
+							 ng-model-options="{ allowInvalid: true }"
+							 ng-model="student.password"
+					   	 ng-blur="checkSave('password')"
+							 name="password"
+							 type="text" class="form-control" placeholder="" />
+				<span class="glyphicon"
+							ng-if="updateStudent.password.$touched"
+							ng-class="{ 'glyphicon-ok' 	 : updateStudent.password.$valid,
+							 					  'glyphicon-remove' : updateStudent.password.$invalid,
+													'form-control-valid': updateStudent.password.$valid,
+													'form-control-feedback': updateStudent.password.$invalid }">
+				</span>
+
+			</div>
+		</div>
+	</div>
+
+	</div>
+
+  <div class="panel panel-info">
+	<div class="panel-heading">Licenses</div>
+
+	<div ng-if="student.licenses">
+			<table id="studentLicenses" ng-if="student.licenses.length" class="table zebra table-bordered panel-body">
+				<thead><tr>
+					<th>Book</th>
+					<th>Expiration</th>
+					<th>User Order#</th>
+					<th>Act</th>
+					<th>Verified</th>
+					<th>School</th>
+					<th>School Exp</th>
+					<th>School Order#</th>
+					<th>Length</th>
+				</tr></thead>
+
+				<tr ng-repeat="item in student.licenses track by $index">
+					<td>{{item.book_name}}</td>
+					<td>{{item.ub_expire_date}}</td>
+					<td>{{item.ub_ordersid}}</td>
+					<td>{{item.active}}</td>
+					<td>{{item.verified}}</td>
+					<td>{{item.name}}</td>
+					<td>{{item.remaining_seats}}</td>
+					<td>{{item.sb_ordersid}}</td>
+					<td>{{item.walength}}</td>
+				</tr>
+			</table>
+	</div>
+  </div>
+
+  <div class="panel panel-info">
+	<div class="panel-heading">Enrolled Classes</div>
+	<div ng-if="student.courses">
+		<table id="studentCourses" ng-if="student.courses.length" class="table zebra table-bordered panel-body">
+			<thead><tr>
+				<th>Class</th>
+				<th>Book</th>
+				<th>Teacher</th>
+				<th>Created</th>
+				<th>Expire</th>
+				<th>Active</th>
+			</tr></thead>
+
+			<tr ng-repeat="item in student.courses track by $index">
+				<td ng-click="linkToClass(item.course_id)">{{item.name}}</td>
+				<td>{{item.book_name}}</td>
+				<td>{{item.teacher}}</td>
+				<td>{{item.date_created}}</td>
+				<td>{{item.expiry_date}}</td>
+				<td>{{item.active}}</td>
+			</tr>
+		</table>
+	</div>
+  </div>
+</div>
