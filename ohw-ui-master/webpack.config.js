@@ -20,7 +20,7 @@ module.exports = {
 		app: ['./app/auth.bootstrap'] // needs to be an array due to later use as dependency
 	},
 	output: {
-		path: __dirname,
+		path: path.join(__dirname, '/dist/'),
 		filename: '[name].[hash].bundle.js'
 	},
 	module: {

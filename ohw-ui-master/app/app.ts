@@ -43,6 +43,7 @@ import './core/user-menu/module.ts';
 import './core/manuals/module.ts';
 import './core/bookshelf/module.ts';
 
+
 import hideOnRoute from './core/hide-on-route-directive.ts';
 import mathxSuperscript from './core/math-superscript-module.ts';
 import hideBodyOverflow from './core/hide-body-overflow-directive.ts';
@@ -62,6 +63,7 @@ import gridPagination from './core/grid-pagination-service.ts';
 import sortIcon from './core/sort-icon/sort-icon-directive.ts';
 import hotkey from './core/hotkeys/hotkey-service.ts';
 import oneRoster from './core/oneroster-service.ts';
+import ckEditor from './core/ckEditor.ts';
 
 import './modules/digital-library/module';
 import './modules/admin/module';
@@ -121,6 +123,7 @@ export default angular.module('ohw', [
 	'settings',
 	'support'
 ])
+.directive('ckEditor', ckEditor)
 .directive('hideOnRoute', hideOnRoute)
 .directive('hideBodyOverflow', hideBodyOverflow)
 .directive('hideOnState', hideOnState)

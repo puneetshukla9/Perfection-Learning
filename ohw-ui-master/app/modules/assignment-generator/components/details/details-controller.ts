@@ -11,7 +11,7 @@ export default function (AppState, $state, $rootScope, Preferences, Wizard,
 	self.due = new Date();
 	self.calendar = Calendar;
 	self.isDistAdmin = AppState.get('isDistAdmin');
-
+		self.instruction="testing";
 	$rootScope.assignGen = $rootScope.assignGen || {};
 
 	if ($state.params.id) {
