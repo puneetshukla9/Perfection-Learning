@@ -1,0 +1,10 @@
+<div class="text-center">
+
+	<h3 class="bold">The Power of Personalized Learning</h3>
+	<br>
+	<button class="btn btn-default" [routerLink]="['/auth/code']">Use a code</button>
+	<button class="btn btn-warning" [routerLink]="['/auth/user/username']">Sign in</button>
+	<div class="box-footer">
+		<img [src]="DomSanitizer.bypassSecurityTrustUrl(logo)" class="img-responsive pl-logo" alt="Perfection Learning Company">
+	</div>
+</div>

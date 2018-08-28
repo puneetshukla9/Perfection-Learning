@@ -1,0 +1,11 @@
+<div ng-if="problem.prefix" class="previewPrefix" ng-bind-html="problem.vtp.prefix"></div>
+
+<div class="previewProb" ng-bind-html="problem.vtp.q"></div>
+
+<qimg ng-if="problem.qImg" qi-data="problem.vtp.overlays" ng-src="{{problem.qImg}}"></qimg>
+
+<div ng-if="showAnswers">
+  <div ng-if="problem.ansPrefix" class="eqPrefix pull-left" ng-bind-html="problem.ansPrefix"></div>
+  <div class="eqBox pull-left"></div>
+  <div ng-if="problem.ansSuffix" class="eqSuffix pull-left" ng-bind-html="problem.ansSuffix"></div>
+</div>

@@ -1,0 +1,78 @@
+/* =========================== School Year =========================== */
+@import './../../../core/less/definitions.less';
+
+.monthContainer {
+	margin-right: 10px;
+	margin-bottom: 20px;
+
+	.calTable {
+		border-collapse: separate;
+		border: solid 2px black;
+		border-radius: 4px;
+
+		box-shadow: 4px 4px 6px #888888;
+	}
+
+	.calHeader>td {
+		padding: 6px;
+		text-align: center;
+		font: bold 16px Arial;
+
+		background-color: #AAD0F0;
+		padding-bottom: 4px;
+
+		border-bottom: solid 1px black;
+	}
+
+	.calDayRow>td {
+		padding: 8px;
+		text-align: center;
+		font: bold 12px Arial;
+		background-color: #D0E4F5;
+	}
+
+	.calDate {
+		padding: 10px 0px;
+		text-align: center;
+		font: 12px Arial;
+
+		width: 42px;
+		height: 42px;
+
+		border-bottom: 1px solid #eaeaea;
+		border-right: 1px solid #eaeaea;
+	}
+
+
+	// Date markers
+
+	// Our assignment type background colors are quite light. For the calendar, darker colors work better.
+	// Apply a uniform darkness factor.
+	@darken-amount: 20;
+
+	// Common to all
+	div.badge {
+		cursor: pointer;
+		box-shadow: inset -1px -1px 2px 1px rgba(0,0,0,0.3);
+	}
+
+	div.badge.hw {
+		background-color: darken(@homework-bg-color, @darken-amount);
+		color: contrast(darken(@homework-bg-color, @darken-amount));
+	}
+
+	div.badge.test {
+		background-color: darken(@test-bg-color, @darken-amount);
+		color: contrast(darken(@test-bg-color, @darken-amount));
+	}
+
+	div.badge.quiz {
+		background-color: darken(@quiz-bg-color, @darken-amount);
+		color: contrast(darken(@quiz-bg-color, @darken-amount));
+	}
+
+	div.badge.ipractice {
+		background-color: darken(@ipractice-bg-color, @darken-amount);
+		color: contrast(darken(@ipractice-bg-color, @darken-amount));
+	}
+}

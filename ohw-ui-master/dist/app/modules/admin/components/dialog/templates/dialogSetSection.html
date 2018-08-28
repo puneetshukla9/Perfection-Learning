@@ -1,0 +1,29 @@
+<div class="fullSize">
+    <div class="panel panel-primary">
+        <header class="panel-heading">
+            <h3 class="panel-title text-center">{{ctrl.dlg.title}}</h3>
+        </header>
+
+        <nav class="navbar navbar-default">
+ <!--
+            <div class="dialog text-center">
+                <h3>{{ctrl.dlg.msg}}</h3>
+            </div>
+-->
+			<div class="modal-body">
+				<input ng-model="ctrl.secName" type="text" class="form-control" placeholder={{ctrl.dlg.msg}}> <!--"Section name"> -->
+			</div>
+
+            <div class="modal-footer">
+ <!--
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Add</button>
+-->
+                <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
+                <button type="button" class="btn btn-primary" ng-click="continue()">Add</button>
+            </div>
+        </nav>
+
+    </div>
+
+</div>

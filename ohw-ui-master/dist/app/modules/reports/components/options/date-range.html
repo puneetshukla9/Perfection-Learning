@@ -1,0 +1,99 @@
+<div id="modalPanel" class="container-fluid">
+
+	<div class="flexWrapper">
+		<div class="flexHeight panel panel-primary">
+
+			<!-- HEADER -->
+			<div class="panel-heading">
+				Manage Date Ranges
+			</div>
+
+			<!-- BODY -->
+			<div class="panel-body">
+
+<!--				<div ng-if="!ctrl.ranges.length" class="instructions">There are no ranges defined yet.</div> -->
+
+				<div ng-if="ctrl.ranges.length" class="rangeList">
+					<table id="dateRange" class="table table-hover table-condensed">
+						<thead>
+							<tr>
+								<th>
+									<span ng-click="ctrl.sort('name')" class="rangeSort">Name</span>
+								</th>
+
+								<th>
+									<span ng-click="ctrl.sort('start')" class="rangeSort">Start Date</span>
+								</th>
+
+								<th>
+									<span ng-click="ctrl.sort('end')" class="rangeSort">End Date</span>
+								</th>
+
+								<th></th>
+							</tr>
+						</thead>
+
+						<tbody>
+							<tr ng-click="ctrl.edit(entry)" ng-repeat="entry in ctrl.ranges track by $index" ng-class="{rangeInvalid: entry.invalid}">
+
+								<!-- Name -->
+								<td ng-if="entry.edit">
+									<input type="text" class="form-control" ng-model="entry.name" ng-blur="ctrl.validate(entry)" required="true" ng-minlength="1" ng-trim="true">
+								</td>
+								<td ng-if="!entry.edit">
+									<div class="rangeEdit">{{entry.name}}</div>
+								</td>
+
+								<!-- Start Date -->
+								<td ng-if="entry.edit" class="rangeDate">
+									<span class="input-group">
+										<input type="text" ng-blur="ctrl.validate(entry)" class="form-control" datepicker-popup="shortDate" ng-model="entry.start" is-open="entry.editStart" datepicker-options="ctrl.pickerOptions" ng-required="true" datepicker-append-to-body="true" show-button-bar="false">
+										<span class="input-group-btn">
+											<button type="button" class="btn btn-default" ng-click="ctrl.startPicker($event, $index)"><i class="glyphicon glyphicon-calendar"></i></button>
+										</span>
+									</span>
+								</td>
+								<td ng-if="!entry.edit">
+									<div class="rangeEdit">{{entry.start | date}}</div>
+								</td>
+
+								<!-- End Date -->
+								<td ng-if="entry.edit" class="rangeDate">
+									<span class="input-group">
+										<input type="text" ng-blur="ctrl.validate(entry)" class="form-control" datepicker-popup="shortDate" ng-model="entry.end" is-open="entry.editEnd" min-date="entry.start" datepicker-options="ctrl.pickerOptions" ng-required="true" datepicker-append-to-body="true" show-button-bar="false">
+										<span class="input-group-btn">
+											<button type="button" class="btn btn-default" ng-click="ctrl.endPicker($event, $index)"><i class="glyphicon glyphicon-calendar"></i></button>
+										</span>
+									</span>
+								</td>
+								<td ng-if="!entry.edit">
+									<div class="rangeEdit">{{entry.end | date}}</div>
+								</td>
+
+								<!-- Remove Button -->
+								<td class="rangeRemove">
+									<span ng-click="ctrl.remove($event, $index)" class="glyphicon glyphicon-remove-circle removeButton"></span>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<!-- Instructions -->
+				<div class="rangeInstructions">
+					<span class="glyphicon glyphicon-info-sign instructIcon"></span>
+					Create subsets of your total class time, such as semesters or quarters. You can use these to filter your reports.
+				</div>
+
+			</div>
+
+			<!-- OKAY / CANCEL -->
+			<div class="panel-footer clearfix">
+				<button ng-click="ctrl.addRange()" class="btn btn-sm btn-info">Create new range</button>
+				<button ng-click="$close({})" class="btn btn-sm btn-info pull-right prButtonSpacer">Done</button>
+			</div>
+
+		</div>
+	</div>
+
+</div>

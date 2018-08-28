@@ -1,0 +1,32 @@
+<div>
+
+	<nav class="navbar navbar-inverse">
+		<a class="navbar-brand">View License Details - {{license}}</a>
+	</nav>
+
+	<div ng-form="licenseBreakdown" class="col-md-offset-2 form-horizontal override-label-error" role="form">
+
+		<div ng-repeat="school in schools" class="form-group" ng-if="school.student_count > 0">
+			<label class="col-sm-2 control-label">{{school.name}}:</label>
+			<div class="col-sm-6">
+				<input ng-model="school.student_count" type="text" class="form-control" readonly>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-sm-2 control-label">Used:</label>
+			<div class="col-sm-6">
+				<input ng-model="total_used" type="text" class="form-control" readonly>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-sm-2 control-label">Available:</label>
+			<div class="col-sm-6">
+				<input ng-model="total_available" type="text" class="form-control" readonly>
+			</div>
+		</div>
+
+	</div>
+
+</div>

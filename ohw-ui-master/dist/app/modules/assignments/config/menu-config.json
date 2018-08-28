@@ -1,0 +1,17 @@
+{
+  "enabled": true,
+  "data": [
+    { "id": 1, "title": "Grades", "disabled": "amsco", "teacherAccess" : "true", "distrAdminAccess" : "false", "options":
+      [
+        { "id": "gradebook", "text": "Gradebook", "state": "assignApp.gradebook", "teacherAccess" : "true", "distrAdminAccess" : "false" }
+      ]
+    },
+    { "id": 2, "title": "Assignments", "teacherAccess" : "true", "distrAdminAccess" : "true", "options":
+      [
+        { "id": "list", "text": "Class Assignments", "state": "assignApp.list", "teacherAccess" : "true", "distrAdminAccess" : "true" },
+        { "id": "create", "text": "Create Assignment", "state": "assignGenApp.details", "teacherAccess" : "true", "distrAdminAccess" : "true" },
+        { "id": "sharedList", "text": "Assignment Library", "state": "assignApp.sharedList", "teacherAccess" : "true", "distrAdminAccess" : "true" }
+      ]
+    }
+  ]
+}

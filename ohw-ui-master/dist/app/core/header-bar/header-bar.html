@@ -1,0 +1,20 @@
+<div ng-if="!readerLayout">
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container-fluid no-margin">
+			<div class="ohw-header navbar-header">
+				<div subject-dropdown></div>
+				<div product-menu></div>
+				<!-- Logo is never shown. $scope.showLogo is never set to true. -->
+				<div ng-if="showLogo" class="ohw-logo navbar-brand">
+					<img alt="Brand" ng-src="{{logo}}" />
+				</div>
+				<div class="ohw-module navbar-brand">
+					{{modName}}
+				</div>
+
+				<div user-alert></div>
+
+			</div>
+			<div ng-transclude=""></div>
+	</nav>
+</div>

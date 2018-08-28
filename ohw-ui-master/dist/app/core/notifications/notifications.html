@@ -1,0 +1,10 @@
+<div id="notifications" class="slider"
+  ng-class="{ closed: !view.visible, error: view.type === 'error', confirmation: view.type === 'confirmation' }">
+  <div id="notifications-close">
+    <i class="pull-right glyphicon glyphicon-remove"></i>
+  </div>
+  <div class="content">
+    <p class="center">{{view.message}}</p>
+    <p ng-if="view.messageLine2" class="center">{{view.messageLine2}}</p>
+  </div>
+</div>

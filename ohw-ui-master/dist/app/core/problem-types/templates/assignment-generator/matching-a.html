@@ -1,0 +1,12 @@
+<div class="">
+
+	<div ng-if="!problem.a">None of the above</div>
+
+	<div ng-bind-html="problem.vtp.a" class="pull-left"></div>
+<!-- This contains a lot more logic than one should ever have in a template. However, there's no controller where the logic would go. -->
+	<div class="mcChoiceRow" ng-repeat="choice in ::problem.vtp.choices" ng-if="problem.a.split(',').indexOf(choice.id+'') !== -1">
+		<span class="mcPreview">{{numToLetter($index)}}.</span>
+		<!--<span ng-if="problem.a.indexOf(',') !== -1">&#x25CF;&nbsp;</span>-->
+		<span ng-bind-html="choice.a"></span>
+	</div>
+</div>

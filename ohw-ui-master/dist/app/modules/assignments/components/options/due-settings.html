@@ -1,0 +1,54 @@
+<div id="modalPanel" class="container-fluid">
+
+	<div class="flexWrapper">
+		<div class="flexHeight panel panel-primary">
+
+			<!-- HEADER -->
+			<div class="panel-heading">
+				Due Date Settings
+			</div>
+
+			<!-- BODY -->
+			<div class="panel-body">
+
+				<!-- SETTINGS -->
+				<div id="dueHead1">Lead time</div>
+				<div class="formSpacer dueSetting">
+					Students can work on assignments
+					<input id="leadTimeInput" class="form-control" ng-model="due.leadTime" type="number" required pattern="\d+" min="1">
+					days before the due date.
+				</div>
+
+				<hr class="dueHR" />
+
+				<div class="dueH4">Default times</div>
+				<div class="dueBox pull-left bg-success">
+					<div class="pull-left timeAlign">Assigned</div>
+					<div class="pull-left">
+						<timepicker ng-model="due.defaultAssign" minute-step="15" class="duePicker"></timepicker>
+					</div>
+				</div>
+
+				<div class="dueBox pull-right bg-danger">
+					<div class="pull-left timeAlign">Due</div>
+					<div class="pull-left">
+						<timepicker ng-model="due.defaultDue" minute-step="15" class="duePicker"></timepicker>
+					</div>
+				</div>
+
+				<div class="popupInstructions">
+					<span class="glyphicon glyphicon-info-sign instructIcon"></span>
+					You can change these settings for an individual assignment when specifying the due date.
+				</div>
+
+			</div>
+
+			<div class="panel-footer clearfix">
+				<button ng-click="$dismiss()" class="btn btn-primary pull-right"><span class="glyphicon glyphicon-thumbs-down"></span> Cancel</button>
+				<button ng-click="$close({lead: due.leadTime, assign: due.defaultAssign, due: due.defaultDue})" class="btn btn-info pull-right prButtonSpacer"><span class="glyphicon glyphicon-thumbs-up"></span> Okay</button>
+			</div>
+
+		</div>
+	</div>
+
+</div>

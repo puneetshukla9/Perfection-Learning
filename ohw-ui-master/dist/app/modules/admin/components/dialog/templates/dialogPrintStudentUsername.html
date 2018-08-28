@@ -1,0 +1,23 @@
+<div>
+  <div class="dialog dialog-print">
+    <div ng-repeat="student in data">
+      <div>
+        <div class="col-xs-6 dialog-print-container" ng-if="student.email">
+          <ul class="unformatted">
+            <li><strong>{{student.first}} {{student.last}}</strong></li>
+            <li>Go to mathx.perfectionlearning.com and click on "Use a code."</li>
+            <li><strong>Username:</strong> {{student.email}}</li>
+            <li><strong>Code:</strong> {{student.password}}</li>
+          </ul>
+        </div>
+        <div ng-if="!(($index + 1) % 2) || ($index === data.length - 1)">
+          <div class="clearfix dialog-print-border"></div>
+          <div class="clearfix"></div>
+        </div>
+        <div ng-if="$index === data.length - 1">
+          <div class="clearfix dialog-print-border"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

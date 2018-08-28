@@ -1,0 +1,158 @@
+<div ng-class="{scoreBarSpacer: problem.isPending}" class="form-inline scoreBar anim">
+	<span ng-switch="pointsState">
+
+		<!-- i-Practice, graded -->
+		<span ng-switch-when="drill-graded">
+			<div>
+				<span class="noWrap anim" style="font-size:26px">
+					<span class="text-primary anim">Points:&nbsp;</span><br/>
+					<form name="points">
+						<input ng-blur="change.setPoints(problem, this.points.$valid, idx)" required min="0" max="99"
+									 type="text" ng-pattern="/^\d*$/" ng-model="problem.pts" class="form-control gradeInp">
+					</form>
+					&nbsp;/&nbsp;
+					<span class="textBold">{{problem.scoreMax}}</span>
+				</span>
+			</div>
+			<div uib-tooltip="{{submissionMsg()}}" tooltip-placement="{{msgPosition}}" class="submission">
+				<span class="text-primary textBold">Rounds:&nbsp;</span>
+				<span class="text-default textBold">{{problem.attempts}}</span>
+			</div>
+		</span>
+
+		<!-- i-Practice, grading required -->
+		<span ng-switch-when="drill-not-graded">
+			<div>
+				<span class="noWrap anim" style="font-size:26px">
+					<!--<span ng-if="problem.isPending" class="glyphicon glyphicon-pencil gradeMe gradeMeSpacer"></span>-->
+					<span class="text-primary anim">Points:&nbsp;</span><br/>
+					<form name="points">
+						<input ng-blur="change.setPoints(problem, this.points.$valid, idx)" required min="0" max="99"
+									 type="text" ng-pattern="/^\d*$/" ng-model="problem.pts" class="form-control gradeInp">
+					</form>
+					&nbsp;/&nbsp;
+					<span class="textBold">{{problem.scoreMax}}</span>
+				</span>
+			</div>
+			<div uib-tooltip="{{submissionMsg()}}" tooltip-placement="{{msgPosition}}" class="submission">
+				<span class="text-primary textBold">Rounds:&nbsp;</span>
+				<span class="text-default textBold">{{problem.attempts}}</span>
+			</div>
+		</span>
+
+		<!-- i-Practice, assigned but not yet due or submitted -->
+		<span ng-switch-when="drill-in-progress">
+			<div>
+				<span class="noWrap anim" style="font-size:26px">
+					<span class="text-primary anim">Points:&nbsp;</span><br/>
+					--
+					&nbsp;/&nbsp;
+					<span class="textBold">{{problem.scoreMax}}</span>
+				</span>
+			</div>
+			<div uib-tooltip="{{submissionMsg()}}" tooltip-placement="{{msgPosition}}" class="submission">
+				<span class="text-primary textBold">Rounds:&nbsp;</span>
+				<span class="text-default textBold">{{problem.attempts}}</span>
+			</div>
+		</span>
+
+		<!-- i-Practice, past due -->
+		<span ng-switch-when="drill-no-submission">
+			<div>
+				<span class="noWrap anim" style="font-size:26px">
+					<span class="text-primary anim">Points:&nbsp;</span><br/>
+					<form name="points">
+						<input ng-blur="change.setPoints(problem, this.points.$valid, idx)" required min="0" max="99"
+									 type="text" ng-pattern="/^\d*$/" ng-model="problem.pts" class="form-control gradeInp">
+					</form>
+					&nbsp;/&nbsp;
+					<span class="textBold">{{problem.scoreMax}}</span>
+				</span>
+			</div>
+			<div uib-tooltip="{{submissionMsg()}}" tooltip-placement="{{msgPosition}}" class="submission">
+				<span class="text-primary textBold">Rounds:&nbsp;</span>
+				<span class="text-default textBold">{{problem.attempts}}</span>
+			</div>
+		</span>
+
+
+		<!-- homework, quiz, or test - graded -->
+		<span ng-switch-when="graded">
+			<div>
+				<span class="noWrap anim" style="font-size:26px">
+					<span class="text-primary anim">Points:&nbsp;</span><br/>
+					<form name="points">
+						<input ng-blur="change.setPoints(problem, this.points.$valid, idx)" required min="0" max="99"
+									 type="text" ng-pattern="/^\d*$/" ng-model="problem.pts" class="form-control gradeInp">
+					</form>
+					&nbsp;/&nbsp;
+					<span class="textBold">{{problem.scoreMax}}</span>
+				</span>
+			</div>
+			<div uib-tooltip="{{submissionMsg()}}" tooltip-placement="{{msgPosition}}" class="submission">
+				<span class="text-primary textBold">Submissions:&nbsp;</span>
+				<span class="text-default textBold">{{problem.attempts}} </span> /
+				<span class="textBold">{{problem.attemptsMax}}</span>
+			</div>
+		</span>
+
+		<!-- homework, quiz, or test - grading required -->
+		<span ng-switch-when="not-graded">
+			<div>
+				<span class="noWrap anim" style="font-size:26px">
+					<!--<span ng-if="problem.isPending" class="glyphicon glyphicon-pencil gradeMe gradeMeSpacer"></span>-->
+					<span class="text-primary anim">Points:&nbsp;</span><br/>
+					<form name="points">
+						<input ng-blur="change.setPoints(problem, this.points.$valid, idx)" required min="0" max="99"
+									 type="text" ng-pattern="/^\d*$/" ng-model="problem.pts" class="form-control gradeInp">
+					</form>
+					&nbsp;/&nbsp;
+					<span class="textBold">{{problem.scoreMax}}</span>
+				</span>
+			</div>
+			<div uib-tooltip="{{submissionMsg()}}" tooltip-placement="{{msgPosition}}" class="submission">
+				<span class="text-primary textBold">Submissions:&nbsp;</span>
+				<span class="text-default textBold">{{problem.attempts}} </span> /
+				<span class="textBold">{{problem.attemptsMax}}</span>
+			</div>
+		</span>
+
+		<!-- homework, quiz, or test - not yet due, answer not submitted -->
+		<span ng-switch-when="in-progress">
+			<div>
+				<span class="noWrap anim" style="font-size:26px">
+					<span class="text-primary anim">Points:&nbsp;</span><br/>
+					--
+					&nbsp;/&nbsp;
+					<span class="textBold">{{problem.scoreMax}}</span>
+				</span>
+			</div>
+			<div uib-tooltip="{{submissionMsg()}}" tooltip-placement="{{msgPosition}}" class="submission">
+				<span class="text-primary textBold">Submissions:&nbsp;</span>
+				<span class="text-default textBold">--</span>
+			</div>
+		</span>
+
+		<!-- homework, quiz, or test - not yet due, answer not submitted -->
+		<span ng-switch-when="no-submission">
+			<div>
+				<span class="noWrap anim" style="font-size:26px">
+					<span class="text-primary anim">Points:&nbsp;</span><br/>
+
+					<form name="points">
+						<input ng-blur="change.setPoints(problem, this.points.$valid, idx)" required min="0" max="99"
+									 type="text" ng-pattern="/^\d*$/" ng-model="problem.pts" class="form-control gradeInp">
+					</form>
+					&nbsp;/&nbsp;
+					<span class="textBold">{{problem.scoreMax}}</span>
+				</span>
+			</div>
+			<div uib-tooltip="{{submissionMsg()}}" tooltip-placement="{{msgPosition}}" class="submission">
+				<span class="text-primary textBold">Submissions:&nbsp;</span>
+				<span class="text-default textBold">{{problem.attempts}} </span> /
+				<span class="textBold">{{problem.attemptsMax}}</span>
+			</div>
+		</span>
+
+	</span>
+</div>

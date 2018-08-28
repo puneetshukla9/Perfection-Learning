@@ -1,0 +1,85 @@
+<!-- Main Panel -->
+<div id="rightPanel">
+	<!-- <div class="panel panel-primary fullSize flexWrapper">
+		<div class="panel-heading">
+			<div class="rightHeader pull-left">Change Email</div>
+		</div>
+
+		<div class="panel-body flexHeight"> -->
+		<nav class="navbar navbar-inverse">
+			<a class="navbar-brand">Change Email</a>
+		</nav>
+
+		<div ng-form="formEmail" class="settings-email-form form-horizontal center" role="form">
+			<br/>
+			<div class="form-group" ng-class="{ 'has-error': formEmail.newEmail.$invalid && formEmail.newEmail.$touched }">
+				<label class="col-md-2 col-md-offset-1 col-xs-2 col-xs-offset-1 text-right" for="newEmail">New Email:</label>
+			 	<div class="col-md-6 col-xs-6">
+					<input class="form-control"
+						required
+						ng-pattern="ctrl.emailPattern"
+						ng-model="ctrl.newEmail"
+						name="newEmail"
+						type="text" placeholder="New email">
+					<span class="glyphicon glyphicon-remove form-control-feedback"
+						ng-if="formEmail.newEmail.$invalid && formEmail.newEmail.$touched"></span>
+				</div>
+				<div ng-show="formEmail.newEmail.$invalid && formEmail.newEmail.$touched" class="validation-message col-md-2 col-xs-2">
+					<span>New email is required and must be a valid address.</span>
+				</div>
+			</div>
+
+			<div
+				class="form-group"
+				ng-class="{ 'has-error': (formEmail.retypeEmail.$invalid && formEmail.retypeEmail.$touched) ||
+									(ctrl.retypeEmail && (ctrl.newEmail !== ctrl.retypeEmail))}">
+				<label class="col-md-2 col-md-offset-1 col-xs-2 col-xs-offset-1 text-right" for="newEmail">Confirm Email:</label>
+				<div class="col-md-6 col-xs-6">
+					<input
+						required
+						ng-model="ctrl.retypeEmail"
+						name="retypeEmail" type="text" class="form-control" placeholder="Retype email">
+					<span class="glyphicon glyphicon-remove form-control-feedback"
+						ng-show="(formEmail.retypeEmail.$invalid && formEmail.retypeEmail.$touched) ||
+										 (ctrl.newEmail && (ctrl.newEmail !== ctrl.retypeEmail))"></span>
+				</div>
+				<div ng-show="(formEmail.retypeEmail.$invalid && formEmail.retypeEmail.$touched) ||
+								 (ctrl.retypeEmail && (ctrl.newEmail !== ctrl.retypeEmail))"
+						class="validation-message col-md-2 col-xs-2">
+					<span>E-mail addresses must match.</span>
+				</div>
+			</div>
+
+			<div
+				class="form-group"
+				ng-class="{ 'has-error': formEmail.password.$invalid && formEmail.password.$touched }">
+				<label class="col-md-2 col-md-offset-1 col-xs-2 col-xs-offset-1 text-right" for="password">Password:</label>
+				<div class="col-md-6 col-xs-6">
+					<input
+						required
+						ng-model="ctrl.pw"
+						ng-minlength="6"
+						name="password"
+						type="password" class="form-control" placeholder="Password">
+					<span class="glyphicon glyphicon-remove form-control-feedback"
+						ng-show="formEmail.password.$invalid && formEmail.password.$touched"></span>
+				</div>
+				<div ng-show="formEmail.password.$invalid && formEmail.password.$touched" class="validation-message col-md-2 col-xs-2">
+					<span>Your valid password is required.</span>
+				</div>
+			</div>
+
+			<div
+				class="form-group">
+				<div class="col-md-8 col-md-offset-1 col-xs-8 col-xs-offset-1">
+					<button
+						ng-click="ctrl.updateEmail();formEmail.$setPristine()"
+						type="submit"
+						ng-disabled="formEmail.$invalid || (ctrl.newEmail !== ctrl.retypeEmail)"
+						class="pull-right btn btn-large btn-primary">Submit</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>

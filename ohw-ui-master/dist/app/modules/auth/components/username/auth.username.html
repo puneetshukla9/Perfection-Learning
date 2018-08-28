@@ -1,0 +1,58 @@
+<form novalidate>
+	<div [ngSwitch]="view">
+		<div *ngSwitchCase="'username'">
+			<div class="form-group">
+				<label class="font-weight-normal" for="username">Username:</label>
+				<input coreAutofocus
+					[(ngModel)]="username"
+					pattern="^[A-Za-z0-9-_\'\.\@]+$"
+					ngControl="username"
+					required
+					name="username"
+					type="text"
+					class="form-control border-width-1px"
+					id="username"
+					placeholder="Enter your email or username" #usernameModel="ngModel">
+				<span
+					*ngIf="!usernameModel.valid && usernameModel.touched"
+					class="input-error pull-right glyphicon glyphicon-remove"></span>
+				<span
+					*ngIf="usernameModel.valid"
+					class="input-valid pull-right glyphicon glyphicon-ok"></span>
+				<!-- <span class="input-group-btn">
+					<button
+						(click)="check()"
+						class="btn pull-right button-glyphicon-arrow-right-style">
+						<span class="glyphicon glyphicon-arrow-right"></span>
+					</button>
+				</span> -->
+				<div *ngIf="!usernameModel.valid && usernameModel.touched"
+					class="validation-message margin-top-5px">
+					<span>Please enter your username.</span>
+				</div>
+
+				<div class="fix-bottom">
+					<button [routerLink]="['/auth/main']" type="button" class="btn btn-default">Back</button>
+					<button [disabled]="!usernameModel.valid" (click)="check()" type="submit" class="btn btn-primary pull-right">Next</button>
+				</div>
+
+			</div>
+		</div>
+		<div *ngSwitchCase="'errorNoMatch'">
+			<div class="text-center">
+				<h4>We didn&apos;t recognize that username and code combination.</h4>
+			</div>
+			<div class="fix-bottom">
+				<button [routerLink]="['/auth/main']" type="button" class="btn btn-default">Back</button>
+			</div>
+		</div>
+		<div *ngSwitchCase="'error'">
+			<div class="text-center">
+				<h4>We didn&apos;t recognize that username.</h4>
+			</div>
+			<div class="fix-bottom">
+				<button [routerLink]="['/auth/main']" type="button" class="btn btn-default">Back</button>
+			</div>
+		</div>
+	</div>
+</form>

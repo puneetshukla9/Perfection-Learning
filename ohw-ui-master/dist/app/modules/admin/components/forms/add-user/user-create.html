@@ -1,0 +1,196 @@
+<div class="form-scroll" style="margin-left: 10px;">
+
+	<nav class="navbar navbar-inverse">
+		<a class="navbar-brand">Add a {{user.type}}</a>
+	</nav>
+
+	<br/>
+
+	<div ng-form="addUser" class="col-sm-offset-1 form-horizontal" role="form">
+
+		<div ng-if="!isPLCAdmin" class="form-group" ng-class="{ 'has-error': addUser.school.$invalid && addUser.school.$touched }">
+			<div ng-if="!!!mustSelectSchool" ng-class="{ 'has-error': addUser.school.$invalid && addUser.school.$touched }">
+						<label for="nameField" class="col-sm-2 control-label">School:</label>
+						<div class="col-sm-7">
+							<input type="text" class="form-control" disabled value="{{newUser.school.name}}"/>
+						</div>
+      </div>
+			<div ng-if="!!mustSelectSchool" ng-class="{ 'has-error': addUser.school.$invalid && addUser.school.$touched }">
+						<label for="nameField" class="col-sm-2 control-label">School:</label>
+						<div class="col-sm-7">
+							<select
+							  required
+							  name="newUser.school.school_id"
+							  class="form-control"
+							  ng-options="school.school_id as school.name for school in schools"
+							  ng-model="newUser.school_id">
+							  <option value="">Select a school</option>
+						  </select>
+							<div ng-if="addUser.school.$invalid && addUser.school.$touched" class="validation-message col-md-2 col-xs-2">
+							  <span>You must select a school.</span>
+						  </div>
+						</div>
+      </div>
+			<!-- <div ng-show="addUser.name.$invalid && addUser.name.$touched" class="validation-message col-md-2 col-xs-2">
+				<span>A name for the class is required. You can use letters, numbers, and spaces. No other characters are allowed.</span>
+			</div> -->
+		</div>
+
+    <schooldropdown ng-if="isPLCAdmin" show-label="true"></schooldropdown>
+
+		<div class="form-group" ng-class="{ 'has-error': addUser.firstName.$touched && addUser.firstName.$invalid }">
+			<label for="firstName" class="col-sm-2 control-label">*First Name:</label>
+			<div class="col-sm-7">
+				<input  required ng-pattern="validation.name.regex"
+								ng-model="newUser.firstName"
+								ng-model-options="{ allowInvalid: true }"
+								ng-change="setBlur('firstName', false)"
+								ng-blur="setBlur('firstName', true)"
+								name="firstName" type="text" class="form-control" placeholder="">
+				<span class="glyphicon"
+							ng-if="addUser.firstName.$touched"
+							ng-class="{ 'glyphicon-ok' 	 : addUser.firstName.$valid,
+													'glyphicon-remove' : addUser.firstName.$invalid,
+													'form-control-valid': addUser.firstName.$valid,
+													'form-control-feedback': addUser.firstName.$invalid }">
+				</span>
+			</div>
+			<div ng-show="addUser.firstName.$invalid && addUser.firstName.$touched" class="validation-message col-md-2 col-xs-2">
+				<span>A first name is required. {{validation.name.text}}</span>
+			</div>
+		</div>
+
+
+		<div class="form-group" ng-class="{ 'has-error': addUser.lastName.$touched && addUser.lastName.$invalid }">
+			<label for="lastName" class="col-sm-2 control-label">*Last Name:</label>
+			<div class="col-sm-7">
+				<input  required ng-pattern="validation.name.regex"
+								ng-model-options="{ allowInvalid: true }"
+								ng-change="setBlur('lastName', false)"
+								ng-blur="setBlur('lastName', true)"
+								ng-model="newUser.lastName" name="lastName" type="text" class="form-control" placeholder="">
+				<span class="glyphicon"
+							ng-if="addUser.lastName.$touched"
+							ng-class="{ 'glyphicon-ok' 	 : addUser.lastName.$valid,
+							 					  'glyphicon-remove' : addUser.lastName.$invalid,
+													'form-control-valid': addUser.lastName.$valid,
+													'form-control-feedback': addUser.lastName.$invalid }">
+				</span>
+			</div>
+			<div ng-show="addUser.lastName.$invalid && addUser.lastName.$touched" class="validation-message col-md-2 col-xs-2">
+				<span>A last name is required. {{validation.name.text}}</span>
+			</div>
+		</div>
+
+		<div ng-if="user.level === 'student'" class="form-group" ng-class="{ 'has-error': addUser.studentNumber.$invalid && addUser.studentNumber.$touched }">
+			<label for="studentNumber" class="col-sm-2 control-label">*Student ID:</label>
+			<div class="col-sm-7">
+				<input required ng-model="newUser.studentNumber" name="studentNumber" type="text" class="form-control" placeholder="">
+				<span class="glyphicon"
+							ng-if="addUser.studentNumber.$touched"
+							ng-class="{ 'glyphicon-ok' 	 : addUser.studentNumber.$valid,
+							 					  'glyphicon-remove' : addUser.studentNumber.$invalid,
+													'form-control-valid': addUser.studentNumber.$valid,
+													'form-control-feedback': addUser.studentNumber.$invalid }">
+				</span>
+			</div>
+			<div ng-show="addUser.studentNumber.$invalid && addUser.studentNumber.$touched" class="validation-message col-md-2 col-xs-2">
+				<span>A student ID is requred. Use any characters you like.</span>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="col-sm-7 col-sm-offset-2">
+				<p class="help-text center-text" style="border-radius: 2px;">{{instructionText}}</p>
+			</div>
+		</div>
+
+		<div class="form-group" ng-class="{ 'has-error': addUser.login.$touched && addUser.login.$invalid }">
+			<label for="email" class="col-sm-2 control-label">*Username:</label>
+			<div class="col-sm-7">
+				<input ng-pattern="aproposPattern" required ng-model="newUser.email" name="login" type="text" class="form-control" placeholder="{{placeholderText}}">
+				<span class="glyphicon"
+							ng-if="addUser.login.$touched"
+							ng-class="{ 'glyphicon-ok' 	 : addUser.login.$valid,
+							 					  'glyphicon-remove' : addUser.login.$invalid,
+													'form-control-valid': addUser.login.$valid,
+													'form-control-feedback': addUser.login.$invalid }">
+				</span>
+			</div>
+			<div ng-show="addUser.login.$invalid && addUser.login.$touched" class="validation-message col-md-2 col-xs-2">
+				<span>A valid username is required.</span>
+			</div>
+		</div>
+
+		<!--<div class="form-group" ng-if="user.level === 'teacher' || user.level === 'admin'">
+			<div class="col-sm-7 col-sm-offset-2">
+				<p class="help-text center-text" style="border-radius: 2px;">{{validation.password.text}}</p>
+			</div>
+		</div>-->
+
+		<!--<div class="form-group" ng-class="{ 'has-error': addUser.password.$invalid && addUser.password.$touched }">
+			<label for="password" class="col-sm-2 control-label">*Password:</label>
+			<div class="col-sm-7">
+				<input required
+							 password-hide-show
+							 ng-pattern="validation.password.regex"
+							 ng-model-options="{ allowInvalid: true }"
+							 ng-model="newUser.password"
+							 name="password"
+							 type="text" class="form-control" placeholder="" />
+				<span class="glyphicon"
+							ng-if="addUser.password.$touched"
+							ng-class="{ 'glyphicon-ok' 	 : addUser.password.$valid,
+							 					  'glyphicon-remove' : addUser.password.$invalid,
+													'form-control-valid': addUser.password.$valid,
+													'form-control-feedback': addUser.password.$invalid }">
+				</span>
+			</div>
+			<div ng-show="addUser.password.$invalid && addUser.password.$touched" class="validation-message col-md-2 col-xs-2">
+				<span>A valid password is required. {{validation.password.text}}</span>
+			</div>
+		</div>-->
+<!--
+		<div class="form-group" ng-class="{ 'has-error': addUser.username.$touched && addUser.username.$invalid }">
+			<label for="username" class="col-sm-2 control-label">*Username:</label>
+			<div class="col-sm-7">
+				<input required ng-model="newUser.username" name="username" type="text" class="form-control" placeholder="">
+				<span class="glyphicon"
+							ng-if="addUser.username.$touched"
+							ng-class="{ 'glyphicon-ok' 	 : addUser.username.$valid,
+							 					  'glyphicon-remove' : addUser.username.$invalid,
+													'form-control-valid': addUser.username.$valid,
+													'form-control-feedback': addUser.username.$invalid }">
+				</span>
+			</div>
+			<div ng-show="addUser.name.$invalid && addUser.name.$touched" class="validation-message col-md-2 col-xs-2">
+				<span>A username is required. All characters are valid.</span>
+			</div>
+		</div>
+-->
+
+
+<!--
+		<div class="form-group" ng-class="{ 'has-error': addUser.year.$invalid && addUser.year.$touched }">
+			<label for="yearField" class="col-sm-2 control-label">Year</label>
+			<div class="col-sm-10">
+				<input required ng-model="class.year" name="year" type="text" class="form-control" placeholder="Year">
+			</div>
+		</div> -->
+
+		<!-- <div class="form-group">
+			<label for="termField" class="col-sm-2 control-label">Term</label>
+			<div class="col-sm-10">
+				<img ng-src="dateRanges.png" />
+			</div>
+		</div> -->
+		<div class="col-sm-9" style="padding-right: 10px;">
+			<button
+				type="submit"
+				ng-disabled="addUser.$invalid"
+				ng-click="create()" class="btn btn-primary pull-right">Submit</button>
+		</div>
+
+	</div>
+
+</div>

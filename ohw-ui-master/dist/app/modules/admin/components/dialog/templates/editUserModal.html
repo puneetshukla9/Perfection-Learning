@@ -1,0 +1,38 @@
+<div id="modalPanel" class="container-fluid">
+
+	<div class="">
+		<div class=" panel panel-primary">
+
+			<!-- HEADER -->
+			<div class="panel-heading">
+				User Details
+			</div>
+
+			<!-- BODY -->
+			<div class="panel-body">
+
+				<div class="form-horizontal">
+
+					<div ng-repeat="field in ctrl.fieldList" class="form-group">
+						<label class="col-sm-3 control-label">{{field.label}}</label>
+						<div class="col-sm-9">
+							<input ng-if="field.type !== 'select'" ng-model="ctrl.user[field.fld]" type="text" class="form-control" placeholder="{{field.ph}}" />
+							<select ng-if="field.type === 'select'" ng-model="ctrl.user[field.fld]" class="form-control" />
+								<option ng-repeat="item in field.list">{{item}}</option>
+							</select>
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+			<!-- OKAY / CANCEL -->
+			<div class="panel-footer clearfix">
+				<button ng-click="cancel()" class="btn btn-primary pull-right"><span class="glyphicon glyphicon-thumbs-down"></span> Cancel</button>
+				<button ng-click="continue()" class="btn btn-info pull-right stdDialogBtnSpacer"><span class="glyphicon glyphicon-thumbs-up"></span> Okay</button>
+			</div>
+
+		</div>
+	</div>
+
+</div>

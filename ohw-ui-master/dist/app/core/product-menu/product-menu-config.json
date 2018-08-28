@@ -1,0 +1,59 @@
+[
+  {
+    "state": "adminApp.book",
+    "glyph": "book",
+    "text": "Book",
+    "config": [],
+	  "noClasses": true
+  },
+  {
+    "state": "adminApp.classes.classesList",
+    "noClassState": "adminApp.addClass",
+    "glyph": "user",
+    "text": "Admin",
+    "config": [1,2,4,16,32,64],
+	  "noClasses": true
+  },
+  {
+    "state": "libraryApp.bookshelf.userBookshelf",
+    "glyph": "book",
+    "text": "Digital Library",
+    "config": [1,4,8,16,64],
+	  "noClasses": true
+  },
+  {
+    "state": "assignApp.list",
+    "glyph": "pencil",
+    "text":"Assignments",
+    "config": [1,2,16,32],
+	  "noClasses": false
+  },
+  {
+    "state": "reportsApp.asov",
+    "glyph": "stats",
+    "text": "Reports",
+    "config": [1,2,16],
+	  "noClasses": false
+  },
+  {
+    "state": "settingsApp.email",
+    "glyph": "cog",
+    "text": "Settings",
+    "config": [1024],
+	  "noClasses": true
+  },
+  {
+    "state": "supportApp.start",
+    "glyph": "phone-alt",
+    "text": "Support",
+    "config": [1,2,4,16,32],
+	  "noClasses": true
+  },
+  {
+    "state": "logout",
+    "glyph": "off",
+    "text": "Logout",
+    "config": [1024],
+	  "noClasses": true
+  }
+]

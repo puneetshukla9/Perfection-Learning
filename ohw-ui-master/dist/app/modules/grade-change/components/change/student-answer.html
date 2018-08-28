@@ -1,0 +1,8 @@
+<div class="panel colorAnim panel-info">
+	<div class="panel-heading">Student Answer</div>
+	<div class="panel-body">
+        <span ng-if="isInProgress" class="changeNoAnswer">In progress</span>
+				<span ng-if="isNoAnswerSubmitted" class="changeNoAnswer">No answer submitted.</span>
+        <problem-type ng-if="showAnswer" ng-model="problem" pt-mode="a" pt-answer="problem.cleanSub" pt-correct="problem.isCorrect"></problem-type>
+	</div>
+</div>

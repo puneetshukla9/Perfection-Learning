@@ -1,0 +1,9 @@
+<div class="navbar-btn navbar-right navbar-collapse collapse navbar-btn-group btn-group">
+  <button
+    id="doneBtn"
+    ng-class="{ 'btn-disabled' : saving }"
+    ng-click="done ? goTo(done) : activate(tabs[0])"
+    class="btn btn-md btn-danger">{{ saving ? 'Saving ' : 'Done' }}
+    <span ng-if="saving"><i class="glyphicon glyphicon-floppy-disk"></i></span>
+  </button>
+</div>

@@ -1,0 +1,110 @@
+/* =========================== Select Problems =========================== */
+
+#agLeftPanel {
+	padding-left: 0;
+	padding-right: 6px;
+}
+
+#agRightPanel {
+	padding-right: 0;
+	padding-left: 6px;
+	.navbar {
+		margin-bottom: 10px!important;
+	}
+}
+
+#select-chapters-standards, #problem-list {
+	position:absolute;
+	top:69px;
+	width:100%;
+	height:100px;
+	overflow-y:scroll;
+}
+
+.stdActive {
+	background-color: #FCECA4;
+}
+
+.tabHeading {
+	vertical-align: bottom;
+	padding-bottom: 0;
+	// padding-left: 2px;
+	margin-bottom: 10px;
+	padding-top: 14px;
+	border-bottom: 1px solid #cdcdcd;
+}
+
+.tab {
+	font-weight: bold;
+	margin-right: 2px;
+
+	border-color: #275B8A;
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+}
+
+.chooseEntry {
+	padding: 0 0 0 8px;
+
+	.transition(all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s);
+	cursor: pointer;
+}
+
+.shortBottom {
+	margin-bottom: 0;
+}
+
+.probLine {
+	width: 100%;
+}
+
+.probQ {
+	width: 99%;
+	padding: 8px 8px 8px 0;
+}
+
+.badgeSpacer {
+	margin-right: 14px;
+}
+
+.probBtn {
+	text-align: center;
+	padding: 4px;
+	width: 1%;
+
+	font: 24px Arial;
+	cursor: pointer;
+
+	background-color: #E3E3E3;
+}
+
+.inAssignment {
+	background-color: #FCECA4;
+}
+
+.probIcons {
+	min-width: 40px;
+	text-align: center;
+}
+
+.rotate45 {
+	.transform(rotate(135deg));
+}
+
+.selectToggle {
+	.transition(all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s);
+}
+
+.selectProbNum {
+	font-weight: bold;
+	vertical-align: top;
+	padding: 8px 3px 8px 0;
+}
+
+/* To keep initial p tag in line with problem number. */
+.probQ > span p:nth-child(2) {
+	display:inline;
+}
+.probQ > span p:nth-child(3) {
+	padding-top:1em;
+}

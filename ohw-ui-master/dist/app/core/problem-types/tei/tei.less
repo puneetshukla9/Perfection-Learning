@@ -1,0 +1,323 @@
+#preview .blank {
+	border: 1px dashed #4683D5;
+	display: inline-block;
+	background: #fff;
+	min-height: 30px;
+	min-width: 120px;
+  vertical-align: middle;
+	text-align:center;
+  margin: 0px 5px 0px 5px;
+}
+
+#preview .drag_drop_elements {
+	line-height: 34px;
+  padding: 10px;
+  background: #fff;
+	border: 1px solid #4683d5;
+}
+
+table.draggable, table.matching {
+	margin-top:10px;
+	width:100%;
+	display: table;
+}
+table.draggable tbody tr, table.matching tbody tr {
+	border:1px solid #4683d5;
+	display: table-row;
+}
+table.draggable .drag, table.matching td {
+	border:1px solid #4683d5;
+	height:40px;
+	padding:10px;
+	position:relative;
+}
+
+
+.dragsC {
+  width: auto;
+  //position: relative;
+  display: inline-block;
+  margin-right: 4px;
+	margin-top: 2px;
+}
+
+.drags {
+  width: auto;
+	position:relative;
+  padding: 4px;
+	//background: #b9b9b9;
+  border: 1px solid #4683D5;
+	line-height: 18px;
+	text-align: center;
+}
+
+
+
+div.ansChoice.mcms {
+    left: 50%;
+    transform: translateY(-48%) translateX(-52%);
+    padding: 0;
+    line-height: 19px;
+}
+div.ansChoice.mcms {
+    font-weight: bold;
+    font-size: 16px;
+    position: absolute;
+    color: transparent;
+    top: 49%;
+    width: 21px;
+    height: 20px;
+    background: #EEEEEE;
+    border: 1px solid #B7B7B7;
+    padding-left: 7px;
+    /* padding-top: 2px; */
+}
+
+.ansChoice.mcms.checked {
+    color: #3D93AB;
+}
+
+
+li.ansChoice.mcss.selected {
+    font-weight: bold;
+    color: #3498DB;
+}
+
+.drag-and-drop-wrapper {
+	border:1px solid gray;
+	background:#b9b9b9;
+	padding:10px;
+	line-height:34px;
+
+	p, div { display:inline-block; }
+}
+
+.blank, .drops {
+	border: 1px dashed #4683D5;
+	display: inline-block;
+	background: #fff;
+	min-height: 30px;
+	min-width: 120px;
+  vertical-align: middle;
+	text-align:center;
+  margin: 0px 5px 0px 5px;
+}
+
+.blank img, .drops img, .drag img {
+	width:100px;
+}
+
+.dndtable-cell {
+	line-height:1.1em;
+	text-align:center;
+}
+
+span.blank.wrong, span.drops.wrong {
+	background: yellow;
+}
+
+.drag_drop_elements {
+	margin-top:10px;
+	line-height: 34px;
+  padding: 10px;
+	border: none;
+}
+
+.ansContainer {
+margin-top: 10px;
+margin-bottom: 10px;
+width: 100%;
+max-width: 800px;
+/* min-height: 200px; */
+float: left;
+border: 1px solid #cacaca;
+background: -moz-linear-gradient(#e5e5e5, #cacaca);
+background: -webkit-linear-gradient(#e5e5e5, #cacaca);
+background: linear-gradient(#e5e5e5, #cacaca);
+padding: 10px;
+}
+.questionContainer {
+margin-top: 10px;
+margin-bottom: 10px;
+width: 100%;
+max-width: 800px;
+border: 1px solid #cacaca;
+background: -moz-linear-gradient(#e5e5e5, #cacaca);
+background: -webkit-linear-gradient(#e5e5e5, #cacaca);
+background: linear-gradient(#e5e5e5, #cacaca);
+padding: 10px;
+}
+.partTitle {
+	clear:both;
+}
+
+.MultKinetic.frameSubmission, .MultKinetic.frameAnswer,
+.OpenResponse.frameSubmission, .OpenResponse.frameAnswer {
+	border: 1px solid #b7b6b6;
+	background: white;
+	display:inline-block;
+	width:100%;
+	min-height:30px;
+	padding: 3px;
+	border-radius: 4px;
+
+}
+.bOptionRow {
+    position: relative;
+    /*float: left;*/
+    margin-right: 27px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+}
+.bOptionRow.pDisable{
+    cursor:default;
+}
+.tableCell {
+    display: table-cell;
+    width: 40px;
+    vertical-align: top;
+
+    padding: 0;
+}
+.bRadioBtn {
+    display: inline-block;
+    height: 22px;
+    width: 22px;
+    vertical-align: middle;
+    border: 1px solid #3498db;
+}
+.bOptionRow.selected .radioSelect {
+    opacity:1;
+}
+.radioSelect {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+    /*background-color: #3498db;*/
+
+    height: 14px;
+    width: 14px;
+    -webkit-transition: all .2s;
+    transition: all .2s;
+    opacity: 0;
+}
+.bRadioText {
+    display: table-cell;
+    vertical-align: middle;
+
+}
+.inlineText {
+	display:inline-block;
+}
+.task_choice .inline-choice {
+    position: relative;
+    display: inline-block;
+    min-width: 130px;
+    min-height: 27px;
+    vertical-align: middle;
+    background: white;
+    border: 1px solid #bbb;
+    cursor: pointer;
+    padding-right: 17px;
+    line-height: 20px;
+    padding-top: 2px;
+}
+.inline-choice > span {
+	display:block;
+	text-align:right;
+}
+/*
+.task_choice .inline-choice {
+    padding-left:5px;
+}
+.task_choice .inline-choice::after {
+    content: "";
+    position: absolute;
+    right: 5px;
+    top: 9px;
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 5px solid #3498db;
+}
+*/
+
+/*
+.task_choice.ansContainer{
+    line-height: 30px;
+    height: initial;
+    margin-bottom: 100px;
+}
+*/
+/* Equation Input */
+.equation-input {
+    padding: 3px;
+    min-width: 100px;
+    min-height: 30px;
+    border: 1px solid #b7b6b6;
+    background-color: #fff;
+    border-radius: 4px;
+		display:inline-block;
+		margin-left:10px;
+}
+
+/* Table Item */
+.table_item .table-cell {
+    padding: 10px;
+    /* width: 140px; */
+    height: 40px;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    background: #C6C6C6;
+    border: 1px solid #878787;
+}
+
+/* Open Response */
+.frameResponse {
+	background: white;
+	border: 1px solid gray;
+	padding: 3px;
+	min-height: 30px;
+}
+
+/* Extras */
+.text_select_dropdown .task_choice_list {
+	display:none;
+}
+.extras-wrapper .task_choice_list {
+    border: 1px solid;
+    border-bottom: none;
+		margin: 10px;
+}
+.extras-wrapper .task_choice_list .list_item {
+    background: white;
+    padding: 2px;
+    border-bottom: 1px solid;
+}
+.extras-wrapper .task_choice_list .list_item:first-child {
+	background:#c6c6c6;
+	text-align:center;
+}
+
+.extras-wrapper .task_choice_list {
+	display:block;
+	float:left;
+}
+.extras-wrapper {
+	clear:both;
+	background: #eee;
+	border: 1px solid #878787;
+	margin-right: 10px;
+}
+.extras-wrapper .extra {
+	float:left;
+}
+.extras-wrapper .extra-item {
+	border:1px solid black;
+}

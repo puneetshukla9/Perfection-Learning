@@ -1,0 +1,19 @@
+<div class="wizard-button-container navbar-btn navbar-right navbar-collapse collapse navbar-btn-group btn-group">
+  <!-- ng-if allows the button to be eliminated entirely, so that if the Done button is the only one in the group, it has rounded corners. -->
+  <button
+    class="btn"
+    ng-if="!tab.hide"
+    ng-repeat="tab in tabs"
+    ng-disabled='tab.disabled'
+    ng-show='!tab.hide'
+    ng-class="{ 'btn-default' : !tab.active, 'btn-info' : tab.active, 'disabled' : tab.disabled }"
+    ng-click="activate(tab)"
+    href="">{{tab.name}}</button>
+  <button
+    id="doneBtn"
+    ng-class="{ 'btn-disabled' : saving }"
+    ng-click="done ? goTo(done) : activate(tabs[0])"
+    class="btn btn-md btn-danger">{{ saving ? 'Saving ' : 'Done' }}
+    <span ng-if="saving"><i class="glyphicon glyphicon-floppy-disk"></i></span>
+  </button>
+</div>

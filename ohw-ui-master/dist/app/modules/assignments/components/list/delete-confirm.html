@@ -1,0 +1,14 @@
+<div class="modal-header">
+  <div class="panel-heading">
+    <h4 class="panel-title text-center">Are you sure you want to {{data.action.toLowerCase()}} this assignment? All student grades for this assignment will be erased.</h4>
+  </div>
+
+  <div class="modal-body">
+    <p class="dialog text-center">{{data.assign.name}}</p>
+  </div>
+
+  <div class="model-footer center">
+    <button type="button" class="btn btn-success" ng-click="$close(data.assign.id)">Continue</button>
+    <button type="button" class="btn btn-primary" ng-click="$dismiss('cancel')">Cancel</button>
+  </div>
+</div>

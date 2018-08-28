@@ -1,0 +1,167 @@
+<div>
+	<nav class="navbar navbar-inverse">
+		<a class="navbar-brand">Update Class {{course.name}}</a>
+	</nav>
+  
+	<div ng-form="updateClass" class="col-md-offset-2 form-horizontal" role="form">
+
+		<div class="form-group">
+			<label for="nameField" class="col-sm-2 control-label">School:</label>
+			<div class="col-sm-6">
+				<input
+					ng-model="course.school_name"
+					name="school_name"
+					type="text"
+					class="form-control"
+					placeholder="School"
+					readonly>
+			</div>
+		</div>
+
+		<div class="form-group" ng-class="{ 'has-error': updateClass.teacher.$invalid && updateClass.teacher.$dirty }">
+			<label for="nameField" class="col-sm-2 control-label">*Teacher:</label>
+			<div class="col-sm-6">
+				<select ng-if="!ctrl.distrCourse"
+					name="user_id"
+					ng-disabled="oneRosterLockout"
+					class="form-control"
+					ng-change="ctrl.checkSave('user_id')"
+					ng-options="teacher.user_id as teacher.name for teacher in teachers"
+					ng-model="course.user_id">
+					<option value="">Select a teacher</option>
+				</select>
+				<label class="switch-out-dropdown" ng-if="ctrl.distrCourse">
+					{{course.teacher}}
+				</label>
+			</div>
+		</div>
+
+		<div class="form-group" ng-class="{ 'has-error': updateClass.name.$touched && updateClass.name.$invalid }">
+			<label for="nameField" class="col-sm-2 control-label">*Class Name:</label>
+			<div class="col-sm-6">
+				<input
+					required ng-pattern="validation.className.regex"
+					ng-disabled="oneRosterLockout"
+					ng-blur="ctrl.checkSave('name')"
+					ng-model="course.name"
+					name="name"
+					type="text"
+					class="form-control"
+					placeholder="e.g., Algebra I, Period 2">
+			</div>
+			<div ng-show="updateClass.name.$invalid && updateClass.name.$touched" class="validation-message col-md-2 col-xs-2">
+				<span>A name for the class is required. {{validation.className.text}}</span>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="nameField" class="col-sm-2 control-label">*License:</label>
+			<div class="col-sm-6">
+				<input
+					ng-model="course.license"
+					name="book_id"
+					type="text"
+					class="form-control"
+					readonly>
+			</div>
+		</div>
+
+		<div class="form-group" ng-class="{ 'has-error': updateClass.num.$invalid && updateClass.num.$touched }">
+			<label for="numField" class="col-sm-2 control-label">*Class ID:</label>
+			<div class="col-sm-6">
+				<input ng-pattern="validation.classId.regex"
+					required
+					ng-disabled="oneRosterLockout"
+					ng-model="course.num"
+					ng-blur="ctrl.checkSave('num')"
+					name="num"
+					type="text"
+					class="form-control"
+					placeholder="A1P2_2016">
+			</div>
+			<div ng-show="updateClass.num.$invalid && updateClass.num.$touched" class="validation-message col-md-2 col-xs-2">
+				<span>A class identifier is required. {{validation.classId.text}}</span>
+			</div>
+
+		</div>
+
+		<div class="form-group" ng-class="{ 'has-error': updateClass.num.$invalid && updateClass.num.$touched }">
+			<label for="numField" class="col-sm-2 control-label">Class Code:</label>
+			<div class="col-sm-6">
+				<input
+					ng-model="course.registration_code"
+					name="registration_code"
+					type="text"
+					class="form-control"
+					readonly>
+			</div>
+
+		</div>
+
+<!-- START AND END DATES -->
+		<div class="form-group">
+			<label class="col-sm-2 control-label">Start Date:</label>
+
+			<div class="col-sm-6">
+				<div class="row">
+					<div class="col-sm-5">
+						<div class="pull-right input-group datepicker-right-align">
+							<input
+								class="datepicker-table-input form-control"
+								readonly
+								placeholder="Start Date"
+								enable-time="false"
+								datetime-picker="MM/dd/yy"
+								ng-change="ctrl.updateDate('start_date')"
+								name="start_date"
+								ng-model="course.start_date"
+								is-open="ctrl.calendar.data['edit-class-start-date']"
+								min-date="ctrl.calendar.today"
+								datepicker-options="ctrl.calendar.options"
+								when-closed="ctrl.calendar.open($event, 'edit-class-end-date')"
+							/>
+							</input>
+							<span class="input-group-btn">
+								<button type="button"
+									ng-disabled="oneRosterLockout"
+									ng-click="ctrl.calendar.toggle($event, 'edit-class-start-date'); ctrl.calendar.close($event, 'edit-class-end-date')"
+									class="btn btn-default btn-md">
+									<i class="glyphicon glyphicon-calendar"></i>
+								</button>
+							</span>
+						</div>
+					</div>
+
+					<label class="col-sm-2 control-label unpadded-label">End Date:</label>
+					<div class="col-sm-5">
+						<div class="pull-right input-group datepicker-right-align">
+							<input
+								class="datepicker-table-input form-control input"
+								readonly
+								placeholder="End Date"
+								datetime-picker="MM/dd/yy"
+								enable-time="false"
+								ng-change="ctrl.updateDate('end_date')"
+								name="end_date"
+								ng-model="course.end_date"
+								is-open="ctrl.calendar.data['edit-class-end-date']"
+								min-date="ctrl.calendar.today"
+							 	datepicker-options="ctrl.calendar.options"/>
+							</input>
+							<span class="input-group-btn">
+								<button type="button"
+									ng-disabled="oneRosterLockout"
+									ng-click="ctrl.calendar.toggle($event, 'edit-class-end-date'); ctrl.calendar.close($event, 'edit-class-start-date')"
+									class="btn btn-default btn-md">
+									<i class="glyphicon glyphicon-calendar"></i>
+								</button>
+							</span>
+						</div>
+					</div>
+			</div>
+		</div>
+<!-- END START AND END DATES -->
+
+	</div>
+
+</div>

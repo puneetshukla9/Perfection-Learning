@@ -1,0 +1,32 @@
+{
+  "enabled" : true,
+  "data": [
+    {
+      "id" : 1,
+      "title" : "Support",
+			"product": "amsco",
+      "options" : [
+        { "id" : "start", "text" : "Getting Started", "state": "supportApp.start" },
+		    { "id" : "faqs", "text" : "FAQs and Technical Support", "href" : "https://www.perfectionlearning.com/amsco-math-support" }
+	    ]
+	  },
+		{
+      "id" : 2,
+		 	"title" : "Support",
+			"product": "mathx",
+			"options" : [
+				{ "id" : "start", "text" : "Getting Started", "state": "supportApp.start" },
+				{ "id" : "faqs", "text" : "FAQs and Technical Support", "href" : "https://www.perfectionlearning.com/mathx-support"}
+			]
+    },
+    {
+      "id" : 3,
+  	  "title" : "Support",
+      "product": "fpp",
+      "options" : [
+      	{ "id" : "start", "text" : "Getting Started", "state": "supportApp.start" },
+      	{ "id" : "faqs", "text" : "FAQs and Technical Support", "href" : "https://www.perfectionlearning.com/mathx-support"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+<div class="col-sm-12">
+
+	<br>
+
+	<div class="row">
+		<uib-progressbar 	class="progress primary"
+									style="height: 40px;" max="gridOptions.data.length" value="validRows" type="success"
+								 	value="dynamic">
+			<span class="progress-bar-inner-text">{{validRows}} of {{gridOptions.data.length}} teachers ready to submit.</span>
+		</uib-progressbar>
+	</div>
+
+	<div class="row">
+		<form class="form form-inline" style="margin-bottom: 24px;">
+			<schooldropdown ng-if="isPLCAdmin" show-label="false"></schooldropdown>
+			<select ng-show="mustSelectSchool" ng-change="verifySchool()" ng-model="schoolFilter" style="margin-left: 10px;" class="form-control"
+				ng-options="school as school.name for school in schools track by school.id">
+        <option value="">Select School</option>
+			</select>
+			<span ng-show="mustSelectSchool">
+				<span ng-if="!OKToSubmit" uib-tooltip="Select the school teachers should be enrolled in." tooltip-class="wrapped-tooltip-button-margin" tooltip-placement="bottom" tooltip-append-to-body="true" ng-click="validRows && OKToSubmit && submit()">
+					<button id="wrapped-tooltip-button" class="btn btn-primary" ng-disabled="!validRows || !OKToSubmit" ng-click="submit()">Submit teachers with correct information</button>
+				</span>
+				<span ng-if="OKToSubmit" tooltip-class="wrapped-tooltip-button-margin" tooltip-placement="bottom" tooltip-append-to-body="true" ng-click="validRows && OKToSubmit && submit()">
+					<button id="wrapped-tooltip-button" class="btn btn-primary" ng-disabled="!validRows || !OKToSubmit" ng-click="submit()">Submit teachers with correct information</button>
+				</span>
+			</span>
+			<span ng-show="!mustSelectSchool">
+				<button class="btn btn-primary" ng-disabled="!validRows || !OKToSubmit" ng-click="submit()">Submit teachers with correct information</button>
+			</span>
+			<span tooltip-class="wrapped-tooltip-button-margin" tooltip-placement="bottom" tooltip-append-to-body="true" ng-click="hasIncorrect && export()">
+				<button class="btn btn-primary" ng-disabled="!hasIncorrect" style="margin-left: 10px;" ng-click="export()">Export teachers with incorrect information</button>
+			</span>
+			<select ng-change="applyFilter()" ng-model="filter" style="margin-left: 10px;" class="form-control">
+				<option value="all">All teachers</option>
+				<option value="correct">Correct information</option>
+				<option value="incorrect">Incorrect information</option>
+			</select>
+			<a style="display: none;" ng-href="{{invalidEntries}}" download="invalid-entries.csv" class="export-invalid-download-link">Test</a>
+		</form>
+	</div>
+
+	<br>
+
+	<div class="row">
+		<div ng-if="!saving" class="student-upload grid-container" style="width: 100%;">
+			<div id="grid"
+				 ui-grid="gridOptions"
+				 ui-grid-pagination
+				 ui-grid-edit
+			 	 class="grid">
+				 <div class="grid-no-results-container" ng-if="!gridOptions.data.length">
+					 <h2 class="grid-no-results">{{ 'No results to display' }}</h2>
+				 </div>
+			 </div>
+		 </div>
+	 </div>
+ </div>
+
+</div>

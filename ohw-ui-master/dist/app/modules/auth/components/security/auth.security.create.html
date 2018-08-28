@@ -1,0 +1,48 @@
+<form novalidate>
+	<div class="form-group">
+		<label class="font-weight-normal" for="securityQuestion">Question {{num + 1}}</label>
+			<!-- <div class="btn-group" ngbDropdown>
+			  <button type="button" class="btn btn-default login-dropdown-style">{{selectedQuestion || 'Choose a question to answer'}}</button>
+			  <button type="button" class="btn btn-default" ngbDropdownToggle aria-haspopup="true" aria-expanded="false">
+			    <span class="caret"></span>
+			    <span class="sr-only">Toggle Dropdown</span>
+			  </button>
+			  <ul class="dropdown-menu">
+					<li *ngFor="let question of questions">
+						<a href="javascript:void(0)" (click)="selectQuestion(question)">{{question}}</a>
+					</li>
+			  </ul>
+			</div> -->
+			<select name="securityQuestion" class="form-control" #ref (change)="selectQuestion(ref.value)">
+				<option *ngFor="let question of questions">{{question}}</option>
+			</select>
+	</div>
+	<div class="form-group">
+		<input
+			coreAutofocus
+			[(ngModel)]="answers[num]"
+			pattern="[a-zA-Z0-9 ]+"
+			name="answers"
+			type="text"
+			class="form-control border-width-1px"
+			id="securityQuestion"
+			required
+			placeholder="You&#8217;ll use your answer if you forget your password"
+			#questionModel="ngModel">
+		<span
+			*ngIf="!questionModel.valid && questionModel.touched"
+			class="input-error pull-right glyphicon glyphicon-remove"></span>
+		<span
+			*ngIf="questionModel.valid"
+			class="input-valid pull-right glyphicon glyphicon-ok"></span>
+		<div class="validation-message">
+			<span *ngIf="!questionModel.valid && questionModel.touched">You must choose a question to answer.</span>
+		</div>
+		<div class="fix-bottom">
+			<!-- <button [routerLink]="['/auth/main']" type="button" class="btn btn-default">Back</button> -->
+			<button [disabled]="!questionModel.valid || !selectedQuestion" (click)="handleClick(questionModel)" type="submit" class="btn btn-primary pull-right">Next</button>
+		</div>
+
+	</div>
+
+</form>

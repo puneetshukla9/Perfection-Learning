@@ -1,0 +1,19 @@
+<div class="btn-group dropdown pull-right" uib-dropdown>
+
+	<button class="navbar-btn btn-sm navbar-right" style="margin-right: 10px;" uib-dropdown-toggle>
+		<span><img ng-src="{{pref.image}}" alt="Eye"></span>
+	</button>
+
+	<ul class="dropdown-menu dropdown-menu-right" role="menu" id="prefMenu">
+
+		<li ng-if="pref.list" ng-click="pref.toggle(item)" ng-repeat="item in pref.list">
+			<a href>
+				<div class="optCheck pull-left">
+					<span ng-show="item.state">&#x2714</span>&nbsp;
+				</div>
+				{{item.text}}
+			</a>
+		</li>
+
+	</ul>
+</div>

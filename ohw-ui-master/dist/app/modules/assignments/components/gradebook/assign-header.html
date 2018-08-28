@@ -1,0 +1,27 @@
+<div>
+	<div class="header-container">
+		<ul class="vertical-text-span">
+			<li ng-if="showDate" class="assign-due" ng-class="assignBgColor">
+
+				<span class="icon legend-icon uppercase"
+							ng-class="assignIcon"
+							uib-tooltip="{{displayName(type)}}" tooltip-class="text-capitalize" tooltip-append-to-body="true"></span>
+				<span ng-if="isPending"
+							ng-click="linkToPending()"
+							uib-tooltip="This assignment needs to be graded." tooltip-append-to-body="true"
+							class="glyphicon glyphicon-exclamation-sign assign-header-warning"></span>
+				<span ng-if="isInProgress"
+							uib-tooltip="This assignment is in progress." tooltip-append-to-body="true"
+							class="glyphicon glyphicon-time"></span>
+				{{dueDate | date: 'M/d/yy'}}</li>
+			<li class="assign-name" uib-tooltip="{{name}}" tooltip-append-to-body="true" tooltip-placement="bottom">{{name}}</li>
+		</ul>
+		<div class="clearfix"></div>
+		<div class="assign-details">
+			<ul>
+				<li>Avg: {{avg}}</li>
+				<li>Pts: {{points}}</li>
+			</ul>
+		</div>
+	</div>
+</div>

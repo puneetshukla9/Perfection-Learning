@@ -1,0 +1,29 @@
+<div ng-if="visible">
+  <uib-accordion close-others="true" class="module-menu">
+   <uib-accordion-group
+      ng-repeat="entry in menu track by entry.id"
+      is-open="entry.isOpen"
+	  is-disabled="mustAddClass || (entry.disabled ? (product === entry.disabled) : false)">
+     <uib-accordion-heading>
+  	   <div class="hoverHighlight shortBottom titlePad">
+  		   {{entry.title}}
+         <i ng-if="entry.options"
+            class="pull-right anim glyphicon glyphicon-chevron-right"
+            ng-class="{'spin-down': entry.isOpen }"></i>
+  	   </div>
+     </uib-accordion-heading>
+
+     <ul class="list-group shortBottom">
+  	   <li  ng-click="handleClick(option)"
+            ng-repeat="option in entry.options track by option.id"
+            ng-class="{ 'active-header': active === option.state }"
+            class="list-group-item hoverHighlight">
+  		   <span ng-if="option.icon" ng-class="option.icon" class="glyphicon light-icon"></span>
+  		   <span ng-if="mustAddClass" class="disabled-option">{{option.text}}</span>
+         <span ng-if="!mustAddClass">{{option.text}}</span>
+  	   </li>
+     </ul>
+
+   </uib-accordion-group>
+  </uib-accordion>
+</div>

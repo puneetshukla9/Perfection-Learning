@@ -1,0 +1,13 @@
+<div>
+
+	<nav class="navbar navbar-inverse">
+		<button style="margin-right: 10px;" ng-click="download()" class="btn navbar-btn navbar-right">Download the User Manual</button>
+	</nav>
+
+	<div class="videos-container">
+		<div ng-repeat="video in view.videos | filter: { product: product }" class="col-md-6">
+			<div class="video-responsive" vimeo embedCode="video.embedCode"></div>
+		</div>
+	</div>
+
+</div>

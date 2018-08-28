@@ -1,0 +1,93 @@
+<div>
+
+	<nav class="navbar navbar-inverse">
+		<a class="navbar-brand">Edit License Details - {{license}}</a>
+	</nav>
+
+	<div ng-form="plcEdit" class="col-md-offset-2 form-horizontal override-label-error" role="form">
+
+    <div class="form-group">
+			<label class="col-sm-2 control-label">School/District:</label>
+			<div class="col-sm-6">
+				<input ng-model="school_name" type="text" class="form-control" readonly>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-sm-2 control-label">Quantity:</label>
+			<div class="col-sm-6">
+				<input ng-model="seats_purchased" ng-blur="checkSave('seats_purchased')" type="text" class="form-control">
+			</div>
+		</div>
+
+    <div class="form-group">
+			<label class="col-sm-2 control-label">Remaining:</label>
+			<div class="col-sm-6">
+				<input ng-model="remaining_seats" type="text" class="form-control" readonly>
+			</div>
+		</div>
+
+    <div class="form-group">
+			<label class="col-sm-2 control-label">Order#:</label>
+			<div class="col-sm-6">
+				<input ng-model="ordersid" type="text" class="form-control" readonly>
+			</div>
+		</div>
+
+    <div class="form-group">
+			<label class="col-sm-2 control-label">Start Date:</label>
+			<div class="col-sm-6">
+				<input ng-model="start_date" type="text" class="form-control" readonly>
+			</div>
+		</div>
+
+    <div class="form-group">
+			<label class="col-sm-2 control-label">End Date:</label>
+			<div class="col-sm-6">
+				<div style="float: left; padding-right: 10px;" class="col-md-5 input-group datepicker-right-align">
+					<input style="margin-right: 5px;"
+						class="datepicker-table-input form-control"
+						enable-time="false"
+						placeholder="{{expire_date}}"
+						datetime-picker="MM/dd/yy"
+						ng-model="expire_date"
+						ng-focus="ctrl.calendar.toggle($event, 'add-class-end'); ctrl.calendar.close($event, 'add-class-start');"
+						ng-blur="checkSave('expire_date')"
+						is-open="ctrl.calendar.data['add-class-end']"
+						min-date="ctrl.calendar.today"
+						datepicker-options="ctrl.calendar.options" />
+					</input>
+					<span class="input-group-btn">
+						<button
+							type="button"
+							ng-click="ctrl.calendar.toggle($event, 'add-class-end'); ctrl.calendar.close($event, 'add-class-start');"
+							class="btn btn-default">
+							<i class="glyphicon glyphicon-calendar"></i>
+						</button>
+					</span>
+				</div>
+
+			</div>
+		</div>
+
+    <div class="form-group">
+			<label class="col-sm-2 control-label">Key:</label>
+			<div class="col-sm-6">
+				<input ng-model="key" type="text" class="form-control" readonly>
+			</div>
+		</div>
+
+		<div class="col-sm-9">
+    	<div class="panel panel-info">
+      	<p class="panel-heading">To provide access to {{license}} ({{walength}}), send the following information:</p>
+        <div class="panel-body">
+					<p>Navigate to {{b_link}}</p><!-- Where to get this link? -->
+          <p>Registration Code (case-sensitive): {{key}}</p>
+          For any questions, please contact Perfection Learning at http://www.perfectionlearning.com/technical-support/
+				</div>
+    	</div>
+		</div>
+
+	</div>
+
+</div>

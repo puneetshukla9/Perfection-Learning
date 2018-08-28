@@ -1,0 +1,7 @@
+<div ng-class="{'footerGroup pull-left': true}">
+		<select ng-show="!assignmentdetails" ng-readonly="readonly"
+		ng-options="type for type in assignmentTypes"
+		ng-change="handleAssignmentTypeChange()"
+		ng-model="assignmentType"
+		ng-class="{'list-heading-dropdown': !assignmentdetails, 'list-heading-dropdown-asg-details': assignmentdetails, 'form-control btn-info filter-pd': !assignmentdetails}"></select>
+</div>

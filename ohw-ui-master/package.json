@@ -52,7 +52,7 @@
   },
   "scripts": {
     "prestart": "npm install",
-    "build": "set NODE_ENV=development && del app.*.bundle.js && webpack",
+    "build": "set NODE_ENV=production && del app.*.bundle.js && webpack",
     "autobuild": "pm2 start build.js",
     "lint": "find ./app -name '*.ts' | xargs tslint",
     "server": "set NODE_ENV=development && webpack-dev-server",

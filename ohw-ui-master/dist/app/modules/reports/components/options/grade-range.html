@@ -1,0 +1,42 @@
+<div id="modalPanel" class="container-fluid">
+
+	<div class="flexWrapper">
+		<div class="flexHeight panel panel-primary">
+
+			<!-- HEADER -->
+			<div class="panel-heading">
+				View Grade Ranges
+			</div>
+
+			<!-- BODY -->
+			<div class="panel-body">
+
+				<div class="alert range-excel">
+					<b>Excel</b>: 90% and above
+				</div>
+
+				<div class="alert range-pass">
+					<b>Pass</b>: 70% - 89%
+				</div>
+
+				<div class="alert range-fail">
+					<b>Fail</b>: Below 70%
+				</div>
+
+				<!-- Instructions -->
+				<div class="rangeInstructions">
+					<span class="glyphicon glyphicon-info-sign instructIcon"></span>
+					These are the scores we use to break students into performance ranges.
+				</div>
+
+			</div>
+
+			<!-- OKAY / CANCEL -->
+			<div class="panel-footer clearfix">
+				<button ng-click="$close({})" class="btn btn-sm btn-info pull-right">Okay</button>
+			</div>
+
+		</div>
+	</div>
+
+</div>

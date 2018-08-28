@@ -1,0 +1,53 @@
+<form novalidate>
+	<div *ngIf="!error">
+		<div class="form-group">
+			<label class="font-weight-normal" for="email">Email:</label>
+			<input
+				coreAutofocus
+				[(ngModel)]="email"
+				ngControl="email"
+				pattern="^[-A-Za-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([A-Za-z0-9_][-a-z0-9_]*(\.[-A-Za-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-zA-Z][a-zA-Z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$"
+				required
+				name="email"
+				type="text"
+				class="form-control border-width-1px"
+				id="email"
+				placeholder="Enter your email" #emailModel="ngModel">
+			<span
+				*ngIf="!emailModel.valid && emailModel.touched"
+				class="input-error pull-right glyphicon glyphicon-remove"></span>
+			<span
+				*ngIf="emailModel.valid"
+				class="input-valid pull-right glyphicon glyphicon-ok"></span>
+			<!-- <span class="input-group-btn">
+				<button
+					(click)="check()"
+					class="btn pull-right button-glyphicon-arrow-right-style">
+					<span class="glyphicon glyphicon-arrow-right"></span>
+				</button>
+			</span> -->
+
+
+			<div *ngIf="!emailModel.valid && emailModel.touched"
+				class="validation-message margin-top-5px">
+				<span>Please enter a valid email address.</span>
+			</div>
+
+			<div class="fix-bottom">
+				<button [routerLink]="['/auth/main']" type="button" class="btn btn-default">Back</button>
+				<button [disabled]="!emailModel.valid" (click)="check()" type="submit" class="btn btn-primary pull-right">Next</button>
+			</div>
+		</div>
+	</div>
+
+	<div *ngIf="error">
+		<div class="text-center">
+			<h4>The email you entered is already in our system.<br>If you'd like to add the course to the email provided, click Continue.</h4>
+		</div>
+		<div class="fix-bottom">
+			<button (click)="error = false;" type="button" class="btn btn-default">Back</button>
+			<button (click)="addToAccount()" type="button" class="btn btn-primary pull-right">Continue</button>
+		</div>
+	</div>
+
+</form>

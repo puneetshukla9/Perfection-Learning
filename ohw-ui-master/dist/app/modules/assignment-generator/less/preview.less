@@ -1,0 +1,250 @@
+/* =========================== Preview Mode =========================== */
+
+// Single definition for most text sizes on the print preview page
+@fontSize: 12pt;
+@fontFamily: serif;
+
+#for-print {
+	font-family: @fontFamily;
+	font-size: @fontSize;
+}
+
+#previewList, #answerList {
+	margin-top: 20px;
+	margin-left: 0;
+
+	font-size: @fontSize;
+}
+
+h3.previewName {
+	font-size:@fontSize+2;
+	padding-bottom:0;
+	font-weight:bold;
+}
+/*
+#answerList {
+	display: none;
+}
+*/
+
+#previewList td, #answerList td {
+	vertical-align: top;
+	border-top: none!important;
+}
+
+.previewName {
+	padding-bottom: 10px;
+}
+
+.previewItem {
+	position:relative;
+	padding-bottom: 10px;
+	display:block;
+}
+
+.previewItem .with-answer {
+	display:none;
+}
+.previewItem .with-answer .always-print {
+	display:block;
+}
+
+.menclose span {
+	border: 0 !important;
+}
+
+// This just looks much too fragile. However, if we need boxes around the answers within always-print, but not elsewhere, it's difficult to target.
+.always-print .menclose > span > span:first-child {
+	border: 1px solid black !important;
+}
+
+#previewList .vtp, #answerList .vtp {
+	color: black;
+}
+
+.probNum {
+	font-weight: bold;
+	font-size: @fontSize;
+
+	float: left;
+	vertical-align: text-top;
+}
+
+.previewPrefix {
+	margin-bottom: 6px;
+}
+
+.eqPrefix {
+	font-size: @fontSize;
+}
+
+.previewProb {
+	font-size: @fontSize;
+	margin-bottom: 10px;
+}
+/* To keep initial p tag in line with problem number. */
+.previewPrefix p:nth-child(2), .previewProb p:nth-child(2) {
+	display:inline;
+}
+.previewPrefix p:nth-child(3), .previewProb p:nth-child(3) {
+	padding-top:1em;
+}
+
+.previewImg {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.imgOverlay {
+	font: bold 12px Arial;
+	position: absolute;
+}
+
+.previewChoices {
+	margin-left: 10px;
+}
+
+.previewOption {
+	font-weight: normal;
+}
+
+.mcBox {
+	width: 20px;
+	height: 20px;
+	margin-right: 6px;
+
+	border: solid 1px black;
+}
+
+.mcSpacer {
+	margin-bottom: 6px;
+}
+
+.mcChoiceRow:nth-of-type(n+3) {
+	clear:both;
+}
+
+.mcPreview {
+	padding-right: 5px;
+}
+
+.eqBox {
+	// border: solid 1px black;
+	width: 240px;
+	// height: 100px;
+}
+
+.eqBox {
+	display:none;
+}
+
+.fiBox {
+	display:none;
+}
+
+.graphConstTable {
+	border-collapse:separate;
+	border-spacing: 4px 8px;
+}
+
+.graphConstLabel {
+	font: bold 15px Arial;
+}
+
+.graphConstValue {
+	border: solid 1px black;
+	padding: 2px;
+
+	text-align: center;
+}
+
+.essaySpace {
+	margin-bottom: 80px;
+}
+
+table.atomic tr {
+	display: block;
+}
+
+table.atomic tr td, table.atomic tr th {
+	page-break-inside: avoid;
+}
+
+.kbGraph {
+	display: block;
+	// border: solid 1px black;
+}
+
+kb-graph {
+	display: block;
+}
+
+kb-graph.graph-display {
+	display:block;
+}
+
+.multiPart {
+	margin-left: 20px;
+}
+
+.multiPartSpacer {
+	height: 0px;
+}
+
+span.no-print {
+	display:none;
+}
+
+
+.header-name:after {
+	content: ": _____________________________________";
+}
+.header-class:after {
+	content: ": _____________________________________";
+}
+.header-date:after, {
+	content: ": ____________";
+}
+.header-name {
+	width:42%;
+	float:left;
+}
+.header-class {
+	width:42%;
+	float:left;
+}
+.header-date {
+	width:16%;
+	float:left;
+}
+.header {
+	margin-bottom:20px;
+	padding-bottom:36px;
+}
+
+
+/* Handle spacing between problems */
+.spacer {
+	height:26px
+}
+
+.space-for-buttons {
+	position:relative;
+	left:23px;
+}
+.adjust-space-btns {
+	position:absolute;
+	left:-16px;
+	top:-5px
+}
+.adjust-space-btns div:nth-of-type(2) {
+	margin-left:5px;
+}
+.adjust-space {
+	font-size:2em;
+	cursor:pointer;
+	color: #ddddde;
+}
+.adjust-space:hover {
+	color:#bcbec0;
+}
