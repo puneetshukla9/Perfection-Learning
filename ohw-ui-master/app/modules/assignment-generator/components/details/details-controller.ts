@@ -401,7 +401,13 @@ export default function (AppState, $state, $rootScope, Preferences, Wizard,
 	self.assignmentData = {
 		"orgStrategies": [],
 		"collaboration": [],
-		"studentSelfAssessment": {}
+		"studentSelfAssessment": {},
+		"planOrgPoint":"",
+		"writeFirstPoint":"",
+		"evaluatePoint":"",
+		"sharePoint":"",
+		"publishPoint":"",
+
 	};
 	self.TemplateModel=self.template[0];
 	self.teacherSelect = true;
@@ -584,5 +590,8 @@ export default function (AppState, $state, $rootScope, Preferences, Wizard,
 		$('.wizard-fullscreen').css("z-index","");
 		$('.choiceWrapper').removeClass('fade in').hide();
 		$('body').css("overflow","auto");
+	}
+	self.updateTotal=function(){
+		self.assignmentData.totalPoint=Number(self.assignmentData.publishPoint)+Number(self.assignmentData.sharePoint)+Number(self.assignmentData.evaluatePoint)+Number(self.assignmentData.writeFirstPoint)+Number(self.assignmentData.planOrgPoint)
 	}
 };

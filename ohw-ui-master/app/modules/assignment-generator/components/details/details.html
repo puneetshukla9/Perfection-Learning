@@ -321,17 +321,17 @@
 										<input type="checkbox" ng-model="details.assignmentData.planOrg" value="">Share and mceEditor</label>
 								</div>
 								<div class="col-sm-2 ">
-									<input class="form-control height34" ng-model="details.assignmentData.planOrgPoint" type="text">
+									<input class="form-control height34" ng-change="details.updateTotal()" ng-model="details.assignmentData.planOrgPoint" type="number">
 
 								</div>
 							</div>
 							<div class="row form-group ">
 								<div class="col-sm-6">
 									<label class="checkbox-inline">
-										<input type="checkbox" ng-model="details.assignmentData.writeFirst" value="">Write first draft</label>
+										<input type="checkbox"  ng-model="details.assignmentData.writeFirst" value="">Write first draft</label>
 								</div>
 								<div class="col-sm-2 ">
-									<input class="form-control height34" ng-model="details.assignmentData.writeFirstPoint" id="ex1" type="text">
+									<input class="form-control height34" ng-change="details.updateTotal()" ng-model="details.assignmentData.writeFirstPoint" id="ex1" type="number">
 
 								</div>
 							</div>
@@ -341,7 +341,7 @@
 										<input type="checkbox" ng-model="details.assignmentData.evaluate" value="">Evaluate and Revise</label>
 								</div>
 								<div class="col-sm-2 ">
-									<input class="form-control height34" ng-model="details.assignmentData.evaluatePoint" id="ex1" type="text">
+									<input class="form-control height34" ng-change="details.updateTotal()" ng-model="details.assignmentData.evaluatePoint" id="ex1" type="number">
 
 								</div>
 							</div>
@@ -351,7 +351,7 @@
 										<input type="checkbox" ng-model="details.assignmentData.share" value="">Share and mceEditor</label>
 								</div>
 								<div class="col-sm-2 ">
-									<input class="form-control height34" ng-model="details.assignmentData.sharePoint" type="text">
+									<input class="form-control height34" ng-change="details.updateTotal()" ng-model="details.assignmentData.sharePoint" type="number">
 
 								</div>
 							</div>
@@ -361,7 +361,7 @@
 										<input type="checkbox" ng-model="details.assignmentData.publish" value="">Publish</label>
 								</div>
 								<div class="col-sm-2 ">
-									<input class="form-control height34" ng-model="details.assignmentData.publishPoint" id="ex1" type="text">
+									<input class="form-control height34" ng-change="details.updateTotal()" ng-model="details.assignmentData.publishPoint" id="ex1" type="number">
 
 								</div>
 							</div>
@@ -370,7 +370,7 @@
 									<label class="right"> Total Points</label>
 								</div>
 								<div class="col-sm-2 ">
-									<input class="form-control height34" ng-model="details.assignmentData.totalPoint" id="ex1" type="text">
+									<input class="form-control height34" ng-model="details.assignmentData.totalPoint" disabled id="ex1" type="text">
 
 								</div>
 							</div>
