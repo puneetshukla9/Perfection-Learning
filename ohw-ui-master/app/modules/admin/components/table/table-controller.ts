@@ -113,6 +113,8 @@ export default function(AdminData, TableDefaults, State, $state, $stateParams, O
 
 		assembleGrid(self.view);
 
+		// Changed from $rootScope to $scope, following suggestion at https://github.com/angular-ui/ui-router/issues/1338
+		// Seems to prevent increasing triggers.
 		$rootScope.$on('$stateChangeSuccess', function() {
 			var id = $state.$current.name;
 			self.view = ViewDefinitions.getById(id);

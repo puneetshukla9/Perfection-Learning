@@ -6,6 +6,19 @@ import { AuthAPIService } from './../../services/auth.api';
 import { AuthStateService } from './../../services/auth.state.service';
 import { Router } from '@angular/router';
 
+// Test to see if new teacher should be created on the fly.
+function createTeacher(code, data) {
+	var result = false;
+	// check for is_te flag or 16-digit code.
+	if (!!parseInt(data.is_te, 10)) {
+		result = true;
+	} else if (/^\d{16}$/.test(code)) {
+		result = true;
+	}
+
+	return result;
+};
+
 // Test to see if new student should be created on the fly, given registration code and email address.
 function createStudentOnFly(data) {
 	// test for non-zero / non-blank course_id. If exists, assume it's not a teacher code but for creating students on the fly.
@@ -46,7 +59,7 @@ export class CodeComponent {
 				} else {
 					AuthStateService.id('auth').set('studentReset', false);
 					AuthStateService.id('auth').set('order', response.data);
-					AuthStateService.id('auth').set('isTeacherEdition', !!parseInt(response.data.is_te, 10));
+					AuthStateService.id('auth').set('isTeacherEdition', createTeacher(this.code, response.data));
 					AuthStateService.id('auth').set('createStudentOnFly', createStudentOnFly(response.data));
 					AuthStateService.id('auth').set('isStudentRegistrationCode', !!response.data.course_id);
 					AuthStateService.id('auth').set('courseId', response.data.course_id);

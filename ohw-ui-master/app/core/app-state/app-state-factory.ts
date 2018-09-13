@@ -10,15 +10,19 @@ export default function($http, $rootScope, Util, PubSub, Course, CourseHelper, C
         'hasAmsco': true, 'hasMathx': true, 'books': true, 'showStds': true, 'stdList': true};
 
     AppState.data = AppState.data || _.extend(window.ohw.appConfig, CONFIG);
-
     if (AppState.data && _.has(AppState.data, 'courses')) {
       AppState.data.courses = AppState.data.courses.sort(CourseHelper.sorter);
       AppState.data.defaultCourse = AppState.data.curCourse;
-      AppState.data.curCourse = AppState.data.courses[0];
-      if (AppState.data.courses[0]) {
-        Course.setById(AppState.data.courses[0].id).then(() => {
-          AppState.refresh();
-        });
+      if (!AppState.data.curCourse) {
+        // If no curCourse set, use the first course in the courses array as the default.
+        // This shouldn't be possible unless there are no courses.
+        console.log('AppState.data.curCourse is not set. Use first course in array', AppState.data.courses[0]);
+        AppState.data.curCourse = AppState.data.courses[0];
+        if (AppState.data.courses[0]) {
+          Course.setById(AppState.data.courses[0].id).then(() => {
+            AppState.refresh();
+          });
+        }
       }
     }
 
@@ -82,7 +86,7 @@ export default function($http, $rootScope, Util, PubSub, Course, CourseHelper, C
 
     AppState.get = function(key) {
       if (key === 'url') return function(key) { return AppState.data.url[key]; };
-      if (AppState.data && AppState.data[key]) {
+      if (AppState.data && AppState.data[key] !== undefined) {
         return AppState.data[key];
       } else {
         return;
@@ -127,6 +131,10 @@ export default function($http, $rootScope, Util, PubSub, Course, CourseHelper, C
     };
 
     AppState.setCourseFilter = function(allowed) {
+      // Set CourseFilterActive to indicate filtering has been set up.
+      // This is currently used to prevent setCourse from being called before filtering is in place.
+      // This is done to avoid a race condition in getting the Assignment List.
+      AppState.set('CourseFilterActive', allowed);
       filters.courses = allowed;
     };
 
@@ -135,7 +143,7 @@ export default function($http, $rootScope, Util, PubSub, Course, CourseHelper, C
     // Note: The classes list uses a string course_id, while the bootstrapped courses
     // list has an integer id.
     PubSub.subscribe('StateChange:classes', function(classes) {
-        AppState.set('courses', classes);
+      AppState.set('courses', classes);
     });
 
     // Applying the filter entails checking the filters hash for a filter to apply to the named State.
@@ -173,11 +181,19 @@ export default function($http, $rootScope, Util, PubSub, Course, CourseHelper, C
     // AND no books have fpp
     // AND no books have lang or languagearts
     // Otherwise, it returns false.
+    //
+    // UPDATE: "We should show the button now if any ebooks are available."
+    // - card https://trello.com/c/Zip4jS2W/169-mathx-a1-florida-not-showing-bookshelf-for-class
+
     AppState.setDigitalBooks = function() {
       var ebooksData = AppState.get('ebooksData');
-      var flags = ebooksData.bookshelf;
-      //var result = (flags.ebooks || flags.pdf) && !flags.custom && !flags.lang;
-      var result = (flags.ebooks || flags.pdf || flags.lang) && !flags.custom;
+
+      var flags = ebooksData.bookshelf || {};
+      var keys = Object.keys(flags);
+      // filter bookshelf keys for any whose value is set to true;
+      var hasEbooks = keys.filter(k => flags[k]);
+      // if any flags in the bookshelf has are set, the setDigitalBooks function returns true.
+      var result =  hasEbooks.length > 0;
       return result;
     };
 

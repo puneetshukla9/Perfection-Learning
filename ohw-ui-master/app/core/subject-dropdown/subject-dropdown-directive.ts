@@ -2,7 +2,7 @@
 
 import * as $ from 'jquery';
 
-export default function(AppState, State, $state, $timeout, subjectDropdownService) {
+export default function(AppState, State, $state, $timeout, $rootScope, subjectDropdownService) {
 		var templateUrl = require('./subject-dropdown.html');
 
 		// Hide dropdown for certain states.
@@ -35,6 +35,8 @@ export default function(AppState, State, $state, $timeout, subjectDropdownServic
 			var filter = courses.map((item) => item.id);
 			AppState.setCourseFilter(filter);
 			State.setFilter('classes', 'course_id', filter);
+			// Added to trigger using filtered courses for Assignment List course dropdown.
+			$rootScope.$broadcast('filtered courses');
 		}
 
 		function setDefaultProduct(scope) {

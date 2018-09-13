@@ -1,6 +1,6 @@
 'use strict';
 
-export default function (AppState, $state, $rootScope, Preferences, Wizard,
+export default function(AppState, $state, $rootScope, Preferences, Wizard,
 	Calendar, AssignmentHelper, DateConvert, State, PubSub, $scope, CalendarHelper, $http) {
 
 	var self = this;
@@ -11,7 +11,7 @@ export default function (AppState, $state, $rootScope, Preferences, Wizard,
 	self.due = new Date();
 	self.calendar = Calendar;
 	self.isDistAdmin = AppState.get('isDistAdmin');
-		self.instruction="testing";
+
 	$rootScope.assignGen = $rootScope.assignGen || {};
 
 	if ($state.params.id) {
@@ -19,12 +19,12 @@ export default function (AppState, $state, $rootScope, Preferences, Wizard,
 		$scope.className = ' '; // Initialize className to blank, to be filled in by refreshPage()
 	} else {
 		$rootScope.assignGen.edit = false;
-		self.hasAssignmentId = true;
+		self.hasAssignmentId = false;
 		AssignmentHelper.initNew();
 		State.set('choose', undefined);
 	}
 
-	self.checkValid = function (name, category) {
+	self.checkValid = function(name, category) {
 		var result = !!(name && category);
 		if (!result) {
 			$rootScope.assignGen.detailsValid = false;
@@ -36,13 +36,11 @@ export default function (AppState, $state, $rootScope, Preferences, Wizard,
 	};
 
 	self.modes = {
-		homework: { name: 'Homework', tries: true, instruct: 'Students are allowed multiple tries per problem and can access videos and step-by-step help.' },
-		quiz: { name: 'Quiz', tries: true, instruct: 'Students are allowed multiple tries per problem, but cannot access videos or step-by-step help.' },
-		test: { name: 'Test', instruct: 'Students are allowed one try per problem and cannot access videos or step-by-step help.' },
-		ipractice: {
-			name: 'i-Practice', instruct: 'Students are allowed to keep trying until ' +
-				'they\'ve mastered the problem with access to videos and step-by-step help.', oneSub: true
-		}
+		homework: {name: 'Homework', tries: true, instruct: 'Students are allowed multiple tries per problem and can access videos and step-by-step help.'},
+		quiz: {name: 'Quiz', tries: true, instruct: 'Students are allowed multiple tries per problem, but cannot access videos or step-by-step help.'},
+		test: {name: 'Test', instruct: 'Students are allowed one try per problem and cannot access videos or step-by-step help.'},
+		ipractice: {name: 'i-Practice', instruct: 'Students are allowed to keep trying until ' +
+			'they\'ve mastered the problem with access to videos and step-by-step help.', oneSub: true}
 	};
 
 	self.buttonBarConfig = {
@@ -58,18 +56,18 @@ export default function (AppState, $state, $rootScope, Preferences, Wizard,
 	self.tries = [];
 	var maxTries = 10; // per Jesse. (Is this value used anywhere else?)
 	for (var i = 1; i <= maxTries; i++)
-		self.tries.push({ text: i, setting: i });
+		self.tries.push({text: i, setting: i});
 
-	self.assignedToOpts = [{ text: 'All students', setting: false }, { text: 'Subset of students', setting: true }];
+	self.assignedToOpts = [{text: 'All students', setting: false}, {text: 'Subset of students', setting: true}];
 
 	self.scoringOptions = [
-		{ text: 'Full points are awarded, regardless of number of submissions', setting: 'full' },
-		{ text: 'Deduct points for each submission after the first', setting: 'deduct' }
+		{text: 'Full points are awarded, regardless of number of submissions', setting: 'full'},
+		{text: 'Deduct points for each submission after the first', setting: 'deduct'}
 	];
 
 	self.sharingOptions = [
-		{ text: 'Only I can use this assignment', setting: false },
-		{ text: 'Share this assignment with other teachers in my school', setting: true }
+		{text: 'Only I can use this assignment', setting: false},
+		{text: 'Share this assignment with other teachers in my school', setting: true}
 	];
 
 	self.showTries = showTries;
@@ -123,7 +121,7 @@ export default function (AppState, $state, $rootScope, Preferences, Wizard,
 		useDefault: Preferences.get('autoAssignDate')
 	};
 
-	var pickAssignedDate = function (dueDate) {
+	var pickAssignedDate = function(dueDate) {
 		// If a due date is set, base the assigned date on it
 		if (dueDate) {
 			var out = dueDate.getTime();
@@ -218,19 +216,19 @@ export default function (AppState, $state, $rootScope, Preferences, Wizard,
 		return (self.modes[mode] && self.modes[mode].instruct) || '';
 	};
 
-	self.subsDisabled = function () {
+	self.subsDisabled = function() {
 		var disabled = self.modes[self.curMode].oneSub;
 		if (disabled)
 			self.submissions = 1;
 		return disabled;
 	};
 
-	self.setName = function () {
+	self.setName = function() {
 		AssignmentHelper.setName(self.name);
 	};
 
 	// Allow entry of new assignment name with the Enter key.
-	self.captureEnter = function (evt) {
+	self.captureEnter = function(evt) {
 		if (evt.keyCode !== 13 || self.hasAssignmentId) return false;
 
 		self.hasAssignmentId = true;
@@ -242,41 +240,46 @@ export default function (AppState, $state, $rootScope, Preferences, Wizard,
 		AssignmentHelper.setName(self.name, true);
 	}
 
-	self.setNameUI = function () {
+	self.setNameUI = function() {
 		setNameUI();
 	};
 
-	self.setMode = function () {
+	self.setMode = function() {
 		AssignmentHelper.setMode(self.curMode);
 		checkSubmissionsAdjustment();
 	};
 
-	self.setSubmits = function () {
+	self.setSubmits = function()
+	{
 		AssignmentHelper.setSubmits(self.submissions);
 	};
 
-	self.setScoring = function () {
+	self.setScoring = function()
+	{
 		AssignmentHelper.setScoring(self.scoring);
 	};
 
-	self.setNotes = function () {
+	self.setNotes = function()
+	{
 		AssignmentHelper.setNotes(self.notes);
 	};
 
-	self.setStudentNotes = function () {
+	self.setStudentNotes = function()
+	{
 		AssignmentHelper.setStudentNotes(self.studentNotes);
 	};
 
-	self.setSharing = function () {
+	self.setSharing = function()
+	{
 		AssignmentHelper.setSharing(self.sharing);
 	};
 
 
 	// Convert an array to a string filled with non-wrapping sections
 
-	self.formatStandards = function (list) {
+	self.formatStandards = function(list) {
 		var stds = Object.keys(list).sort(_std_sort);
-		list = _.map(stds, function (key) { return '<span class="noWrap">' + key + '</span>'; });
+		list = _.map(stds, function(key) {return '<span class="noWrap">' + key + '</span>'; });
 		return list.join(', ');
 	};
 
@@ -291,12 +294,12 @@ export default function (AppState, $state, $rootScope, Preferences, Wizard,
 
 	// Sort standards
 
-	function _std_sort(a, b) {
-		var std1 = _std_parse(a);
-		var std2 = _std_parse(b);
-		var result = std1 && std2 ? _std_compare(std1, std2) : 0;
-		return result;
-	}
+    function _std_sort(a, b) {
+        var std1 = _std_parse(a);
+        var std2 = _std_parse(b);
+        var result = std1 && std2 ? _std_compare(std1, std2) : 0;
+        return result;
+    }
 
 
 	// Parse standard code; e.g., APR-1 3a:
@@ -304,45 +307,45 @@ export default function (AppState, $state, $rootScope, Preferences, Wizard,
 	// num: 3
 	// sub: a
 
-	function _std_parse(str) {
-		var stdRe = /^(\S+)[\s\.]+(\d+)(.+)?$/;
-		var parts = stdRe.exec(str);
+    function _std_parse(str) {
+        var stdRe = /^(\S+)[\s\.]+(\d+)(.+)?$/;
+        var parts = stdRe.exec(str);
 		if (parts) {
 			return {
-				main: parts[1],
-				num: parts[2],
-				sub: parts[3]
+			    main: parts[1],
+			    num: parts[2],
+			    sub: parts[3]
 			};
 		} else {
 			return null;
 		}
-	}
+    }
 
 
 	// Compare parsed standard codes
 
-	function _std_compare(std1, std2) {
-		var result;
-		if (std1.main < std2.main) {
+    function _std_compare(std1, std2) {
+        var result;
+        if (std1.main < std2.main) {
 			result = -1;
-		} else if (std1.main > std2.main) {
+        } else if (std1.main > std2.main) {
 			result = 1;
-		} else if (std1.num * 1 < std2.num * 1) {
+        } else if (std1.num * 1 < std2.num * 1) {
 			result = -1;
-		} else if (std1.num * 1 > std2.num * 1) {
+        } else if (std1.num * 1 > std2.num * 1) {
 			result = 1;
-		} else if (!std1.sub || std1.sub < std2.sub) {
+        } else if (!std1.sub || std1.sub < std2.sub) {
 			result = -1;
-		} else {
+        } else {
 			result = 1;
-		}
+        }
 		return result;
 	}
-
+	
 	//Mitr Code added by puneet
 	self.engage = "writing_assigment";
 
-	setTimeout(function () {
+	var _interval = setInterval(function () {
 		$(".accordianHeading").off("click").on("click", function () {
 			var id = $(this).attr('data-target');
 			if (!$(id).hasClass('open')) {
@@ -361,7 +364,10 @@ export default function (AppState, $state, $rootScope, Preferences, Wizard,
 				$(id).removeClass('open').slideUp();
 			}
 		});
-	});
+		if($(".accordianHeading").length && $(".accordianSubHeading").lenght){
+			clearInterval(_interval);
+		}
+	},100);
 	self.homeworkChange = function () {
 		setTimeout(function () {
 			$(".accordianHeading").off("click").on("click", function () {
@@ -402,6 +408,11 @@ export default function (AppState, $state, $rootScope, Preferences, Wizard,
 		"orgStrategies": [],
 		"collaboration": [],
 		"studentSelfAssessment": {},
+		"planOrg":true,
+		"writeFirst":true,
+		"evaluate":true,
+		"share":true,
+		"publish":true,
 		"planOrgPoint":"",
 		"writeFirstPoint":"",
 		"evaluatePoint":"",
@@ -418,7 +429,7 @@ export default function (AppState, $state, $rootScope, Preferences, Wizard,
 	});
 
 	self.setFow = function () {
-		console.log(self.formOfWriting);
+		self.homeworkChange();
 		self.assignmentData.orgStrategies = rawData["organizationStrategies"][self.formOfWriting.index].options;
 		self.assignmentData.collaboration = rawData["collaboration"][self.formOfWriting.index].options
 		self.assignmentData.studentSelfAssessment = rawData["studentSelfAssessment"][self.formOfWriting.index];
@@ -594,4 +605,5 @@ export default function (AppState, $state, $rootScope, Preferences, Wizard,
 	self.updateTotal=function(){
 		self.assignmentData.totalPoint=Number(self.assignmentData.publishPoint)+Number(self.assignmentData.sharePoint)+Number(self.assignmentData.evaluatePoint)+Number(self.assignmentData.writeFirstPoint)+Number(self.assignmentData.planOrgPoint)
 	}
+
 };

@@ -1,4 +1,4 @@
-import { OpaqueToken, APP_INITIALIZER, NgModule } from '@angular/core';
+import { InjectionToken, OpaqueToken, APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AuthComponent } from './auth.component';
 import { Routes, RouterModule } from '@angular/router';
@@ -34,7 +34,8 @@ import { ConfigService } from './services/auth.config.service.ts';
 // import { Ng2BootstrapModule } from 'ng2-bootstrap/ng2-bootstrap';
 // import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-const API: OpaqueToken = new OpaqueToken('API');
+const API: InjectionToken = new InjectionToken('API');
+//OpaqueToken = new OpaqueToken('API');
 
 const providers = [
     appRoutingProviders,

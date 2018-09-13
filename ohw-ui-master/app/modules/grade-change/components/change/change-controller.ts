@@ -1,9 +1,10 @@
 'use strict';
 
-export default function(Problems, Assignment, Preferences, State, PubSub, Hotkey, $state, $stateParams, $scope) {
+export default function (Problems, Assignment, Preferences, State, PubSub, Hotkey, $state, $stateParams, $scope, $http) {
 
 	var self = this;
 	var scoreFmt = 'pts';
+	var $ = require('jquery');
 	var curFilter;
 	var pendingCount;
 	var inProgressCount;
@@ -19,13 +20,25 @@ export default function(Problems, Assignment, Preferences, State, PubSub, Hotkey
 		$state.go('assignApp.list');
 	}
 
+	var problemRubricPoints = {};
+	// Listen for the send-rubric-points signal emitted from the rubric-item directive.
+	// When this is received, broadcast the data down to the change-points-directive.
+	$scope.$on('send-rubric-points', function (discard, data) {
+		let id = parseInt(data.problem.id, 10);
+		let probID = parseInt(data.problem.probID, 10);
+		if (!problemRubricPoints[probID]) { problemRubricPoints[probID] = {}; }
+		problemRubricPoints[probID][data.name] = parseInt(data.points, 10);
+		Problems.setRubricPoints(id, problemRubricPoints[probID]);
+		$scope.$broadcast('receive-rubric-points:' + probID, data);
+	});
+
 	$scope.$on('preferences changed', optChangePrefs);
 	PubSub.subscribe('updateScore', showScore);
 
 	Hotkey.set('showIDs', $scope);
 	self.doShowIDs = Hotkey.get('showIDs');
 
-	$scope.setFilter = function(val) {
+	$scope.setFilter = function (val) {
 		curFilter = val;
 		if (val === 'All') {
 			State.set('pendFilter', false);
@@ -53,7 +66,7 @@ export default function(Problems, Assignment, Preferences, State, PubSub, Hotkey
 		{ label: 'In progress', show: true }
 	];
 
-	$scope.toggleFmt = function() {
+	$scope.toggleFmt = function () {
 		scoreFmt = scoreFmt === 'pts' ? 'pct' : 'pts';
 		showScore();
 	};
@@ -69,7 +82,7 @@ export default function(Problems, Assignment, Preferences, State, PubSub, Hotkey
 	}
 
 	function removeFilter(label) {
-		$scope.filterList.forEach(function(item, ndx) {
+		$scope.filterList.forEach(function (item, ndx) {
 			if (item.label === label) $scope.filterList[ndx].show = false;
 		});
 	}
@@ -81,15 +94,15 @@ export default function(Problems, Assignment, Preferences, State, PubSub, Hotkey
 
 	var modeData = {
 		assign: {},
-		assignStudent: {oneStudent: true},
-		pendAssign: {pendingOnly: true},
-		pendAssignStudent: {oneStudent: true, pendingOnly: true}
+		assignStudent: { oneStudent: true },
+		pendAssign: { pendingOnly: true },
+		pendAssignStudent: { oneStudent: true, pendingOnly: true }
 	};
 
 	var assignID = $stateParams.assign;
 	var studentID = $stateParams.student;
 
-	var init = function() {
+	var init = function () {
 		var curState = $state.current.name;		// assign, assignStudent, pendAssign, pendAssignStudent
 		var curStateArr = curState.split('.');
 		self.mode = curStateArr[curStateArr.length - 1];
@@ -104,7 +117,7 @@ export default function(Problems, Assignment, Preferences, State, PubSub, Hotkey
 
 	init();
 
-	self.filterQs = function(prob) {
+	self.filterQs = function (prob) {
 		if (State.get('pendFilter')) {
 			return !prob.showPend;
 		} else if (State.get('unansweredFilter')) {
@@ -113,7 +126,7 @@ export default function(Problems, Assignment, Preferences, State, PubSub, Hotkey
 		}
 	};
 
-	self.setPoints = function(prob, isValid, partIdx) {
+	self.setPoints = function (prob, isValid, partIdx) {
 		if (partIdx === undefined) partIdx = -1;
 		// Prevent saving of points greater than max. This is to keep Reports from exceeding 100%.
 		if (!isValid || isNaN(prob.pts) || prob.pts > prob.scoreMax)
@@ -135,7 +148,7 @@ export default function(Problems, Assignment, Preferences, State, PubSub, Hotkey
 		self.problems[idx] = prob; // Prop is a clone of self.problems[idx], so we have to update it. It feels like we could end up with a memory leak here.
 	};
 
-	self.getIcon = function(prob) {
+	self.getIcon = function (prob) {
 		// Amazingly, this gets called 5 times per problem on page init
 		// It's called once per change or blur, for every single problem
 		var map = {
@@ -157,7 +170,7 @@ export default function(Problems, Assignment, Preferences, State, PubSub, Hotkey
 		return map[status] || map['default'];
 	};
 
-	$scope.assignmentIcon = function(type) {
+	$scope.assignmentIcon = function (type) {
 		return (iconList[type] || iconList['default']);
 	};
 
@@ -171,6 +184,7 @@ export default function(Problems, Assignment, Preferences, State, PubSub, Hotkey
 		self.problems = Problems.set(data);
 		self.title = self.problems[0].assign;
 		self.type = self.problems[0].type;
+		self.userName = self.problems[0].uname.first + ' ' + self.problems[0].uname.last;
 		self.capitalType = self.problems[0].capitalType;
 		// Count Pending problems, set total; set default display
 		pendingCount = Problems.pendingCount();
@@ -192,7 +206,7 @@ export default function(Problems, Assignment, Preferences, State, PubSub, Hotkey
 		if (studentID === undefined) {
 			removeFilter('All');
 		}
-		PubSub.publish('updatePending', {count: pendingCount});
+		PubSub.publish('updatePending', { count: pendingCount });
 
 		// Duplicate some data so we can safely modify it
 		copyFields();
@@ -206,5 +220,38 @@ export default function(Problems, Assignment, Preferences, State, PubSub, Hotkey
 		}
 		$scope.loading = false;
 	}
+
+	// code added by MITR
+
+	self.sample = [{
+		"text": "Sample 1"
+	}, {
+		"text": "Sample 2"
+	}, {
+		"text": "Sample 3"
+	}];
+	self.dd = self.sample[0];
+	var _interval = setInterval(function () {
+		if ($(".accordianHeading").length) {
+			console.log("inside here")
+			clearInterval(_interval);
+			$(".accordianHeading").off("click").on("click", function () {
+				var id = $(this).attr('data-target');
+				if (!$(id).hasClass('open')) {
+					$('#accordionWrapper .collapse').removeClass('open').slideUp();
+					$(id).addClass('open').slideDown();
+				} else {
+					$(id).removeClass('open').slideUp();
+				}
+			});
+		}
+
+	}, 100);
+	self.gradeBookData;
+	$http.get("./app/modules/grade-change/config/settings.json").then(function (response) {
+		self.gradeBookData = response.data;
+
+	});
+
 
 };

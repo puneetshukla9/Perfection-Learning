@@ -16,7 +16,7 @@ export default function($http, API) {
       } else {
         url = API.REST_BASE + 'pset/' + data.aid + '/' + data.qid + '/user/' + data.uid + '/score';
       }
-      return $http.put(url, { score: data.grade });
+      return $http.put(url, { score: data.grade, rubric: data.rubric || {} });
     };
 
     return Grade;

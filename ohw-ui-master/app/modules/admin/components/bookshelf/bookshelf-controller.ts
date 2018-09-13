@@ -1,6 +1,6 @@
 'use strict';
 
-export default function(Bookshelf, State, AppState, $state, $stateParams) {
+export default function(Bookshelf, State, AppState, $state, $stateParams, $rootScope) {
   var userid = AppState.get('user_id');
   var authtoken = AppState.get('ebooksAuthToken');
   var ebooksData = AppState.get('ebooksData');
@@ -11,12 +11,9 @@ export default function(Bookshelf, State, AppState, $state, $stateParams) {
   var courseBookId = parseInt(course.book_id, 10);
   var productLine = course.product_line;
   // State.bookshelf-school is set by the call to lti/school_licensed_books
-  var schoolBooks = ebooksData.schoolLicensedBooks;
+  var schoolBooks = _.cloneDeep(ebooksData.flatSchoolLicensedBooks);
   var userBooks = ebooksData.userBookshelf.books;
-  console.log('schoolBooks', schoolBooks);
-  console.log('userBooks', userBooks);
-//  var schoolBooks = State.get('bookshelf-school');
-//  var userBooks = State.get('bookshelf');
+
   // Create a hash of userBooks.
   if (userBooks) {
     var userBookshelf = {};
@@ -48,20 +45,44 @@ export default function(Bookshelf, State, AppState, $state, $stateParams) {
     return result;
   }
 
+/*
   function getBooksInCollections(books) {
     // If this is a collection, get list of books belonging to it.
     var collectionBooks = {};
     books.forEach((book) => {
       if (book.collection && book.collection.length > 0) {
+        // Book is collection and has a collection array containing books.
         collectionBooks[book.book_id] = [];
         book.collection.forEach((item) => {
           var collectionBook = JSON.parse(JSON.stringify(userBookshelf[item.book_id]));
           collectionBook.book_name = item.book_name;
           collectionBooks[book.book_id].push(collectionBook);
         });
+      } else if (book.collection_id) {
+        // Book belongs to a collection, whose collection_id is specified.
+        if (!collectionBooks[book.collection_id]) {
+          collectionBooks[book.collection_id] = [];
+        }
+        collectionBooks[book.collection_id].push(book);
       }
     });
     return collectionBooks;
+  }
+*/
+
+  /*
+    isbn 0000000000002 = Reading Essentials collection: can select individual books.
+    Currently, that's the only collection of which this is true. If a book belongs to a
+    different collection, don't display it under "Additional titles."
+    There will later be other collections whose books can be selected individually, so
+    there will need to be some other criteria for identifying them.
+  */
+  function shouldShowBook(book) {
+    var result = false;
+    if (book.collection_isbn === '0000000000002' || !book.collection_isbn) {
+      result = true;
+    }
+    return result;
   }
 
   /*
@@ -73,50 +94,41 @@ export default function(Bookshelf, State, AppState, $state, $stateParams) {
   Return the resulting list to be assigned to the controller bookshelf, for display.
   */
   function createBookshelf(books) {
-    var collectionBooks = getBooksInCollections(books);
+//    var collectionBooks = getBooksInCollections(books);
     var bookIds = books.map(item => item.book_id);
     var courseBooks = [];
     var nonCourseBooks = [];
+
     schoolBooks.forEach((book, ndx) => {
-      //if (!userBookshelf[book.book_id]) return;
-      //book.thumbUrl = userBookshelf[book.book_id] ? userBookshelf[book.book_id].thumbUrl : '';
+
       // Compile list of books specifically for this course. Each is also checked to see if the user's bookshelf contains it.
-      if (courseBookId === parseInt(book.book_id, 10)) {
-        if (collectionBooks[book.book_id]) {
-          // If this "book" represents a collection, check each item in the collection
-          // to see if it's in the user bookshelf array.
-          collectionBooks[book.book_id].forEach((collectionBook) => {
-            if (userBookshelf[collectionBook.book_id]) {
-              collectionBook.belongsToCourse = true;
-              // Thumbnail *may not* be getting included, so adding from userBookshelf.
-              // NOTE: Currently, no evidence that it's not being included. This is a
-              // pre-emptive measure. If we run into an account that uses this logic, we
-              // should review to see if adding the thumbUrl is necessary.
-              collectionBook.thumbUrl = userBookshelf[collectionBook.book_id].thumbUrl;
-              courseBooks.push(collectionBook);
-            }
-          });
-        } else {
-          // Not a collection? Need to check to see if it's in the user bookshelf array.
+      // Exclude ISBN 0000000000002, Reading Essentials.
+      if (book.collection_isbn !== '0000000000002' &&
+          (courseBookId === parseInt(book.book_id, 10) || courseBookId === parseInt(book.collection_id, 10))) {
+
           if (userBookshelf[book.book_id]) {
             book.belongsToCourse = true;
             // Thumbnail wasn't getting included, so adding from userBookshelf.
             book.thumbUrl = userBookshelf[book.book_id].thumbUrl;
             courseBooks.push(book);
           }
-        }
+
       } else {
-      // Compile a list of books that don't specifically belong to this course but that the teacher has discretion to add.
-        if (bookIds.indexOf(book.book_id) !== -1) {
-          book.inUse = true; // turns on or off the checkmark on the book.
+          // Currently, the criteria are collection_isbn of 0000000000002 or no collection_isbn. That will change.
+          if (shouldShowBook(book)) {
+            // Compile a list of books that don't specifically belong to this course but that the teacher has discretion to add.
+            if (bookIds.indexOf(book.book_id) !== -1) {
+              book.inUse = true; // turns on or off the checkmark on the book.
+            }
+            // Necessary to check user bookshelf array to make sure the user has access.
+            // (Is this a redundant check?)
+            if (userBookshelf[book.book_id]) {
+              book.thumbUrl = userBookshelf[book.book_id].thumbUrl;
+              nonCourseBooks.push(book);
+            }
+          }
         }
-        // Necessary to check user bookshelf array to make sure the user has access.
-        // (Is this a redundant check?)
-        if (userBookshelf[book.book_id]) {
-          book.thumbUrl = userBookshelf[book.book_id].thumbUrl;
-          nonCourseBooks.push(book);
-        }
-      }
+
     });
     var bookshelf = {
       courseBooks: courseBooks,
@@ -149,6 +161,20 @@ export default function(Bookshelf, State, AppState, $state, $stateParams) {
           this.nonCourseBooks[ndx].inUse = !this.nonCourseBooks[ndx].inUse;
         }
       });
+      $rootScope.$broadcast('bootstrap refresh');
     });
   };
+
+  /*
+    Pretty sure this ISN'T the place for this. The bootstrap refresh event is broadcast in toggleSelect and also
+    from Add Class and Delete Class. However, we can move it later. Important thing is to update userBookshelf.
+  */
+  $rootScope.$on('bootstrap refresh', function() {
+    // Update the User Bookshelf after toggling a book selection.
+    Bookshelf.userBookshelf(userid, authtoken).then(res => {
+      ebooksData.userBookshelf.books = res;
+      AppState.set('ebooksData', ebooksData);
+    });
+
+  });
 };

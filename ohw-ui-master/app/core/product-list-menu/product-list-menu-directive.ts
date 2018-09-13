@@ -8,7 +8,7 @@ export default function(LicenseHelper, State, $rootScope) {
 		var unbindHandler;
 
 		function buildLicenseList(licenses) {
-			licenses = _.uniqBy(licenses, 'product_id');
+			licenses = _.uniqBy(licenses, 'product_id').sort((a, b) => { return a.product_id > b.product_id ? 1 : -1; });
 			var opts = LicenseHelper.filterSharedData(licenses);
 			return opts;
 		}
@@ -20,8 +20,9 @@ export default function(LicenseHelper, State, $rootScope) {
 			replace: true,
 			link: function(scope, elem, attrs) {
 
-				if (unbindHandler) unbindHandler();
-				unbindHandler = $rootScope.$on('StateChange:products', function() {
+				// Move code for populating Products dropdown into own function.
+				// Called on StateChange:products, but also when directive is first loaded.
+				function populateDropdown() {
 					var licenses = State.get('licenses');
 					scope.sharedLicenses = buildLicenseList(licenses);
 					if (lastSelection) {
@@ -30,7 +31,12 @@ export default function(LicenseHelper, State, $rootScope) {
 					} else {
 						scope.selectedItem = scope.sharedLicenses[0];
 					}
-				});
+				}
+
+				if (unbindHandler) unbindHandler();
+				unbindHandler = $rootScope.$on('StateChange:products', populateDropdown);
+
+				populateDropdown();
 
 				scope.visible = true;
 

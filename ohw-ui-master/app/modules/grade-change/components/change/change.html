@@ -6,7 +6,7 @@
 			<!--<div ng-if="!change.loading" id="titleBar">{{change.title}}</div>-->
 			<nav class="navbar navbar-inverse">
 				<span class="type-icon icon {{assignmentIcon(change.type)}}" uib-tooltip="{{change.capitalType}}" tooltip-placement="top"></span>
-				<a class="navbar-brand">{{change.title}}</a>
+				<a class="navbar-brand">{{change.title}}, {{::change.userName}}</a>
 				<div class="btn-group pull-right" uib-dropdown>
 					<button ng-if="curFilter==='All'" type="button" ng-click="toggleFmt()" class="navbar-btn btn-info btn-sm">
 						Score {{fmtScore}}
@@ -24,60 +24,89 @@
 				</div>
 			</nav>
 
-			<ul id="changeList" ng-if="!loading" mathjax class="atomic">
-				<li ng-repeat="problem in change.problems track by problem.id" mathjax-repeat>
-						<div ng-hide="change.filterQs(problem)" class="panel panel-primary repeat-anim">
-							<div class="panel-heading clearfix">
-								<ng-md-icon icon="{{change.getIcon(problem)}}" style="fill:white" size="24" class="iconSpacer pull-left"></ng-md-icon>
-								<div class="probTitle pull-left">{{::problem.uname.first + ' ' + problem.uname.last}}, Question {{::problem.qNum}}</div>
-							</div>
-
-							<div class="panel-body">
-								<div class="probID" ng-if="change.doShowIDs()">ID: {{problem.probID}}</div>
-
-								<problem-type ng-model="problem" pt-questions="showQuestions" pt-standards="showStandards" pt-mode="q"></problem-type>
-<!-- Multipart Problem -->
-								<div ng-if="problem.parts.length">
-									<div ng-repeat="part in problem.parts track by $index">
-										<change-points ng-model="part" pt-change="change" pt-idx="$index"></change-points>
-										<div class="flexColWrapper answerSpacer">
-											<div class="flexColInner">
-												<correct-answer class="flexWidth panel panel-default" ng-model="part" pt-mode="a" pt-answer="part.cleanA" pt-correct="true"></correct-answer>
-												<student-answer class="panel flexWidth colorAnim" ng-if="part.submission" ng-model="part" pt-mode="a" pt-answer="part.cleanSub" pt-correct="part.isCorrect"></student-answer>
-											</div>
+			<div>
+					<div class="panel-group" id="accordionWrapper">
+		
+								<!-- Plan and Organize Ideas Start-->
+								<div class="panel panel-default">
+									<div class="panel-heading accordianHeading" data-target="#collapse1">
+										<h4 class="panel-title">
+											Plan and Organize Ideas
+										</h4>
+									</div>
+									<div id="collapse1" class="panel-collapse collapse ">
+										<div class="panel-body" ng-include src="'./app/modules/grade-change/components/change/gradebook/plan_organise_data.html'">
+											
 										</div>
 									</div>
 								</div>
-<!-- Top-level Problem -->
-								<div ng-if="!problem.parts.length">
-									<div ng-if="problem.isWide">
-										<div style="margin-top:10px;">
-										  <change-points ng-model="problem" pt-change="change"></change-points>
-										</div>
-									  <div style="float:left;padding-right:10px;width:50%">
-												<student-answer class="panel colorAnim" ng-if="true || problem.submission" ng-model="problem" pt-mode="a" pt-answer="problem.cleanSub" pt-correct="problem.isCorrect"></student-answer>
-										</div>
-									  <div style="float:left;padding-left:10px;width:50%">
-												<correct-answer class="panel" ng-model="problem" pt-mode="a" pt-answer="problem.cleanA" pt-correct="true"></correct-answer>
-										</div>
+								<!--Plan and Organize Ideas End-->
+					
+								<!-- Write First Draft Start-->
+								<div class="panel panel-default">
+									<div class="panel-heading accordianHeading" data-target="#collapse2">
+										<h4 class="panel-title">
+											Write First Draft
+										</h4>
 									</div>
-									<div ng-if="!problem.isWide">
-										<div style="float:left; width:16%; margin-top:10px;">
-										  <change-points ng-model="problem" pt-change="change"></change-points>
-										</div>
-									  <div style="float:left;padding-left:20px;width:42%">
-												<student-answer class="panel colorAnim" ng-if="true || problem.submission" ng-model="problem" pt-mode="a" pt-answer="problem.cleanSub" pt-correct="problem.isCorrect"></student-answer>
-										</div>
-									  <div style="float:left;padding-left:20px;width:42%">
-												<correct-answer class="panel" ng-model="problem" pt-mode="a" pt-answer="problem.cleanA" pt-correct="true"></correct-answer>
+									<div id="collapse2" class="panel-collapse collapse">
+										<div class="panel-body" ng-include src="'./app/modules/grade-change/components/change/gradebook/writeFirst.html'">
+											
 										</div>
 									</div>
 								</div>
+								<!-- Write First Draft End-->
+					
+					
+								<!-- Evaluate and Review Start-->
+								<div class="panel panel-default">
+									<div class="panel-heading accordianHeading" data-target="#collapse3">
+										<h4 class="panel-title">
+											Evaluate and Review
+										</h4>
+									</div>
+									<div id="collapse3" class="panel-collapse collapse">
+										<div class="panel-body" ng-include src="'./app/modules/grade-change/components/change/gradebook/evaluate_review.html'" >
+										</div>
+									</div>
+								</div>
+								<!-- Evaluate and Review End-->
+					
+					
+								<!-- Share and Edit Start-->
+								<div class="panel panel-default">
+									<div class="panel-heading accordianHeading" data-target="#collapse4">
+										<h4 class="panel-title">
+											Share & Edit
+										</h4>
+									</div>
+									<div id="collapse4" class="panel-collapse collapse">
+										<div class="panel-body" ng-include src="'./app/modules/grade-change/components/change/gradebook/share_edit.html'">
+											
+										</div>
+									</div>
+								</div>
+								<!-- Share & Edit End-->
+					
+								<!-- Publish Start-->
+								<div class="panel panel-default">
+									<div class="panel-heading accordianHeading" data-target="#collapse5">
+										<h4 class="panel-title">
+												Publish
+										</h4>
+									</div>
+									<div id="collapse5" class="panel-collapse collapse">
+										<div class="panel-body" ng-include src="'./app/modules/grade-change/components/change/gradebook/publish.html'">
+											
+										</div>
+									</div>
+								</div>
+								<!-- Publish End-->
 							</div>
-						</div>
-
-				</li>
-			</ul>
+		
+					
+		
+				</div>
 
 		</div>
 	</div>

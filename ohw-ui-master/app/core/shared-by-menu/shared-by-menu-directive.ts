@@ -54,14 +54,21 @@ export default function(AppState, State, $rootScope) {
 			templateUrl: template,
 			replace: true,
 			link: function(scope, elem, attrs) {
-				var licenses = State.get('licenses');
-				if (unbindHandler) unbindHandler();
-				unbindHandler = $rootScope.$on('StateChange:sharedBy', function() {
+
+				// Move code for populating Shared By dropdown into own function.
+				// Called on StateChange:sharedBy, but also when directive is first loaded.
+				function populateDropdown() {
 					var data = State.get('sharedListSharedby');
 					scope.sharedby = sharedBy;
 					scope.sharedByNames = buildUsers(data);
 					if (sharedBy) scope.sharedByFilter();
-				});
+				}
+
+				var licenses = State.get('licenses');
+				if (unbindHandler) unbindHandler();
+				unbindHandler = $rootScope.$on('StateChange:sharedBy', populateDropdown);
+
+				populateDropdown();
 
 				scope.visible = true;
 

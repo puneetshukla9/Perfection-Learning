@@ -11,7 +11,8 @@ export default function() {
 		scope: {
 			problem: '=ngModel',
 			answer: '=ptAnswer',
-			correct: '=ptCorrect'
+			correct: '=ptCorrect',
+			rubric: '=ptRubric'
 		},
 		templateUrl: template
 	};

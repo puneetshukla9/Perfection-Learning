@@ -3,7 +3,7 @@
 
 // Performs MathJax conversion on request (was automatic, but that was TOO SLOW)
 
-export default function() {
+export default function($rootScope) {
 
 	var submissionMsgs = {
 		'ipractice-graded': 'In this i-Practice assignment, the student completed %attempts% round(s).',
@@ -102,7 +102,9 @@ export default function() {
 		return function() { /*console.log('submision msg key', msgKey);*/ return fillIn(prob, submissionMsgs[msgKey]); };
 	}
 
-
+	// problemTotalPoints: hash of rubric point values for a given problem.
+	// problemTotalPoints[probID][rubricName] = points;
+	var problemTotalPoints = {};
 
 	return {
 		restrict: 'E',
@@ -115,10 +117,35 @@ export default function() {
 		},
 
 		link: function(scope, element, attrs) {
+
+			/*
+			 * Mechnism for adding points directly from the rubric:
+			 * When receive-rubric-points:[problID] signal is detected, assign the indicated
+			 * points to a hash of rubric point values for the problem.
+			 * Then, add up the problem's assigned points, and set the pts to the total.
+			 * This total is then reflected in the points field on the Grade Change page.
+			 */
+			function updatePoints(discard, data) {
+				var problem = scope.problem;
+				if (!problemTotalPoints[problem.probID]) {
+					problemTotalPoints[problem.probID] = {};
+				}
+
+				problemTotalPoints[data.problem.probID][data.name] = data.points;
+				let _total = 0;
+				let _keys = Object.keys(problemTotalPoints[data.problem.probID]);
+				_keys.forEach(k => {
+					_total += problemTotalPoints[data.problem.probID][k];
+				});
+				scope.problem.pts = _total;
+			}
+
 			scope.pointsState = getPointsState(scope.change.type, scope.problem);
 			scope.submissionMsg = submissionMsg(scope.problem);
 			scope.msgPosition = 'bottom';
 			scope.isPastDue = isPastDue(scope.problem.dueDate);
+			// Listen for the receive-rubric-points:[probID] signal.
+			scope.$on('receive-rubric-points:' + scope.problem.probID, updatePoints);
 		},
 
 		templateUrl: template

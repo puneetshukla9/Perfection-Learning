@@ -9,6 +9,14 @@ export default function($http, $cacheFactory, DateConvert, Util, API, Config, St
     $httpDefaultCache.remove(url);
   };
 
+  // Sort licenses alphabetically. Used by license dropdown in Add Class.
+  LicenseHelper.sort = function(a, b) {
+    // Adjust license names so the sort is case-insensitive.
+    var normalized_a = typeof a.license === 'string' ? a.license.toLowerCase() : '';
+    var normalized_b = typeof b.license === 'string' ? b.license.toLowerCase() : '';
+    return normalized_a < normalized_b ? -1 : normalized_a > normalized_b ? 1 : 0;
+  };
+
   LicenseHelper.save = function(res) {
     var data = _.has(res, 'data') ? res.data : res || [];
     data = _.map(data, (item) => {
@@ -200,6 +208,7 @@ export default function($http, $cacheFactory, DateConvert, Util, API, Config, St
             district_product: district.district_id + '_' + id,
             license: license_name,
             district_name: district.district_name || 'From license-helper',
+            school_name: district.name,
             remaining_seats: license.seats_purchased - student_count,
             seats_used: student_count,
             start_date: license.start_date,

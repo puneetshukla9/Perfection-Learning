@@ -89,6 +89,7 @@ export default function(Auth, AdminData, User, Calendar, $scope, $rootScope,
 
 	function buildLicenseList(licenses) {
 		licenses = _.uniqBy(licenses, 'product_id');
+		licenses.sort(LicenseHelper.sort);
 		return LicenseHelper.filterStudentData(licenses);
 	}
 

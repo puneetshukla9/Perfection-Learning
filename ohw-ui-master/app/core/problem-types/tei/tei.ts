@@ -3,7 +3,7 @@
 import * as $ from 'jquery';
 import * as createjs from 'createjs-module';
 
-export default function(MultiPart, DragAndDrop, Matching, MultiSelect) {
+export default function(MultiPart, DragAndDrop, Matching, MultiSelect, TableItems) {
 	var EOC;
 
 	var config = {
@@ -214,6 +214,14 @@ export default function(MultiPart, DragAndDrop, Matching, MultiSelect) {
 			var a = MultiSelect.formatA(els);
 			return a;
 
+		} else if (prob.presentation_data.type === 'table_items') {
+			if (!EOC || !(EOC.probID === prob.probID && EOC.studentID === prob.uid)) {
+				EOC = new ExtendedTypes.default(prob, config);
+			}
+			var els = EOC.getBlocks();
+			var a = TableItems.formatA(els);
+			return a;
+
 		} else if (prob.presentation_data.type === 'multi_part_answer') {
 			if (!EOC || !(EOC.probID === prob.probID && EOC.studentID === prob.uid)) {
 				EOC = new ExtendedTypes.default(prob, config);
@@ -251,6 +259,14 @@ export default function(MultiPart, DragAndDrop, Matching, MultiSelect) {
 			var q = MultiSelect.formatQ(prob, els);
 			return q;
 
+		} else if (prob.presentation_data.type === 'table_items') {
+			if (!EOC || !(EOC.probID === prob.probID && EOC.studentID === prob.uid)) {
+				EOC = new ExtendedTypes.default(prob, config);
+			}
+			var els = EOC.getBlocks();
+			var q = TableItems.formatQ(els);
+			return q;
+
 		} else if (prob.presentation_data.type === 'multi_part_answer') {
 			if (!EOC || !(EOC.probID === prob.probID && EOC.studentID === prob.uid)) {
 				EOC = new ExtendedTypes.default(prob, config);
@@ -286,6 +302,14 @@ export default function(MultiPart, DragAndDrop, Matching, MultiSelect) {
 			}
 			var els = EOC.getBlocks();
 			var q = MultiSelect.formatSub(els);
+			return q;
+
+		} else if (prob.presentation_data.type === 'table_items') {
+			if (!EOC || !(EOC.probID === prob.probID && EOC.studentID === prob.uid)) {
+				EOC = new ExtendedTypes.default(prob, config);
+			}
+			var els = EOC.getBlocks();
+			var q = TableItems.formatSub(els);
 			return q;
 
 		} else if (prob.presentation_data.type === 'multi_part_answer') {

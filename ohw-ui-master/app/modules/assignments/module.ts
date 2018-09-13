@@ -53,7 +53,7 @@ angular.module('assign', [
 		.state('assignApp.gradebook', {
 			url: '/gradebook',
 			templateUrl: require('./components/gradebook/gradebook.html'),
-			controller: 'GradebookCtrl as gradebook'
+			controller: 'GradebookCtrl as ctrl'
 		});
 
 });

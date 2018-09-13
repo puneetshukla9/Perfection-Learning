@@ -1,7 +1,6 @@
 'use strict';
 
 import './less/master.less';
-import './less/details.less';
 import 'ng-sortable';
 //
 
@@ -70,7 +69,6 @@ export default angular.module('assignGen', [
 		})
 		.state('assignGenApp.roster', {
 			url: '/roster/:id',
-			
 			templateUrl: require('./components/roster/roster.html'),
 			controller: 'RosterCtrl as roster'
 		})

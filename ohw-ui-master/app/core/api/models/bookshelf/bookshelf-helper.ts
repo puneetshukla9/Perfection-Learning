@@ -1,6 +1,6 @@
 'use strict';
 
-export default function(State, $cacheFactory) {
+export default function(AppState, State, $cacheFactory) {
 
 		var BookshelfHelper = {};
 
@@ -30,6 +30,16 @@ export default function(State, $cacheFactory) {
 
     BookshelfHelper.course = (res) => {
       var data = _.has(res, 'data') ? res.data : res || [];
+			// Get userBookshelf, to look up each book's possible collection ID and associate it with
+			// that book in the course_books/get response payload.
+			var ebooksData = AppState.get('ebooksData');
+			var books = ebooksData.userBookshelf.books || [];
+			data.forEach((b, ndx) => {
+				var fromUserBookshelf = books.find(item => item.book_id === b.book_id);
+				if (fromUserBookshelf && fromUserBookshelf.collection_book_id) {
+					data[ndx].collection_id = fromUserBookshelf.collection_book_id;
+				}
+			});
       return data;
     };
 

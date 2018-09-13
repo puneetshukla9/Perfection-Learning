@@ -72,9 +72,15 @@ export default function(AppState, $state) {
 				q: require(ASSIGN_GEN_TEMPLATES + 'matching-q.html'),
 				a: require(ASSIGN_GEN_TEMPLATES + 'matching-a.html')
 			},
+
 			multi_part_answer: {
 				q: require(ASSIGN_GEN_TEMPLATES + 'multi-part-q.html'),
 				a: require(ASSIGN_GEN_TEMPLATES + 'multi-part-a.html')
+			},
+
+			table_items: {
+				q: require(ASSIGN_GEN_TEMPLATES + 'simple-q.html'),
+				a: require(ASSIGN_GEN_TEMPLATES + 'simple-a.html')
 			}
 		},
 		gradeChangeApp: {
@@ -140,9 +146,15 @@ export default function(AppState, $state) {
 				q: require(GRADE_CHANGE_TEMPLATES + 'matching-q.html'),
 				a: require(GRADE_CHANGE_TEMPLATES + 'matching-a.html')
 			},
+
 			multi_part_answer: {
 				q: require(GRADE_CHANGE_TEMPLATES + 'multi-part-q.html'),
 				a: require(GRADE_CHANGE_TEMPLATES + 'multi-part-a.html')
+			},
+
+			table_items: {
+				q: require(GRADE_CHANGE_TEMPLATES + 'simple-q.html'),
+				a: require(GRADE_CHANGE_TEMPLATES + 'simple-a.html')
 			}
 		}
 	};

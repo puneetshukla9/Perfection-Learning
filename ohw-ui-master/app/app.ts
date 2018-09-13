@@ -43,7 +43,6 @@ import './core/user-menu/module.ts';
 import './core/manuals/module.ts';
 import './core/bookshelf/module.ts';
 
-
 import hideOnRoute from './core/hide-on-route-directive.ts';
 import mathxSuperscript from './core/math-superscript-module.ts';
 import hideBodyOverflow from './core/hide-body-overflow-directive.ts';
@@ -167,7 +166,6 @@ export default angular.module('ohw', [
 	var hasMathX = AppState.get('hasMathx');
 	var hasAMSCO = AppState.get('hasAmsco');
 	var hasFpp = AppState.get('hasFpp');
-//	var courses = AppState.get('courses');
 	var digitalBooks = AppState.setDigitalBooks();
 	var courses = AppState.filteredCourses();
 	var isStudent = AppState.get('isStudent');
@@ -177,8 +175,6 @@ export default angular.module('ohw', [
 	var isPLCAdmin = AppState.get('isPLCAdmin');
 	var defaultCourse = AppState.get('defaultCourse');
 	var hasSchool = !!AppState.get('school_id'); // Allow for non-school user.
-	console.log('hasSchool', hasSchool);
-	var ebooksNoClassFlag = AppState.get('ebooksNoClassFlag');
 	var ebooksData = AppState.get('ebooksData');
 	var bookshelf = ebooksData.bookshelf;
 	var isHandwriting = bookshelf.handwriting;
@@ -225,6 +221,28 @@ export default angular.module('ohw', [
 		$rootScope.product = 'amsco';
 	}
 
+	// This is to check the accounts products for anything other than Handwriting or AMSCO.
+	// Since AMSCO has assignments, and therefore courses, the name setCanHaveCourses probably
+	// needs to be something else.
+	function setCanHaveCourses() {
+		// If the account has only handwriting or AMSCO books, it can't have courses. Otherwise, it can.
+		// So first, check the bookshelf flags for anything that's not handwriting.
+		var keys = Object.keys(bookshelf);
+		var hasNonHandwriting = false;
+		keys.forEach(k => {
+			if (k !== 'handwriting' && bookshelf[k]) {
+				hasNonHandwriting = true;
+			}
+		});
+		// Next, check for MathX or FPP--though FPP should already be accounted for in the bookshelf flags.
+		var hasNonAMSCO = hasMathX || hasFpp;
+
+		return hasNonHandwriting || hasNonAMSCO;
+	}
+
+	var canHaveCourses = setCanHaveCourses();
+	// Now, the flag has been set for whether the account has other products than Handwriting or AMSCO.
+
 	var studentApp = function() {
 		Util.wrap(false).then(() => {
 
@@ -247,6 +265,7 @@ export default angular.module('ohw', [
 			//    Use if the user meets the criteria for the new app. The flag is set by setUseNewStudentApp().
 			// c) Old student app (developed by KineticBooks)
 			//    Use if the tests for a) and b) don't pass.
+/*
 			if (hasFpp) {
 				if (useNewStudentApp) {
 					// For new student app, FPP goes to new Mitr digital library, rather than to Mitr FPP book.
@@ -266,6 +285,9 @@ export default angular.module('ohw', [
 					//window.location.href = window.location.protocol + '//' + window.location.hostname + '/books/' + appDir + '/project.html#assignments';
 				}
 			}
+*/
+			// Update as of early August 2018: All student logins should go to new student app.
+			studentAppURL = window.location.protocol + '//' + window.location.hostname + '/books/student-app/index.html';
 
 			window.location.href = studentAppURL;
 		});
@@ -284,26 +306,26 @@ export default angular.module('ohw', [
 			studentApp();
 			return;
 		}
-	} else if (isHandwriting) {
-		console.log('No Class flag set');
-		destination = 'libraryApp.bookshelf.userBookshelf';
-	} else if (courses && courses.length) {
-		if ( isSchoolAdmin || isTeacher) {
-			// The && !digitalBooks condition was added to prevent teachers with digital books but not custom ones
-			// from being redirected to the assignment list.
-			if (!hasMathX && !hasMathXCourses && !digitalBooks) {
-				destination = 'assignApp.list';
-			} else {
-				destination = 'adminApp.classes.classesList';
-			}
+	} else if (canHaveCourses) {
+	// The canHaveCourses flag is set if the account has products other than Handwriting or AMSCO.
+		if (courses && courses.length > 0) {
+			// Can have courses: If the account already has courses, go to the Manage All Class page.
+			destination = 'adminApp.classes.classesList';
+		} else {
+			// Otherwise, go to the Add Class page.
+			destination = 'adminApp.addClass';
 		}
-	} else {
-		destination = 'adminApp.addClass';
+	} else if (isHandwriting) {
+	// If the account cannot have courses, it will go to either the Digital Library (for Handwriting), ...
+		destination = 'libraryApp.bookshelf.userBookshelf';
+	} else if (hasAMSCO) {
+	// Or to the Assignment List (for AMSCO).
+		destination = 'assignApp.list';
 	}
 
 	//PLC Admin,
 	//District admin - starting route is license list
-// What if the handwriting flag is already set? In general, what condition determines whether to check for isPLC / isDist?
+	// What if the handwriting flag is already set? In general, what condition determines whether to check for isPLC / isDist?
 	if (isPLCAdmin) {
 		destination = 'adminApp.plcLicenses.licenseList';
 	} else if (isDistAdmin) {

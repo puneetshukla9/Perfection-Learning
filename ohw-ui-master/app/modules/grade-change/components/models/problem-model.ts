@@ -33,7 +33,8 @@ export default function($rootScope, Grade, TEI, AppState, PubSub) {
 		'drag_drop_1': 'dragDrop',
 		'drag_drop_2': 'dragDrop',
 		'matching': 'matching',
-		'multi_part_answer': 'multi_part_answer'
+		'multi_part_answer': 'multi_part_answer',
+		'table_items': 'table_items'
 	};
 
 	// Functions to normalize submitted and stored answers
@@ -49,7 +50,8 @@ export default function($rootScope, Grade, TEI, AppState, PubSub) {
 		multiPart: formatMultiPartA,
 		dragDrop: formatGenericA,
 		matching: formatGenericA,
-		multi_part_answer: formatGenericA
+		multi_part_answer: formatGenericA,
+		table_items: formatGenericA
 	};
 
 	// qNum
@@ -111,6 +113,9 @@ export default function($rootScope, Grade, TEI, AppState, PubSub) {
 				presentation_data: problem.presentation_data,
 				isExtended: isExtended(problem.presentation_data),
 				isWide: isWide(problem),
+
+				rubric: getRubric(problem.instance_presentation_data, problem.presentation_data),
+				hasRubric: hasRubric(problem.presentation_data),
 
 				score: setScore(problem, due), //(problem.status !== 'pending' ? parseFloat(problem.points) : ''),
 				scoreMax: parseFloat(problem.maxPoints),
@@ -367,6 +372,22 @@ export default function($rootScope, Grade, TEI, AppState, PubSub) {
 		return wideDetected;
 	}
 
+	// Get rubric data, if present.
+	function getRubric(inst_pd, pd) {
+		var result = null;
+		var rubric = inst_pd && inst_pd.rubric ? inst_pd.rubric : pd.rubric;
+		if (rubric) {
+			result = rubric;
+		}
+
+		return result;
+	}
+
+	// Flag for whether or not to display rubric content above problem's correct answer.
+	function hasRubric(pd) {
+		return pd && !!pd.rubric;
+	}
+
 	// Added to allow an isWide flag to be added to a problem, so the layout can be adjusted.
 	function isWide(prob) {
 		var result = false;
@@ -392,6 +413,9 @@ export default function($rootScope, Grade, TEI, AppState, PubSub) {
 		return !!(pd && pd.type && pd.type === 'multi_part_answer');
 	}
 
+	function isExtendedTableItems(pd) {
+		return !!(pd && pd.type && pd.type === 'table_items');
+	}
 	// Check for problem part types (e.g., open_response) in TEI problems. Return true ff a problem contains
 	// a part that's single-submission.
 	function isExtendedSingleAttempt(pd) {
@@ -459,7 +483,6 @@ export default function($rootScope, Grade, TEI, AppState, PubSub) {
 				prob.submission = prob.submission.replace(fixOr, '<mtext>&nbsp;or&nbsp;</mtext>');
 			}
 		} else if (prob.ansType === 'essay') {
-			console.log('cleanSubmission, essay', prob.submission);
 			// The fixEssaySubmission function uses the approach Mitr takes to cleaning essay responses.
 			prob.submission = fixEssaySubmission(prob.submission);
 		} else if (prob.isExtended) {
@@ -760,6 +783,36 @@ export default function($rootScope, Grade, TEI, AppState, PubSub) {
 		return angular.copy(prob);
 	}
 
+	// setRubricPoints
+	function setRubricPoints(id, rubricPoints) {
+		var prob = findProblem(id);
+		if (!prob)
+			return null;
+		var rubric = prob.presentation_data.rubric;
+
+		// calculate total from rubric.
+		var keys = Object.keys(rubricPoints);
+		var grade = 0;
+		keys.forEach(k => {
+			var row = rubric.rows.find(r => { return r.name === k; });
+			if (row) { row.grade = rubricPoints[k];	}
+			grade += rubricPoints[k];
+		});
+
+		$rootScope.$broadcast('save button start');
+		Grade.set({
+			aid: prob.aid,
+			qid: prob.qid,
+			uid: prob.uid,
+			grade: grade,
+			rubric: rubric
+		}).then(() => {
+			$rootScope.$broadcast('save button end');
+		}, () => {
+			$rootScope.$broadcast('save button end');
+		});
+	}
+
 	function reset() {
 		probList = [];
 		scoreObj = {
@@ -778,7 +831,8 @@ export default function($rootScope, Grade, TEI, AppState, PubSub) {
 		inProgressCount: inProgressCount,
 		getScore: getScore,
 		count: count,
-		setPoints: setPoints
+		setPoints: setPoints,
+		setRubricPoints: setRubricPoints
 	};
 
 };

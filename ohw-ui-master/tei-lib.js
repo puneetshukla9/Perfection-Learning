@@ -688,6 +688,7 @@ var ExtendedTypes =
 	                frames.push(_this.createInteractiveFrames(item));
 	            });
 	        }
+	        console.log('Matching frames', frames);
 	        _this.frames = frames;
 	        return _this;
 	    }
@@ -701,7 +702,6 @@ var ExtendedTypes =
 	            { name: 'blank', code: this.formatBlank() },
 	            { name: 'answer', code: this.formatAnswer() }
 	        ] : [];
-	        console.log('matching; blocks', this.probID, blocks);
 	        return blocks;
 	    };
 	    // appendElements: attach generated elements to the specified DOM container.
@@ -734,6 +734,9 @@ var ExtendedTypes =
 	        // Can we have an interaction_method of 'checkboxes' but not a type of 'matching'?
 	        var result;
 	        if (frameData.interaction_method === 'checkboxes') {
+	            result = this.createCheckboxTable(frameData);
+	        }
+	        else if (frameData.interaction_method === 'text_input_boxes') {
 	            result = this.createCheckboxTable(frameData);
 	        }
 	        return result;
@@ -1875,7 +1878,8 @@ var ExtendedTypes =
 	        var rowCount = 0;
 	        var idCount = 0;
 	        var text = frameData.text || '';
-	        var pattern = this.makeDropRe(frameData.drop_indicator);
+	        var dropIndicator = frameData.drop_indicator || '|[%id]|';
+	        var pattern = this.makeDropRe(dropIndicator);
 	        for (var i in o) {
 	            var arr = o[i];
 	            rowCount = 0;
@@ -1950,6 +1954,7 @@ var ExtendedTypes =
 	        return result;
 	    };
 	    TableItems.prototype.parseAnswerIndexes = function (a) {
+	        a = a.replace(/&#8722;/g, '-');
 	        var arr = a.split(',');
 	        arr = arr.map(function (item) { return parseInt(item, 10); });
 	        return arr;
@@ -3424,7 +3429,23 @@ var ExtendedTypes =
 	        if (_answerDataPoint) {
 	            for (var i = 0; i < _answerDataPoint.length; i++) {
 	                var str = (_answerDataPoint[i]).replace(/\(|\)/g, '');
-	                var p = scope.pointToPixel({ x: str.split(',')[0], y: str.split(',')[1] });
+	                var _x = 0;
+	                var _y = 0;
+	                // ------ For some reason it wans't accepting the negative char while converting to the integer, so made like this
+	                if ((str.split(",")[0]).indexOf("−") !== -1) {
+	                    _x = ((str.split(",")[0]).replace(/−/g, "")) * -1;
+	                }
+	                else {
+	                    _x = +(str.split(',')[0]);
+	                }
+	                if ((str.split(",")[1]).indexOf("−") !== -1) {
+	                    _y = ((str.split(",")[1]).replace(/−/g, "")) * -1;
+	                }
+	                else {
+	                    _y = +(str.split(',')[1]);
+	                }
+	                // ------
+	                var p = scope.pointToPixel({ x: _x, y: _y });
 	                var c = new scope.createjs.Shape();
 	                if (p[0].x != undefined && p[0].y != undefined) {
 	                    c.set({ x: p[0].x, y: p[0].y }).graphics.beginFill('red').drawCircle(0, 0, 4);
@@ -3436,8 +3457,38 @@ var ExtendedTypes =
 	            for (var i = 0; i < _answerDataLine.length; i += 2) {
 	                var str1 = (_answerDataLine[i]).replace(/\(|\)/g, '');
 	                var str2 = (_answerDataLine[i + 1]) ? (_answerDataLine[i + 1]).replace(/\(|\)/g, '') : (_answerDataLine[i]).replace(/\(|\)/g, '');
-	                var p1 = scope.pointToPixel({ x: str1.split(',')[0], y: str1.split(',')[1] });
-	                var p2 = scope.pointToPixel({ x: str2.split(',')[0], y: str2.split(',')[1] });
+	                var _x1 = 0;
+	                var _y1 = 0;
+	                var _x2 = 0;
+	                var _y2 = 0;
+	                // ------ For some reason it wans't accepting the negative char while converting to the integer, so made like this
+	                if ((str1.split(",")[0]).indexOf("−") !== -1) {
+	                    _x1 = ((str1.split(",")[0]).replace(/−/g, "")) * -1;
+	                }
+	                else {
+	                    _x1 = +(str1.split(',')[0]);
+	                }
+	                if ((str1.split(",")[1]).indexOf("−") !== -1) {
+	                    _y1 = ((str1.split(",")[1]).replace(/−/g, "")) * -1;
+	                }
+	                else {
+	                    _y1 = +(str1.split(',')[1]);
+	                }
+	                if ((str2.split(",")[0]).indexOf("−") !== -1) {
+	                    _x2 = ((str2.split(",")[0]).replace(/−/g, "")) * -1;
+	                }
+	                else {
+	                    _x2 = +(str2.split(',')[0]);
+	                }
+	                if ((str2.split(",")[1]).indexOf("−") !== -1) {
+	                    _y2 = ((str2.split(",")[1]).replace(/−/g, "")) * -1;
+	                }
+	                else {
+	                    _y2 = +(str2.split(',')[1]);
+	                }
+	                // ------
+	                var p1 = scope.pointToPixel({ x: _x1, y: _y1 });
+	                var p2 = scope.pointToPixel({ x: _x2, y: _y2 });
 	                var l = new scope.createjs.Shape();
 	                // var p1 = new scope.createjs.Shape();
 	                // var p2 = new scope.createjs.Shape();

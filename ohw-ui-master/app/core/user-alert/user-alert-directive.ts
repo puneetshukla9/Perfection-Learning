@@ -18,6 +18,9 @@ export default function(Preferences, $rootScope, userAlertService) {
         $rootScope.$on('user alert off', () => { scope.showAlertButton = false; });
 
         scope.showAlertButton = isNewAlert();
+				// Per https://trello.com/c/EDAQBkSy/93-turn-off-the-new-feature-button-message-so-the-most-recent-message-isnt-showing
+				// Turn off this button for now.
+				scope.showAlertButton = false;
         scope.showUserAlert = () => {
           userAlertService.showAlert('newFeatures');
         };

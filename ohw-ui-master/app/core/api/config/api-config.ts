@@ -8,6 +8,11 @@ export default function($http) {
     var w = window.location.hostname;
     var a;
 
+    var lti_map = {
+      test: 'https://testapi.perfectionlearning.com/lti/',
+      live: 'https://api.perfectionlearning.com/lti/'
+    };
+
     if (w === 'localhost') {
       w = 'test-ohw.kineticmath.com';
       a = p + '//' + w;
@@ -21,6 +26,12 @@ export default function($http) {
       API.LOGIN_BASE = a + '/api/login/';
     }
 
+    // Set LTI API URL for correct environment. Used by api/models/bookshelf/bookshelf-model.ts.
+    if (/^(test|qa\d)/.test(w)) {
+      API.LTI_BASE = lti_map.test;
+    } else {
+      API.LTI_BASE = lti_map.live;
+    }
 
     API.appendTransform = function(transform) {
       var defaults = $http.defaults.transformResponse;

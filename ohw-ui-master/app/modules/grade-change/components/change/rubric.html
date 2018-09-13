@@ -1,0 +1,12 @@
+<div class="rubric panel colorAnim panel-success">
+  <div class="panel-heading">Scoring Rubric</div>
+  <div class="rubric-body">
+    <div ng-repeat="row in rubric.rows">
+      <div class="rubric-name">{{row.name}}</div>
+      <div ng-if="row.choices && row.choices.length > 0" class="rubric-group">
+        <rubric-item ng-repeat="choice in row.choices" problem="problem" rubric-grade="row.grade" rubric-name="row.name" ng-model="choice" ng-click="addPoints()"></rubric-item>
+        <rubric-item problem="problem" rubric-name="row.name" ng-click="addPoints()"></rubric-item>
+      </div>
+    </div>
+  </div>
+</div>

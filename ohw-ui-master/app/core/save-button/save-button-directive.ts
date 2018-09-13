@@ -22,6 +22,18 @@ export default function($timeout, $rootScope, $state) {
       });
     }
 
+    /*
+      Shows or hides the Done button based on the 'active' state property.
+    */
+    function checkRoute(elem, active, name) {
+      var result = evalRoute(active, name);
+      if (result) {
+        $(elem).show();
+      } else {
+        $(elem).hide();
+      }
+    }
+
     return {
       restrict: 'A',
       templateUrl: template,
@@ -33,14 +45,10 @@ export default function($timeout, $rootScope, $state) {
       link: function(scope, elem, attrs) {
         var navigate;
         conditionallyHideElement(elem);
+        checkRoute(elem, scope.active, $state.current.name);
 
         $rootScope.$on('$stateChangeSuccess', function(e, state) {
-          var result = evalRoute(scope.active, state.name);
-          if (result) {
-            $(elem).show();
-          } else {
-            $(elem).hide();
-          }
+          checkRoute(elem, scope.active, state.name);
         });
 
         $rootScope.$on('save button start', function(e) {

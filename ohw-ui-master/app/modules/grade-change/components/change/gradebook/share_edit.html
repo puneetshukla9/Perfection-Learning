@@ -1,0 +1,30 @@
+<div class="container gradeContainer">
+        <form>
+            <div class="form-group">
+                <label for="email">Title:</label>
+                <input type="input" ng-model="change.gradeBookData.share.title" class="form-control" placeholder="Title" disabled>
+            </div>
+            <div class="form-group">
+                    <textarea ck-editor  class="form-control" ng-model="change.gradeBookData.share.answer" rows="4" placeholder="" disabled></textarea>
+                </div>
+        </form>
+        <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Teacher Comment: </label>
+                    <div class="col-sm-10">
+                        <input ng-model="change.gradeBookData.share.comment" type="input" class="form-control" placeholder="Topic Choice">
+                    </div>
+        
+        
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Points: </label>
+                    <div class="col-sm-10">
+                            <div class="col-sm-1 padding0">
+                        <input ng-model="change.gradeBookData.share.score" type="input" class="form-control" placeholder="0"> 
+                        </div>
+                        <div class="col-sm-11 padding0">    <label class="col-sm-2 control-label" style="text-align: left">/ 5</label></div>
+                    </div>
+                </div>
+            </form>
+    </div>

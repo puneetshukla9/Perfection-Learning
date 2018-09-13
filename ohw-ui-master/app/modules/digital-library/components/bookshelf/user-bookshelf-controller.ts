@@ -41,22 +41,41 @@ export default function(Bookshelf, State, AppState, $state, $stateParams) {
     };
   }
 
+  // Need to work with book copy when making a new instance for each class. This is quicker than _.cloneDeep.
+  function copyBook(book) {
+    var _book = {
+      book_id: book.book_id,
+      title: book.title,
+      category: book.category,
+      collection: book.collection,
+      product_line: book.product_line,
+      thumbUrl: book.thumbUrl
+    };
+    return _book;
+  }
+
   // Organize the books to display for a class. These are not broken down by section.
   function organizeBooks(books) {
     var sectionLabel = 'Category ';
     //var sectionProperty = 'category';
     var sectionProperty = isIHDP ? 'className' : 'collection';
     var _books = [];
-    // If a book lacks a category, it's probably because it's part of a collection, in which case it
-    // should be organized by collection name.
-    books.forEach((book, ndx) => {
-      if (!book.category) books[ndx].category = book.collection;
-      book.classes.forEach(c => {
-        book.className = c.name;
-        _books.push(book); // allows the same book in each of possibly multiple classes.
+
+    if (isIHDP) {
+      // Build a class-organized list of books if the sectionProperty is className. Otherwise, we skip this bit.
+      books.forEach((book, ndx) => {
+        // If a book lacks a category, it's probably because it's part of a collection, in which case it
+        // should be organized by collection name.
+        if (!book.category) books[ndx].category = book.collection;
+        if (book.classes.length === 0) { book.classes = [{ name: 'Additional Titles Available' }]; }
+        book.classes.forEach(c => {
+          var _book = copyBook(books[ndx]);
+          _book.className = c.name;
+          _books.push(_book); // allows the same book in each of possibly multiple classes.
+        });
       });
-    });
-    books = _books; // point books at newly created _books array.
+      books = _books; // point books at newly created _books array.
+    }
 
     var lastItem = '';
     // For now, omit the sort, as this is handled on the server.
@@ -110,9 +129,7 @@ export default function(Bookshelf, State, AppState, $state, $stateParams) {
       if (item.collectionBookId) {
         item.category = item.collection;
       }
-//      if (ebooksNoClassFlag || item.classes.length > 0) {
-        prepped.push(item);
-//      }
+      prepped.push(item);
     });
     return prepped;
   }
@@ -121,7 +138,7 @@ export default function(Bookshelf, State, AppState, $state, $stateParams) {
   var books = AppState.get('ebooksData').userBookshelf.books;
   var preppedBooks = prepBooks(books);
   this.bookshelf = organizeBooks(preppedBooks);   // bookshelf is for a class.
-  this.sections = organizeSections(preppedBooks); // sections is for a user. Consider how to consolidate.
+  this.sections = organizeSections(this.bookshelf); // sections is for a user. Consider how to consolidate.
 /*
   Bookshelf.userBookshelf(userid, authtoken).then(res => {
     var preppedBooks = prepBooks(res);
@@ -131,9 +148,33 @@ export default function(Bookshelf, State, AppState, $state, $stateParams) {
 */
 
   this.launch = (bookId) => {
-    //var url = '/digital-library/bookshelf-wizard/read/' + bookId;
-    var url = '/digital-library/read/' + bookId;
-    window.open(url, '_blank');
+    // Go back to opening book from our own domain, to deal with popup blocker issue.
+    // This might still be too expensive in load time. If so, will need to reassess.
+    var win = window.open('./digital-library/index.html', '_blank');
+//    var url = '/digital-library/read/' + bookId;
+//    window.open(url, '_blank');
+
+    var book = books.filter(b => { return b.book_id === bookId; } );
+    book = book.length > 0 ? book[0] : {};
+    if (book.product_line === 'ihdp') {
+      // For IHDP books, we want to continue to use our own URL. One reason for this is that the directory in which the books are
+      // stored is unprotected, so we want to keep that concealed for the present.
+      // In doing this, we are accepting a greater load time.
+      var url = '/digital-library/read/' + bookId;
+      //window.open(url, '_blank');
+      win.location.href = url;
+    } else {
+      // Get book URL from already loaded teacher app, and open directly in new tab.
+      // This deprives us of our digital-library/read URL for IHDP books. If that's a problem,
+      // we'll need another approach. However, the advantage is a faster loading time for the teacher.
+      Bookshelf.launch(userid, authtoken, bookId).then(data => {
+        if (data.readerurl) {
+          //window.open(data.readerurl, '_blank');
+          win.location.href = data.readerurl;
+        }
+      });
+    }
+
     //$state.go('adminApp.bookshelf.bookRead', { bookId: bookId });
   };
 };

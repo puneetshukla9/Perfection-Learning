@@ -1,0 +1,5 @@
+<div ng-click="addPoints()" ng-class="{ 'rubric-item': !checked, 'rubric-item-selected': checked }">
+  <div class="rubric-radio-button"><input type="radio" ng-checked="rubricGrade === itemPoints" name={{rubricName}} /></div>
+  <div class="rubric-points-text"><span>{{pointsLabel}}</span>{{text}}</div>
+  <br style="clear:both"/>
+</div>

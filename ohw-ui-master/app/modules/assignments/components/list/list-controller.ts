@@ -12,7 +12,6 @@ export default function(API, $state, $stateParams, $http, $rootScope, AppState, 
 	const STD_LIMIT = 5; // num of stndards to display in column
 	self.showOnlyShared = $stateParams.showOnlyShared;
 	self.ready = false;
-
 //	var sharedAssignmentsFilters = { book_id: _.uniq(AppState.get('courses').map(item => item.book_id))[0] };
 	var sharedAssignmentsFilters = { book_id: _.uniq(AppState.filteredCourses().map(item => item.book_id))[0] };
 
@@ -160,7 +159,16 @@ export default function(API, $state, $stateParams, $http, $rootScope, AppState, 
 		});
 
 		var id = currentCourse.id; // Used to be AppState.get('courses')[0].id, which would olways retrieve first course;
-		loadAssignList(id);
+		// Originally, loadAssignmentList was called right away. Any more, it's called during a handler;
+		// class change, for example. This is because the currentCourse isn't ready until course filtering has
+		// been done. The class change event is broadcast by setCourse, which checks for filtering before making the call
+		// to set the current course.
+		// HOWEVER: needs to load right away for Assignment Library.
+		// FIXME: this is unforgivably hacky. It seems to serve the immediate need of getting shared assignments to show,
+		//        but it's guaranteed not to be the correct approach.
+		if ($state.current.name === 'assignApp.sharedList') {
+			loadAssignList(id);
+		}
 
 		$scope.$on('class change', function(e, course) {
 			var id = course.id;
@@ -474,12 +482,14 @@ export default function(API, $state, $stateParams, $http, $rootScope, AppState, 
 
 	this.studentView = function(entry){
 		$http.put(API.BASE + 'output/wrapping/set', { wrap_output: false }).then(function() {
-			if (self.isTEICourse) {
+			// As of early August 2018, always open new student app for teacher view.
+//			if (self.isTEICourse) {
 				window.location.href = window.location.protocol + '//' + window.location.hostname + '/books/student-app/index.html#assignments/' + entry.id;
+/*
 			} else {
 				window.location.href = window.location.protocol + '//' + window.location.hostname + '/books/teacher/project.html#assign/' + entry.id;
 			}
-
+*/
 		});
 	};
 

@@ -58,6 +58,7 @@ export default function(AppState, PubSub, $rootScope, $state) {
 				var hasFppClasses = false;
 				var hasClasses = false;
 				var mustAddClass = false;
+				var canHaveAssignments = false;
 
 				scope.handleClick = () => {
 					productMenu.toggle();
@@ -92,7 +93,7 @@ export default function(AppState, PubSub, $rootScope, $state) {
 					mustAddClass = !hasClasses && !isDistAdmin && !isPLCAdmin;
 				};
 
-				checkClasses(courses);
+				calibrate(courses);
 
 				productMenu.on('mouseenter', () => {
 					isInside = true;
@@ -185,6 +186,26 @@ export default function(AppState, PubSub, $rootScope, $state) {
 					return config;
 				}
 
+				/*
+					suppressOption. Allow a menu option to be not displayed if a certain condition is met.
+					This was added to support leaving out Assignments if no course had been created for a
+					product that used assignments.
+					This accepts the item.state value from the product-menu-config.json file.
+					It then builds an array of states to be suppressed (yes, sounds full of political intrigue)
+					and checks to see whether a menu item's state is in that list. If it is, the result is set to true.
+				*/
+				function suppressOption(itemState) {
+					var result = false;
+					var suppressState = [];
+					if (canHaveAssignments === false) {
+						suppressState.push('assignApp.list');
+						suppressState.push('reportsApp.asov');
+					}
+
+					result = suppressState.indexOf(itemState) !== -1;
+					return result;
+				}
+
 				function isItemInConfiguration(config, itemConfig) {
 					var result = false;
 					itemConfig.forEach(i => {
@@ -193,16 +214,30 @@ export default function(AppState, PubSub, $rootScope, $state) {
 					return result;
 				}
 
+				function setCanHaveAssignments(classes) {
+					var assignmentProducts = ['languagearts', 'fpp', 'mathx', 'amsco'];
+					// Set canHaveAssignments flag, based on products in courses.
+					let classesWithAssignments = classes.filter(c => {
+						return assignmentProducts.indexOf(c.product) !== -1;
+					});
+					canHaveAssignments = classesWithAssignments.length > 0;
+				}
+
+				// Added to wrap checkClasses and setCanHaveAssignments, since these are called together on load and on state change--see below.
+				function calibrate(classes) {
+					checkClasses(classes);
+					setCanHaveAssignments(classes);
+				}
+
 				scope.showMenuOption = (item) => {
 					var config = determineConfiguration();
-					var show = isItemInConfiguration(config, item.config);
-					//console.log('showMenuOption item.config, config', item.config, config);
-					//console.log('showMenuOption showItem? ', isItemInConfiguration(config, item.config));
+					var show = isItemInConfiguration(config, item.config) && !suppressOption(item.state); // Allow a menu option to be suppressed.
+
 					return show;
 				};
 
 				PubSub.subscribe('StateChange:classes', (classes) => {
-					checkClasses(classes);
+					calibrate(classes);
 				});
 
 				scope.$on('class change', (e, course) => {
