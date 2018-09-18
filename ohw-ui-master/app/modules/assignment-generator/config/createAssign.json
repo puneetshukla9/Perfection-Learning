@@ -70,6 +70,174 @@
       "text": "Other"
     }
   ],
+  "organizationMasterData": [
+    {
+      "type": "check",
+      "value": "Haiku",
+      "checked": false
+    },
+    {
+      "type": "check",
+      "value": "Sensory Details",
+      "checked": false
+    },
+    {
+      "type": "check",
+      "value": "5 W's and How",
+      "checked": false
+    },
+    {
+      "type": "check",
+      "value": "Compare/Contrast - Block",
+      "checked": false
+    },
+    {
+      "type": "check",
+      "value": "Compare/Contrast - Point-by-Point",
+      "checked": false
+    },
+    {
+      "type": "check",
+      "value": "Describe a Place",
+      "checked": false
+    },
+    {
+      "type": "check",
+      "value": "Describe a Thing",
+      "checked": false
+    },
+    {
+      "type": "check",
+      "value": "Freewrite",
+      "checked": false
+    },
+    {
+      "type": "check",
+      "value": "Limerick",
+      "checked": false
+    },
+    {
+      "type": "check",
+      "value": "Describe an Event",
+      "checked": false
+    },
+    {
+      "type": "check",
+      "value": "Describe a Person",
+      "checked": false
+    },
+    {
+      "type": "check",
+      "value": "Diamante",
+      "checked": false
+    },
+    {
+      "type": "check",
+      "value": "Friendly Letter Ideas",
+      "checked": false
+    },
+    {
+      "type": "check",
+      "value": "Letter of Complaint",
+      "checked": false
+    },
+    {
+      "type": "check",
+      "value": "Letter of Inquiry",
+      "checked": false
+    },
+    {
+      "type": "check",
+      "value": "Letter of Recommendation",
+      "checked": false
+    },
+    {
+      "type": "check",
+      "value": "Cause/Effect - Chain of Events",
+      "checked": false
+    },
+    {
+      "type": "check",
+      "value": "Cause/Effect - Simple",
+      "checked": false
+    },
+    {
+      "type": "check",
+      "value": "KWHL",
+      "checked": false
+    },
+    {
+      "type": "check",
+      "value": "Problem/Solution",
+      "checked": false
+    },
+    {
+      "type": "check",
+      "value": "Outline",
+      "checked": false
+    },
+    {
+      "type": "check",
+      "value": "Story Map",
+      "checked": false
+    },
+    {
+      "type": "check",
+      "value": "1-2-3 Summary Organizer",
+      "checked": false
+    },
+    {
+      "type": "check",
+      "value": "Research - Finding Sources",
+      "checked": false
+    },
+    {
+      "type": "check",
+      "value": "Research - Interview Process",
+      "checked": false
+    },
+    {
+      "type": "check",
+      "value": "Research - Questions and Notes",
+      "checked": false
+    },
+    {
+      "type": "check",
+      "value": "Research - SQRR",
+      "checked": false
+    },
+    {
+      "type": "check",
+      "value": "Persuasive - Facts, Reasons, Examples",
+      "checked": false
+    },
+    {
+      "type": "check",
+      "value": "Research - Source Organizer",
+      "checked": false
+    },
+    {
+      "type": "check",
+      "value": "How-to Explanation",
+      "checked": false
+    },
+    {
+      "type": "check",
+      "value": "Book Review",
+      "checked": false
+    },
+    {
+      "type": "check",
+      "value": "Persuasive - Convince Me!",
+      "checked": false
+    },
+    {
+      "type": "check",
+      "value": "Persuasive - I Say, They Say",
+      "checked": false
+    }
+  
+  ],
   "organizationStrategies": [
     {},
     {

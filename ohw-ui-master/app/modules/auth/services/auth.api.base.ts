@@ -1,6 +1,7 @@
 'use strict';
 
 var w = window.location.hostname;
+w ="localhost";
 var p = window.location.protocol;
 var t = window.location.port;
 

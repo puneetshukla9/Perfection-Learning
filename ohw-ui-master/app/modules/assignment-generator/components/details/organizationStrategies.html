@@ -1,0 +1,33 @@
+<div id="myModal" class="modal fade detailsModalWrapper organizationalModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="details.closePopup()" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Organizational Strategies</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    
+                    <div class="row margin0">
+                        <div class="col-sm-12">
+                            <div class="col-sm-6" ng-repeat="check in details.organizationMasterData">
+                                <div class="form-group">
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" ng-model="check.checked" value="check.value"> <span ng-bind-html="check.value" class=""></span> </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                   
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"  ng-click="details.updateOrganizeData()" >Done</button>
+            </div>
+        </div>
+
+    </div>
+</div>

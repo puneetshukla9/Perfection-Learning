@@ -56,7 +56,7 @@
 		</div>
 		<div class="form-group" ng-if="details.engage == 'itemBasedAssignment' ">
 			<div ng-if="!details.isDistAdmin" class="form-group">
-				<label class="col-sm-2 control-label">*Class: </label>
+				<label class="col-sm-2 control-label" >*Class: </label>
 				<div class="col-sm-10">
 					<div ng-if="!className" class="class-menu" details="true" class-menu></div>
 					<div ng-if="className" style="margin-top:11px">{{className}}</div>
@@ -71,12 +71,12 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-2 control-label">*Category: </label>
+				<label class="col-sm-2 control-label" ng-class="{noAssignId: !hasAssignmentId}">*Category: </label>
 				<div class="col-sm-10">
-					<select ng-options="id as mode.name for (id, mode) in details.modes" ng-model="details.curMode" ng-change="details.setMode(); details.checkValid(details.name, details.curMode);"
+					<select ng-disabled="!hasAssignmentId" ng-class="{noAssignId: !hasAssignmentId}" ng-options="id as mode.name for (id, mode) in details.modes" ng-model="details.curMode" ng-change="details.setMode(); details.checkValid(details.name, details.curMode);"
 					 class="form-control">
 					</select>
-					<div ng-if="!details.isAMSCO" id="modeInstruct">
+					<div ng-if="!details.isAMSCO" id="modeInstruct" ng-class="{noAssignId: !hasAssignmentId}">
 						{{details.getInstruct(details.curMode)}}
 					</div>
 					<div ng-if="details.isAMSCO && details.curMode=='ipractice'">
@@ -87,31 +87,31 @@
 				</div>
 			</div>
 			<div ng-if="details.showTries()" class="form-group">
-				<label class="col-sm-2 control-label">Tries Allowed: </label>
+				<label class="col-sm-2 control-label" ng-class="{noAssignId: !hasAssignmentId}">Tries Allowed: </label>
 				<div class="col-sm-10">
-					<select ng-model="details.submissions" ng-change="details.setSubmits()" ng-options="option.setting as option.text for option in details.tries"
+					<select ng-model="details.submissions" ng-disabled="!hasAssignmentId" ng-class="{noAssignId: !hasAssignmentId}" ng-change="details.setSubmits()" ng-options="option.setting as option.text for option in details.tries"
 					 class="form-control">
 					</select>
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-2 control-label">Notes to Self: </label>
+				<label class="col-sm-2 control-label"  ng-class="{noAssignId: !hasAssignmentId}">Notes to Self: </label>
 				<div class="col-sm-10">
-					<textarea  ng-model="details.notes" ng-blur="details.setNotes()" class="form-control" rows="3" placeholder="Write notes about the assignment. These can only be viewed by you."></textarea>
+					<textarea  ng-model="details.notes" ng-disabled="!hasAssignmentId" ng-class="{noAssignId: !hasAssignmentId}" ng-blur="details.setNotes()" class="form-control" rows="3" placeholder="Write notes about the assignment. These can only be viewed by you."></textarea>
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-2 control-label">Sharing: </label>
+				<label class="col-sm-2 control-label" ng-class="{noAssignId: !hasAssignmentId}" >Sharing: </label>
 				<div class="col-sm-10">
-					<select ng-model="details.sharing" ng-change="details.setSharing()" ng-options="option.setting as option.text for option in details.sharingOptions"
+					<select ng-model="details.sharing" ng-disabled="!hasAssignmentId" ng-class="{noAssignId: !hasAssignmentId}" ng-change="details.setSharing()" ng-options="option.setting as option.text for option in details.sharingOptions"
 					 class="form-control">
 					</select>
 				</div>
 			</div>
 
 			<div class="form-group">
-				<label class="col-sm-2 control-label">Standards: </label>
-				<div class="col-sm-10 details-note">
+				<label class="col-sm-2 control-label"  ng-class="{noAssignId: !hasAssignmentId}">Standards: </label>
+				<div class="col-sm-10 details-note"  ng-class="{noAssignId: !hasAssignmentId}">
 					<div>{{details.stdNote}}</div>
 				</div>
 			</div>
@@ -131,7 +131,7 @@
 							<div class="form-group">
 								<label class="col-sm-2 control-label">*Form of Writing</label>
 								<div class="col-sm-10">
-									<select ng-model="details.formOfWriting" ng-change="details.setFow()" ng-options=" option.text for option in details.fOwOptions"
+									<select ng-model="details.assignmentData.formOfWriting" ng-change="details.setFow()" ng-options=" option.text for option in details.fOwOptions"
 									 class="form-control"></select>
 								</div>
 							</div>
@@ -145,8 +145,8 @@
 								<label class="col-sm-2 control-label"></label>
 								<div class="col-sm-10">
 									<label class="checkbox-inline">
-										<input type="checkbox" ng-model="details.teacherSelect" value="details.teacherSelect">Teacher Selects Topic </label>
-									<label class="checkbox-inline" ng-class="{'disabled': details.teacherSelect == true}">
+										<input type="checkbox" ng-model="details.assignmentData.teacherSelect" value="details.teacherSelect">Teacher Selects Topic </label>
+									<label class="checkbox-inline" ng-class="{'disabled': details.assignmentData.teacherSelect == true}">
 										<a href="" ng-click="details.showPopup()" data-toggle="modal" data-target="#myModal" class="assignAudience" id="config_link">Assign Audience and Purpose</a>
 									</label>
 
@@ -162,28 +162,25 @@
 							<div class="form-group">
 								<label class="col-sm-2 control-label">*Title: </label>
 								<div class="col-sm-10">
-									<input ng-model="details.name" ng-keyup="details.captureEnter($event)" ng-change="details.setNameUI();" ng-blur="details.checkValid(details.name, details.curMode); details.setName()"
-									 type="input" class="form-control">
+									<input ng-model="details.assignmentData.title" type="input" class="form-control">
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">Purpose: </label>
 								<div class="col-sm-10">
-									<input ng-model="details.name" ng-keyup="details.captureEnter($event)" ng-change="details.setNameUI();" ng-blur="details.checkValid(details.name, details.curMode); details.setName()"
-									 type="input" class="form-control">
+									<input ng-model="details.assignmentData.purpose" type="input" class="form-control">
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">Audience: </label>
 								<div class="col-sm-10">
-									<input ng-model="details.name" ng-keyup="details.captureEnter($event)" ng-change="details.setNameUI();" ng-blur="details.checkValid(details.name, details.curMode); details.setName()"
-									 type="input" class="form-control">
+									<input ng-model="details.assignmentData.audience" type="input" class="form-control">
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">*Instructions: </label>
 								<div class="col-sm-10">
-									<textarea ck-editor ng-model="details.instruction" name="instructions" id="instructions" class="mceEditor" rows="5" cols="30" aria-hidden="true"></textarea>
+									<textarea ck-editor ng-model="details.assignmentData.instruction" name="instructions" id="instructions" class="mceEditor" rows="5" cols="30" aria-hidden="true"></textarea>
 								</div>
 							</div>
 
@@ -196,9 +193,10 @@
 			<!-- Organizational Strategies Start-->
 			<div class="panel panel-default">
 				<div class="panel-heading accordianHeading" data-target="#collapse2">
-					<h4 class="panel-title">
+					<h4 class="panel-title displayInlineBlock">
 						Organizational Strategies
 					</h4>
+					<a ng-if="details.assignmentData.formOfWriting.index > 0 " title="Add Organizational Strategies" class="editBtn plusSign right glyphicon glyphicon-plus-sign" href="" ng-click="details.showOrganiztionPopup($event)"></a>
 				</div>
 				<div id="collapse2" class="panel-collapse collapse">
 					<div class="panel-body">
@@ -388,6 +386,6 @@
 
 </div>
 </div>
-<div  ng-include src="'./app/modules/assignment-generator/components/details/choice.html'">
+<div  ng-include src="'./app/modules/assignment-generator/components/details/choice.html'"></div>
+<div  ng-include src="'./app/modules/assignment-generator/components/details/organizationStrategies.html'"></div>
 
-</div>

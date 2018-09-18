@@ -106,6 +106,7 @@ export default function($http, $rootScope, Util, PubSub, Course, CourseHelper, C
       var p = window.location.protocol;
       var w = window.location.hostname;
       var a, result;
+      w ='localhost';
       if (w === 'localhost') {
         w = 'test-ohw.kineticmath.com';
         a = p + '//' + w;

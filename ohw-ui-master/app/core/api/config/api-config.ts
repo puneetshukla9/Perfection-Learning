@@ -7,7 +7,7 @@ export default function($http) {
     var p = window.location.protocol;
     var w = window.location.hostname;
     var a;
-
+    w ='localhost';
     var lti_map = {
       test: 'https://testapi.perfectionlearning.com/lti/',
       live: 'https://api.perfectionlearning.com/lti/'

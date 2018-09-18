@@ -1,6 +1,6 @@
 'use strict';
 
-export default function(AppState, $state, $rootScope, Preferences, Wizard,
+export default function (AppState, $state, $rootScope, Preferences, Wizard,
 	Calendar, AssignmentHelper, DateConvert, State, PubSub, $scope, CalendarHelper, $http) {
 
 	var self = this;
@@ -24,7 +24,7 @@ export default function(AppState, $state, $rootScope, Preferences, Wizard,
 		State.set('choose', undefined);
 	}
 
-	self.checkValid = function(name, category) {
+	self.checkValid = function (name, category) {
 		var result = !!(name && category);
 		if (!result) {
 			$rootScope.assignGen.detailsValid = false;
@@ -36,11 +36,13 @@ export default function(AppState, $state, $rootScope, Preferences, Wizard,
 	};
 
 	self.modes = {
-		homework: {name: 'Homework', tries: true, instruct: 'Students are allowed multiple tries per problem and can access videos and step-by-step help.'},
-		quiz: {name: 'Quiz', tries: true, instruct: 'Students are allowed multiple tries per problem, but cannot access videos or step-by-step help.'},
-		test: {name: 'Test', instruct: 'Students are allowed one try per problem and cannot access videos or step-by-step help.'},
-		ipractice: {name: 'i-Practice', instruct: 'Students are allowed to keep trying until ' +
-			'they\'ve mastered the problem with access to videos and step-by-step help.', oneSub: true}
+		homework: { name: 'Homework', tries: true, instruct: 'Students are allowed multiple tries per problem and can access videos and step-by-step help.' },
+		quiz: { name: 'Quiz', tries: true, instruct: 'Students are allowed multiple tries per problem, but cannot access videos or step-by-step help.' },
+		test: { name: 'Test', instruct: 'Students are allowed one try per problem and cannot access videos or step-by-step help.' },
+		ipractice: {
+			name: 'i-Practice', instruct: 'Students are allowed to keep trying until ' +
+				'they\'ve mastered the problem with access to videos and step-by-step help.', oneSub: true
+		}
 	};
 
 	self.buttonBarConfig = {
@@ -56,18 +58,18 @@ export default function(AppState, $state, $rootScope, Preferences, Wizard,
 	self.tries = [];
 	var maxTries = 10; // per Jesse. (Is this value used anywhere else?)
 	for (var i = 1; i <= maxTries; i++)
-		self.tries.push({text: i, setting: i});
+		self.tries.push({ text: i, setting: i });
 
-	self.assignedToOpts = [{text: 'All students', setting: false}, {text: 'Subset of students', setting: true}];
+	self.assignedToOpts = [{ text: 'All students', setting: false }, { text: 'Subset of students', setting: true }];
 
 	self.scoringOptions = [
-		{text: 'Full points are awarded, regardless of number of submissions', setting: 'full'},
-		{text: 'Deduct points for each submission after the first', setting: 'deduct'}
+		{ text: 'Full points are awarded, regardless of number of submissions', setting: 'full' },
+		{ text: 'Deduct points for each submission after the first', setting: 'deduct' }
 	];
 
 	self.sharingOptions = [
-		{text: 'Only I can use this assignment', setting: false},
-		{text: 'Share this assignment with other teachers in my school', setting: true}
+		{ text: 'Only I can use this assignment', setting: false },
+		{ text: 'Share this assignment with other teachers in my school', setting: true }
 	];
 
 	self.showTries = showTries;
@@ -121,7 +123,7 @@ export default function(AppState, $state, $rootScope, Preferences, Wizard,
 		useDefault: Preferences.get('autoAssignDate')
 	};
 
-	var pickAssignedDate = function(dueDate) {
+	var pickAssignedDate = function (dueDate) {
 		// If a due date is set, base the assigned date on it
 		if (dueDate) {
 			var out = dueDate.getTime();
@@ -162,6 +164,7 @@ export default function(AppState, $state, $rootScope, Preferences, Wizard,
 
 	function populateForm() {
 		var assignData = AssignmentHelper.getData(self.isDistAdmin);
+		console.log(assignData);
 		self.id = assignData.id;
 		self.name = assignData.name;
 		self.curMode = assignData.mode;
@@ -175,6 +178,10 @@ export default function(AppState, $state, $rootScope, Preferences, Wizard,
 		self.scoring = assignData.scoringMode;
 		self.sharing = assignData.isShared;
 		self.checkValid(self.name, self.curMode);
+		if (assignData.assignType != "") {
+			self.engage = assignData.assignType;
+		}
+
 	}
 
 	function initStandards() {
@@ -216,19 +223,19 @@ export default function(AppState, $state, $rootScope, Preferences, Wizard,
 		return (self.modes[mode] && self.modes[mode].instruct) || '';
 	};
 
-	self.subsDisabled = function() {
+	self.subsDisabled = function () {
 		var disabled = self.modes[self.curMode].oneSub;
 		if (disabled)
 			self.submissions = 1;
 		return disabled;
 	};
 
-	self.setName = function() {
+	self.setName = function () {
 		AssignmentHelper.setName(self.name);
 	};
 
 	// Allow entry of new assignment name with the Enter key.
-	self.captureEnter = function(evt) {
+	self.captureEnter = function (evt) {
 		if (evt.keyCode !== 13 || self.hasAssignmentId) return false;
 
 		self.hasAssignmentId = true;
@@ -240,46 +247,41 @@ export default function(AppState, $state, $rootScope, Preferences, Wizard,
 		AssignmentHelper.setName(self.name, true);
 	}
 
-	self.setNameUI = function() {
+	self.setNameUI = function () {
 		setNameUI();
 	};
 
-	self.setMode = function() {
+	self.setMode = function () {
 		AssignmentHelper.setMode(self.curMode);
 		checkSubmissionsAdjustment();
 	};
 
-	self.setSubmits = function()
-	{
+	self.setSubmits = function () {
 		AssignmentHelper.setSubmits(self.submissions);
 	};
 
-	self.setScoring = function()
-	{
+	self.setScoring = function () {
 		AssignmentHelper.setScoring(self.scoring);
 	};
 
-	self.setNotes = function()
-	{
+	self.setNotes = function () {
 		AssignmentHelper.setNotes(self.notes);
 	};
 
-	self.setStudentNotes = function()
-	{
+	self.setStudentNotes = function () {
 		AssignmentHelper.setStudentNotes(self.studentNotes);
 	};
 
-	self.setSharing = function()
-	{
+	self.setSharing = function () {
 		AssignmentHelper.setSharing(self.sharing);
 	};
 
 
 	// Convert an array to a string filled with non-wrapping sections
 
-	self.formatStandards = function(list) {
+	self.formatStandards = function (list) {
 		var stds = Object.keys(list).sort(_std_sort);
-		list = _.map(stds, function(key) {return '<span class="noWrap">' + key + '</span>'; });
+		list = _.map(stds, function (key) { return '<span class="noWrap">' + key + '</span>'; });
 		return list.join(', ');
 	};
 
@@ -294,12 +296,12 @@ export default function(AppState, $state, $rootScope, Preferences, Wizard,
 
 	// Sort standards
 
-    function _std_sort(a, b) {
-        var std1 = _std_parse(a);
-        var std2 = _std_parse(b);
-        var result = std1 && std2 ? _std_compare(std1, std2) : 0;
-        return result;
-    }
+	function _std_sort(a, b) {
+		var std1 = _std_parse(a);
+		var std2 = _std_parse(b);
+		var result = std1 && std2 ? _std_compare(std1, std2) : 0;
+		return result;
+	}
 
 
 	// Parse standard code; e.g., APR-1 3a:
@@ -307,43 +309,43 @@ export default function(AppState, $state, $rootScope, Preferences, Wizard,
 	// num: 3
 	// sub: a
 
-    function _std_parse(str) {
-        var stdRe = /^(\S+)[\s\.]+(\d+)(.+)?$/;
-        var parts = stdRe.exec(str);
+	function _std_parse(str) {
+		var stdRe = /^(\S+)[\s\.]+(\d+)(.+)?$/;
+		var parts = stdRe.exec(str);
 		if (parts) {
 			return {
-			    main: parts[1],
-			    num: parts[2],
-			    sub: parts[3]
+				main: parts[1],
+				num: parts[2],
+				sub: parts[3]
 			};
 		} else {
 			return null;
 		}
-    }
+	}
 
 
 	// Compare parsed standard codes
 
-    function _std_compare(std1, std2) {
-        var result;
-        if (std1.main < std2.main) {
+	function _std_compare(std1, std2) {
+		var result;
+		if (std1.main < std2.main) {
 			result = -1;
-        } else if (std1.main > std2.main) {
+		} else if (std1.main > std2.main) {
 			result = 1;
-        } else if (std1.num * 1 < std2.num * 1) {
+		} else if (std1.num * 1 < std2.num * 1) {
 			result = -1;
-        } else if (std1.num * 1 > std2.num * 1) {
+		} else if (std1.num * 1 > std2.num * 1) {
 			result = 1;
-        } else if (!std1.sub || std1.sub < std2.sub) {
+		} else if (!std1.sub || std1.sub < std2.sub) {
 			result = -1;
-        } else {
+		} else {
 			result = 1;
-        }
+		}
 		return result;
 	}
-	
+
 	//Mitr Code added by puneet
-	self.engage = "writing_assigment";
+	self.engage = "itemBasedAssignment";
 
 	var _interval = setInterval(function () {
 		$(".accordianHeading").off("click").on("click", function () {
@@ -364,10 +366,10 @@ export default function(AppState, $state, $rootScope, Preferences, Wizard,
 				$(id).removeClass('open').slideUp();
 			}
 		});
-		if($(".accordianHeading").length && $(".accordianSubHeading").lenght){
+		if ($(".accordianHeading").length && $(".accordianSubHeading").lenght) {
 			clearInterval(_interval);
 		}
-	},100);
+	}, 100);
 	self.homeworkChange = function () {
 		setTimeout(function () {
 			$(".accordianHeading").off("click").on("click", function () {
@@ -388,40 +390,47 @@ export default function(AppState, $state, $rootScope, Preferences, Wizard,
 					$(id).removeClass('open').slideUp();
 				}
 			});
-			
+
 		});
+		AssignmentHelper.setAssignType(self.engage);
 	}
 
 	self.fOwOptions = [{ "index": 0, "text": "- Select Form of Writing - " }, { "index": 1, "text": "Haiku" }, { "index": 2, "text": "Limerick" }, { "index": 3, "text": "Diamante" }, { "index": 4, "text": "Friendly Letter" }, { "index": 5, "text": "Business Letter" }, { "index": 6, "text": "Personal Narrative" }, { "index": 7, "text": "Short Story" }, { "index": 8, "text": "Cause/Effect Essay" }, { "index": 9, "text": "Compare/Contrast Essay" }, { "index": 10, "text": "Problem/Solution Essay" }, { "index": 11, "text": "How-to Essay" }, { "index": 12, "text": "Summary" }, { "index": 13, "text": "Book Review" }, { "index": 14, "text": "Research Report" }, { "index": 15, "text": "Describe a Person Essay" }, { "index": 16, "text": "Describe a Place Essay" }, { "index": 17, "text": "Describe an Object Essay" }, { "index": 18, "text": "Describe an Event Essay" }, { "index": 19, "text": "Persuasive Paragraph" }, { "index": 20, "text": "Persuasive Essay" }, { "index": 21, "text": "Timed Writing" }, { "index": 22, "text": "Other" }]
-	self.formOfWriting = self.fOwOptions[0];
-	self.template=[{
-		text:"Six Traits Template"
-	},{
-		text:"Texas Middle School"
-	},{
-		text:"Plano School District Middle"
-	},{
-		text:"Add New Template"
+	//self.formOfWriting = self.fOwOptions[0];
+	self.template = [{
+		text: "Six Traits Template"
+	}, {
+		text: "Texas Middle School"
+	}, {
+		text: "Plano School District Middle"
+	}, {
+		text: "Add New Template"
 	}]
 	self.hasAssignmentId = true;
 	self.assignmentData = {
 		"orgStrategies": [],
 		"collaboration": [],
 		"studentSelfAssessment": {},
-		"planOrg":true,
-		"writeFirst":true,
-		"evaluate":true,
-		"share":true,
-		"publish":true,
-		"planOrgPoint":"",
-		"writeFirstPoint":"",
-		"evaluatePoint":"",
-		"sharePoint":"",
-		"publishPoint":"",
+		"planOrg": true,
+		"writeFirst": true,
+		"evaluate": true,
+		"share": true,
+		"publish": true,
+		"planOrgPoint": "",
+		"writeFirstPoint": "",
+		"evaluatePoint": "",
+		"sharePoint": "",
+		"publishPoint": "",
+		"title": "",
+		"purpose": "",
+		"audience": "",
+		"instruction": "",
+		"teacherSelect": true,
+		"formOfWriting": self.fOwOptions[0]
 
 	};
-	self.TemplateModel=self.template[0];
-	self.teacherSelect = true;
+	self.TemplateModel = self.template[0];
+
 	var rawData = {};
 	$http.get("./app/modules/assignment-generator/config/createAssign.json").then(function (response) {
 		rawData = response.data;
@@ -430,24 +439,56 @@ export default function(AppState, $state, $rootScope, Preferences, Wizard,
 
 	self.setFow = function () {
 		self.homeworkChange();
-		self.assignmentData.orgStrategies = rawData["organizationStrategies"][self.formOfWriting.index].options;
-		self.assignmentData.collaboration = rawData["collaboration"][self.formOfWriting.index].options
-		self.assignmentData.studentSelfAssessment = rawData["studentSelfAssessment"][self.formOfWriting.index];
+		self.assignmentData.orgStrategies = rawData["organizationStrategies"][self.assignmentData.formOfWriting.index].options;
+		self.assignmentData.collaboration = rawData["collaboration"][self.assignmentData.formOfWriting.index].options
+		self.assignmentData.studentSelfAssessment = rawData["studentSelfAssessment"][self.assignmentData.formOfWriting.index];
+		createOrganizationMasterData();
+	}
+	function createOrganizationMasterData() {
+		self.organizationMasterData =angular.copy(rawData["organizationMasterData"]);
+		var temp;
+		for(var j in self.organizationMasterData){
+		for(var i in self.assignmentData.orgStrategies){
+			
+				if(self.organizationMasterData[j].value == self.assignmentData.orgStrategies[i].value){
+					self.organizationMasterData[j].checked=true;
+				}
+			
+			}
+		}
+	}
+
+	self.showOrganiztionPopup = function (e) {
+
+		$('.wizard-fullscreen').css("z-index", "1050");
+		$('.organizationalModal').show().addClass('fade in');
+		$('body').css("overflow", "hidden");
+		e.stopPropagation();
+	}
+	self.updateOrganizeData = function () {
+		self.assignmentData.orgStrategies = [];
+		for (var i in self.organizationMasterData) {
+			if (self.organizationMasterData[i].checked) {
+				self.assignmentData.orgStrategies.push(angular.copy(self.organizationMasterData[i]));
+			}
+
+		}
+		self.closePopup();
 	}
 	self.collaborationCustomQues = {
 		"value": "",
 		checked: true,
-		custom:true,
+		custom: true,
 		type: "check",
-		edit:false,
-		editValue:""
+		edit: false,
+		editValue: ""
 	};
 	self.customQues = {
 		qText: "",
-		type:"check",
-		custom:true,
-		edit:false,
-		editValue:"",
+		type: "check",
+		custom: true,
+		edit: false,
+		editValue: "",
 		options: [{
 			"value": "Evaluate & Revise",
 			"ans": true
@@ -463,26 +504,26 @@ export default function(AppState, $state, $rootScope, Preferences, Wizard,
 	}
 	self.addCustomQuest = function (type, subtype) {
 		if (typeof subtype == "undefined") {
-			self.collaborationCustomQues.editValue=self.collaborationCustomQues.value
+			self.collaborationCustomQues.editValue = self.collaborationCustomQues.value
 			self.assignmentData[type].push(self.collaborationCustomQues);
 			self.collaborationCustomQues = {
 				"value": "",
 				checked: true,
-				custom:true,
+				custom: true,
 				type: "check",
-				edit:false,
-				editValue:""
+				edit: false,
+				editValue: ""
 			};
 
 		} else {
-			self.customQues.editValue=self.customQues.qText;
+			self.customQues.editValue = self.customQues.qText;
 			self.assignmentData[type][subtype].push(self.customQues);
 			self.customQues = {
 				qText: "",
-				type:"check",
-				custom:true,
-				edit:false,
-				editValue:"",
+				type: "check",
+				custom: true,
+				edit: false,
+				editValue: "",
 				options: [{
 					"value": "Evaluate & Revise",
 					"ans": true
@@ -498,112 +539,112 @@ export default function(AppState, $state, $rootScope, Preferences, Wizard,
 			}
 
 		}
-	
+
 
 	}
-	self.editCustomQuest = function(type,subtype,index){
-		if (typeof subtype == "undefined" || subtype == "" ) {
-			self.assignmentData[type][index].edit=true;
+	self.editCustomQuest = function (type, subtype, index) {
+		if (typeof subtype == "undefined" || subtype == "") {
+			self.assignmentData[type][index].edit = true;
 		} else {
-		   self.assignmentData[type][subtype][index].edit=true;
+			self.assignmentData[type][subtype][index].edit = true;
 
 		}
 	}
-	self.cancelCustomQuest=function(type,subtype,index){
-		if (typeof subtype == "undefined" || subtype == "" ) {
-			self.assignmentData[type][index].editValue=angular.copy(self.assignmentData[type][index].value);
-			self.assignmentData[type][index].edit=false;
+	self.cancelCustomQuest = function (type, subtype, index) {
+		if (typeof subtype == "undefined" || subtype == "") {
+			self.assignmentData[type][index].editValue = angular.copy(self.assignmentData[type][index].value);
+			self.assignmentData[type][index].edit = false;
 		} else {
-			self.assignmentData[type][subtype][index].editValue=angular.copy(self.assignmentData[type][subtype][index].qText);
-		   self.assignmentData[type][subtype][index].edit=false;
+			self.assignmentData[type][subtype][index].editValue = angular.copy(self.assignmentData[type][subtype][index].qText);
+			self.assignmentData[type][subtype][index].edit = false;
 
 		}
 	}
-	self.updateCustomQuest=function(type,subtype,index){
-		if (typeof subtype == "undefined" || subtype == "" ) {
-			self.assignmentData[type][index].value=angular.copy(self.assignmentData[type][index].editValue);
-			self.assignmentData[type][index].editValue=angular.copy(self.assignmentData[type][index].value);
-			self.assignmentData[type][index].edit=false;
+	self.updateCustomQuest = function (type, subtype, index) {
+		if (typeof subtype == "undefined" || subtype == "") {
+			self.assignmentData[type][index].value = angular.copy(self.assignmentData[type][index].editValue);
+			self.assignmentData[type][index].editValue = angular.copy(self.assignmentData[type][index].value);
+			self.assignmentData[type][index].edit = false;
 		} else {
-			self.assignmentData[type][subtype][index].qText=angular.copy(self.assignmentData[type][subtype][index].editValue);
-			self.assignmentData[type][subtype][index].editValue=angular.copy(self.assignmentData[type][subtype][index].qText);
-		   self.assignmentData[type][subtype][index].edit=false;
+			self.assignmentData[type][subtype][index].qText = angular.copy(self.assignmentData[type][subtype][index].editValue);
+			self.assignmentData[type][subtype][index].editValue = angular.copy(self.assignmentData[type][subtype][index].qText);
+			self.assignmentData[type][subtype][index].edit = false;
 
 		}
 	}
-	self.deleteCustomQuest = function (type, subtype,index) {
-		 	if (typeof subtype == "undefined" || subtype == "" ) {
-		 		self.assignmentData[type].splice(index, 1);
-		 	} else {
-				self.assignmentData[type][subtype].splice(index, 1);
-	
-		 	}
+	self.deleteCustomQuest = function (type, subtype, index) {
+		if (typeof subtype == "undefined" || subtype == "") {
+			self.assignmentData[type].splice(index, 1);
+		} else {
+			self.assignmentData[type][subtype].splice(index, 1);
+
+		}
 	}
-	self.topicChoice={
-		"assignAudience":[{
-			label:"classmate",
-			isCheck:false
-		},{
-			label:"adults",
-			isCheck:false
-		},{
-			label:"self intrest groups",
-			isCheck:false
-		},{
-			label:"self",
-			isCheck:false
-		},{
-			label:"your children",
-			isCheck:false
-		},{
-			label:"ederly",
-			isCheck:false
-		},{
-			label:"family",
-			isCheck:false
-		},{
-			label:"buisness",
-			isCheck:false
-		},{
-			label:"teen",
-			isCheck:false
-		},{
-			label:"teacher",
-			isCheck:false
-		},{
-			label:"contest",
-			isCheck:false
-		},{
-			label:"other",
-			isCheck:false
+	self.topicChoice = {
+		"assignAudience": [{
+			label: "classmate",
+			isCheck: false
+		}, {
+			label: "adults",
+			isCheck: false
+		}, {
+			label: "self intrest groups",
+			isCheck: false
+		}, {
+			label: "self",
+			isCheck: false
+		}, {
+			label: "your children",
+			isCheck: false
+		}, {
+			label: "ederly",
+			isCheck: false
+		}, {
+			label: "family",
+			isCheck: false
+		}, {
+			label: "buisness",
+			isCheck: false
+		}, {
+			label: "teen",
+			isCheck: false
+		}, {
+			label: "teacher",
+			isCheck: false
+		}, {
+			label: "contest",
+			isCheck: false
+		}, {
+			label: "other",
+			isCheck: false
 		}],
-	"assignPurpose":[{
-		label:"inform/explain",
-		isCheck:false
-	},{
-		label:"entertain/create",
-		isCheck:false
-	},{
-		label:"persuade/argue",
-		isCheck:false
-	},{
-		label:"express/reflect",
-		isCheck:false
-	}]
+		"assignPurpose": [{
+			label: "inform/explain",
+			isCheck: false
+		}, {
+			label: "entertain/create",
+			isCheck: false
+		}, {
+			label: "persuade/argue",
+			isCheck: false
+		}, {
+			label: "express/reflect",
+			isCheck: false
+		}]
 	}
-	self.showPopup=function(){
-		$('.wizard-fullscreen').css("z-index","1050");
+	self.showPopup = function () {
+		$('.wizard-fullscreen').css("z-index", "1050");
 		$('.choiceWrapper').show().addClass('fade in');
-		$('body').css("overflow","hidden");
-		
+		$('body').css("overflow", "hidden");
+
 	}
-	self.closePopup=function(){
-		$('.wizard-fullscreen').css("z-index","");
-		$('.choiceWrapper').removeClass('fade in').hide();
-		$('body').css("overflow","auto");
+	self.closePopup = function () {
+		$('.wizard-fullscreen').css("z-index", "");
+		$('.detailsModalWrapper').removeClass('fade in').hide();
+		$('body').css("overflow", "auto");
 	}
-	self.updateTotal=function(){
-		self.assignmentData.totalPoint=Number(self.assignmentData.publishPoint)+Number(self.assignmentData.sharePoint)+Number(self.assignmentData.evaluatePoint)+Number(self.assignmentData.writeFirstPoint)+Number(self.assignmentData.planOrgPoint)
+	self.updateTotal = function () {
+		self.assignmentData.totalPoint = Number(self.assignmentData.publishPoint) + Number(self.assignmentData.sharePoint) + Number(self.assignmentData.evaluatePoint) + Number(self.assignmentData.writeFirstPoint) + Number(self.assignmentData.planOrgPoint)
 	}
 
 };

@@ -31,7 +31,7 @@
 								<div class="panel panel-default">
 									<div class="panel-heading accordianHeading" data-target="#collapse1">
 										<h4 class="panel-title">
-											Plan and Organize Ideas
+											Plan and Organize Ideas - <span ng-if="change.gradeBookData.plan.score == '' ">Needs Review</span> <span ng-if="change.gradeBookData.plan.score != '' ">Score {{ change.gradeBookData.plan.score }}</span>
 										</h4>
 									</div>
 									<div id="collapse1" class="panel-collapse collapse ">
@@ -46,7 +46,7 @@
 								<div class="panel panel-default">
 									<div class="panel-heading accordianHeading" data-target="#collapse2">
 										<h4 class="panel-title">
-											Write First Draft
+											Write First Draft - <span ng-if="change.gradeBookData.write.score == '' ">Needs Review</span> <span ng-if="change.gradeBookData.write.score != '' ">Score {{ change.gradeBookData.write.score }}</span>
 										</h4>
 									</div>
 									<div id="collapse2" class="panel-collapse collapse">
@@ -62,7 +62,7 @@
 								<div class="panel panel-default">
 									<div class="panel-heading accordianHeading" data-target="#collapse3">
 										<h4 class="panel-title">
-											Evaluate and Review
+											Evaluate and Review - <span ng-if="change.gradeBookData.evaluate.score == '' ">Needs Review</span> <span ng-if="change.gradeBookData.evaluate.score != '' ">Score {{ change.gradeBookData.evaluate.score }}</span>
 										</h4>
 									</div>
 									<div id="collapse3" class="panel-collapse collapse">
@@ -77,7 +77,7 @@
 								<div class="panel panel-default">
 									<div class="panel-heading accordianHeading" data-target="#collapse4">
 										<h4 class="panel-title">
-											Share & Edit
+											Share & Edit - <span ng-if="change.gradeBookData.share.score == '' ">Needs Review</span> <span ng-if="change.gradeBookData.share.score != '' ">Score {{ change.gradeBookData.share.score }}</span>
 										</h4>
 									</div>
 									<div id="collapse4" class="panel-collapse collapse">
@@ -92,7 +92,7 @@
 								<div class="panel panel-default">
 									<div class="panel-heading accordianHeading" data-target="#collapse5">
 										<h4 class="panel-title">
-												Publish
+												Publish - <span ng-if="change.gradeBookData.publish.score == '' ">Needs Review</span> <span ng-if="change.gradeBookData.publish.score != '' ">Score {{ change.gradeBookData.publish.score }}</span>
 										</h4>
 									</div>
 									<div id="collapse5" class="panel-collapse collapse">
