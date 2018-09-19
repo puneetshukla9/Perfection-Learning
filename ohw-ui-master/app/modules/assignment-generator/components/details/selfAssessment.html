@@ -2,24 +2,24 @@
 	<div class="panel panel-default">
 		<div class="panel-heading accordianSubHeading" data-target="#sub_collapse1">
 			<h4 class="panel-title">
-				Ideas
+				Organization, Structure, and Focus
 			</h4>
 		</div>
 		<div id="sub_collapse1" class="panel-collapse collapse sub_collapse ">
 			<div class="panel-body">
-				<div ng-if="details.assignmentData.studentSelfAssessment.ideas.length" class="col-sm-12 marginBtm15 padding0" ng-repeat="ques in details.assignmentData.studentSelfAssessment.ideas">
+				<div ng-if="details.assignmentData.studentSelfAssessment.organization_structure_and_focus.length" class="col-sm-12 marginBtm15 padding0" ng-repeat="ques in details.assignmentData.studentSelfAssessment.organization_structure_and_focus">
 
 					<div class="col-sm-10" ng-if="!ques.edit" ng-bind-html="ques.qText"></div>
 					<div class="col-sm-10" ng-if="ques.edit">
 						<input class="form-control height35 marginTop10" ng-model="ques.editValue" type="input">
 					</div>
 					<div class="col-sm-2" ng-if="ques.custom  && !ques.edit">
-						<a class="editBtn right glyphicon glyphicon-trash" href="" ng-click="details.deleteCustomQuest('studentSelfAssessment','ideas',$index)"></a>
-						<a class="editBtn right glyphicon glyphicon-pencil" href="" ng-click="details.editCustomQuest('studentSelfAssessment','ideas',$index)"></a>
+						<a class="editBtn right glyphicon glyphicon-trash" href="" ng-click="details.deleteCustomQuest('studentSelfAssessment','organization_structure_and_focus',$index)"></a>
+						<a class="editBtn right glyphicon glyphicon-pencil" href="" ng-click="details.editCustomQuest('studentSelfAssessment','organization_structure_and_focus',$index)"></a>
 					</div>
 					<div class="col-sm-2 padding0" ng-if="ques.edit">
-						<a class="customBtn marginRight10" href="" ng-click="details.updateCustomQuest('studentSelfAssessment','ideas',$index)">Update</a>
-						<a class="customBtn" href="" ng-click="details.cancelCustomQuest('studentSelfAssessment','ideas',$index)">Cancel</a>
+						<a class="customBtn marginRight10" href="" ng-click="details.updateCustomQuest('studentSelfAssessment','organization_structure_and_focus',$index)">Update</a>
+						<a class="customBtn" href="" ng-click="details.cancelCustomQuest('studentSelfAssessment','organization_structure_and_focus',$index)">Cancel</a>
 					</div>
 
 					<div class="col-sm-12" ng-if="ques.type == 'check' && !ques.edit">
@@ -32,29 +32,29 @@
 					</div>
 
 				</div>
-				<div class="col-sm-12 padding0" ng-if="details.assignmentData.studentSelfAssessment.ideas.length">
+				<div class="col-sm-12 padding0" ng-if="details.assignmentData.studentSelfAssessment.organization_structure_and_focus.length">
 
 					<div class="col-sm-10">
 						<input class="form-control height35 marginTop10" ng-model="details.customQues.qText" type="input">
 					</div>
 
-					<a class="addBtn" href="" ng-click="details.addCustomQuest('studentSelfAssessment','ideas')">Add</a>
+					<a class="addBtn" href="" ng-click="details.addCustomQuest('studentSelfAssessment','organization_structure_and_focus')">Add</a>
 
 
 				</div>
-				<div class="col-sm-12 padding0" ng-if="!details.assignmentData.studentSelfAssessment.ideas.length">No Record Found</div>
+				<div class="col-sm-12 padding0" ng-if="!details.assignmentData.studentSelfAssessment.organization_structure_and_focus.length">No Record Found</div>
 			</div>
 		</div>
 	</div>
 	<div class="panel panel-default">
 		<div class="panel-heading accordianSubHeading" data-target="#sub_collapse2">
 			<h4 class="panel-title">
-				Organizations
+				Content and Development of Ideas
 			</h4>
 		</div>
 		<div id="sub_collapse2" class="panel-collapse collapse sub_collapse">
 			<div class="panel-body">
-				<div ng-if="details.assignmentData.studentSelfAssessment.organization.length" class="col-sm-12 marginBtm15 padding0" ng-repeat="ques in details.assignmentData.studentSelfAssessment.organization">
+				<div ng-if="details.assignmentData.studentSelfAssessment.content_and_development_of_ideas.length" class="col-sm-12 marginBtm15 padding0" ng-repeat="ques in details.assignmentData.studentSelfAssessment.content_and_development_of_ideas">
 					<div class="col-sm-10" ng-if="!ques.edit" ng-bind-html="ques.qText"></div>
 					<div class="col-sm-10" ng-if="ques.edit">
 						<input class="form-control height35 marginTop10" ng-model="ques.editValue" type="input">
@@ -62,12 +62,12 @@
 
 
 					<div class="col-sm-2" ng-if="ques.custom  && !ques.edit">
-						<a class="editBtn right glyphicon glyphicon-trash" href="" ng-click="details.deleteCustomQuest('studentSelfAssessment','organization',$index)"></a>
-						<a class="editBtn right glyphicon glyphicon-pencil" href="" ng-click="details.editCustomQuest('studentSelfAssessment','organization',$index)"></a>
+						<a class="editBtn right glyphicon glyphicon-trash" href="" ng-click="details.deleteCustomQuest('studentSelfAssessment','content_and_development_of_ideas',$index)"></a>
+						<a class="editBtn right glyphicon glyphicon-pencil" href="" ng-click="details.editCustomQuest('studentSelfAssessment','content_and_development_of_ideas',$index)"></a>
 					</div>
 					<div class="col-sm-2 padding0" ng-if="ques.edit">
-						<a class="customBtn marginRight10" href="" ng-click="details.updateCustomQuest('studentSelfAssessment','organization',$index)">Update</a>
-						<a class="customBtn" href="" ng-click="details.cancelCustomQuest('studentSelfAssessment','organization',$index)">Cancel</a>
+						<a class="customBtn marginRight10" href="" ng-click="details.updateCustomQuest('studentSelfAssessment','content_and_development_of_ideas',$index)">Update</a>
+						<a class="customBtn" href="" ng-click="details.cancelCustomQuest('studentSelfAssessment','content_and_development_of_ideas',$index)">Cancel</a>
 					</div>
 					<div class="col-sm-12" ng-if="ques.type == 'check'  && !ques.edit">
 						<span class="marginRight15" ng-repeat="option in ques.options">
@@ -79,29 +79,30 @@
 					</div>
 
 				</div>
-				<div class="col-sm-12 padding0" ng-if="details.assignmentData.studentSelfAssessment.organization.length">
+				<div class="col-sm-12 padding0" ng-if="details.assignmentData.studentSelfAssessment.content_and_development_of_ideas.length">
 
 					<div class="col-sm-10">
 						<input class="form-control height35 marginTop10" ng-model="details.customQues.qText" type="input">
 					</div>
 
-					<a class="addBtn" href="" ng-click="details.addCustomQuest('studentSelfAssessment','organization')">Add</a>
+					<a class="addBtn" href="" ng-click="details.addCustomQuest('studentSelfAssessment','content_and_development_of_ideas')">Add</a>
 
 
 				</div>
-				<div class="col-sm-12 padding0" ng-if="!details.assignmentData.studentSelfAssessment.organization.length">No Record Found</div>
+				<div class="col-sm-12 padding0" ng-if="!details.assignmentData.studentSelfAssessment.content_and_development_of_ideas.length">No Record Found</div>
 			</div>
 		</div>
 	</div>
 	<div class="panel panel-default">
 		<div class="panel-heading accordianSubHeading" data-target="#sub_collapse3">
 			<h4 class="panel-title">
-				Voice
+				Use of Language
 			</h4>
 		</div>
 		<div id="sub_collapse3" class="panel-collapse collapse sub_collapse">
 			<div class="panel-body">
-				<div ng-if="details.assignmentData.studentSelfAssessment.voice.length" class="col-sm-12 marginBtm15 padding0" ng-repeat="ques in details.assignmentData.studentSelfAssessment.voice">
+				<div ng-if="details.assignmentData.studentSelfAssessment.use_of_language.length" class="col-sm-12 marginBtm15 padding0" ng-repeat="ques in details.assignmentData.studentSelfAssessment.use_of_language">
+					<div class="col-sm-10" ng-if="ques.heading" style="font-size:16px;margin-bottom: 10px" ng-style="{ 'margin-top':($index > 0)?'15px':'0px' }" ng-bind-html="ques.heading"></div>
 					<div class="col-sm-10" ng-if="!ques.edit" ng-bind-html="ques.qText"></div>
 					<div class="col-sm-10" ng-if="ques.edit">
 						<input class="form-control height35 marginTop10" ng-model="ques.editValue" type="input">
@@ -109,12 +110,12 @@
 
 
 					<div class="col-sm-2" ng-if="ques.custom  && !ques.edit">
-						<a class="editBtn right glyphicon glyphicon-trash" href="" ng-click="details.deleteCustomQuest('studentSelfAssessment','voice',$index)"></a>
-						<a class="editBtn right glyphicon glyphicon-pencil" href="" ng-click="details.editCustomQuest('studentSelfAssessment','voice',$index)"></a>
+						<a class="editBtn right glyphicon glyphicon-trash" href="" ng-click="details.deleteCustomQuest('studentSelfAssessment','use_of_language',$index)"></a>
+						<a class="editBtn right glyphicon glyphicon-pencil" href="" ng-click="details.editCustomQuest('studentSelfAssessment','use_of_language',$index)"></a>
 					</div>
 					<div class="col-sm-2 padding0" ng-if="ques.edit">
-						<a class="customBtn marginRight10" href="" ng-click="details.updateCustomQuest('studentSelfAssessment','voice',$index)">Update</a>
-						<a class="customBtn" href="" ng-click="details.cancelCustomQuest('studentSelfAssessment','voice',$index)">Cancel</a>
+						<a class="customBtn marginRight10" href="" ng-click="details.updateCustomQuest('studentSelfAssessment','use_of_language',$index)">Update</a>
+						<a class="customBtn" href="" ng-click="details.cancelCustomQuest('studentSelfAssessment','use_of_language',$index)">Cancel</a>
 					</div>
 
 
@@ -128,125 +129,27 @@
 					</div>
 
 				</div>
-				<div class="col-sm-12 padding0" ng-if="details.assignmentData.studentSelfAssessment.voice.length">
+				<div class="col-sm-12 padding0" ng-if="details.assignmentData.studentSelfAssessment.use_of_language.length">
 
 					<div class="col-sm-10">
 						<input class="form-control height35 marginTop10" ng-model="details.customQues.qText" type="input">
 					</div>
 
-					<a class="addBtn" href="" ng-click="details.addCustomQuest('studentSelfAssessment','voice')">Add</a>
+					<a class="addBtn" href="" ng-click="details.addCustomQuest('studentSelfAssessment','use_of_language')">Add</a>
 
 
 				</div>
-				<div class="col-sm-12 padding0" ng-if="!details.assignmentData.studentSelfAssessment.voice.length">No Record Found</div>
+				<div class="col-sm-12 padding0" ng-if="!details.assignmentData.studentSelfAssessment.use_of_language.length">No Record Found</div>
 			</div>
 		</div>
 	</div>
 	<div class="panel panel-default">
 		<div class="panel-heading accordianSubHeading" data-target="#sub_collapse4">
 			<h4 class="panel-title">
-				Word Choice
+				Conventions
 			</h4>
 		</div>
 		<div id="sub_collapse4" class="panel-collapse collapse sub_collapse">
-			<div class="panel-body">
-				<div ng-if="details.assignmentData.studentSelfAssessment.wordChoice.length" class="col-sm-12 marginBtm15 padding0" ng-repeat="ques in details.assignmentData.studentSelfAssessment.wordChoice">
-					<div class="col-sm-10" ng-if="!ques.edit" ng-bind-html="ques.qText"></div>
-					<div class="col-sm-10" ng-if="ques.edit">
-						<input class="form-control height35 marginTop10" ng-model="ques.editValue" type="input">
-					</div>
-
-
-					<div class="col-sm-2" ng-if="ques.custom  && !ques.edit">
-						<a class="editBtn right glyphicon glyphicon-trash" href="" ng-click="details.deleteCustomQuest('studentSelfAssessment','wordChoice',$index)"></a>
-						<a class="editBtn right glyphicon glyphicon-pencil" href="" ng-click="details.editCustomQuest('studentSelfAssessment','wordChoice',$index)"></a>
-					</div>
-					<div class="col-sm-2 padding0" ng-if="ques.edit">
-						<a class="customBtn marginRight10" href="" ng-click="details.updateCustomQuest('studentSelfAssessment','wordChoice',$index)">Update</a>
-						<a class="customBtn" href="" ng-click="details.cancelCustomQuest('studentSelfAssessment','wordChoice',$index)">Cancel</a>
-					</div>
-
-
-					<div class="col-sm-12" ng-if="ques.type == 'check' && !ques.edit">
-						<span class="marginRight15" ng-repeat="option in ques.options">
-							<label class="checkbox-inline">
-								<input type="checkbox" ng-model="option.ans" value="option.ans">
-								<span ng-bind-html="option.value"></span>
-							</label>
-						</span>
-					</div>
-
-				</div>
-				<div class="col-sm-12 padding0" ng-if="details.assignmentData.studentSelfAssessment.wordChoice.length">
-
-					<div class="col-sm-10">
-						<input class="form-control height35 marginTop10" ng-model="details.customQues.qText" type="input">
-					</div>
-
-					<a class="addBtn" href="" ng-click="details.addCustomQuest('studentSelfAssessment','wordChoice')">Add</a>
-
-
-				</div>
-				<div class="col-sm-12 padding0" ng-if="!details.assignmentData.studentSelfAssessment.wordChoice.length">No Record Found</div>
-			</div>
-		</div>
-	</div>
-	<div class="panel panel-default">
-		<div class="panel-heading accordianSubHeading" data-target="#sub_collapse5">
-			<h4 class="panel-title">
-				Sentence Fluency
-			</h4>
-		</div>
-		<div id="sub_collapse5" class="panel-collapse collapse sub_collapse">
-			<div class="panel-body">
-				<div ng-if="details.assignmentData.studentSelfAssessment.sentenceFluency.length" class="col-sm-12 marginBtm15 padding0" ng-repeat="ques in details.assignmentData.studentSelfAssessment.sentenceFluency">
-					<div class="col-sm-10" ng-if="!ques.edit" ng-bind-html="ques.qText"></div>
-					<div class="col-sm-10" ng-if="ques.edit">
-						<input class="form-control height35 marginTop10" ng-model="ques.editValue" type="input">
-					</div>
-
-
-					<div class="col-sm-2" ng-if="ques.custom  && !ques.edit">
-						<a class="editBtn right glyphicon glyphicon-trash" href="" ng-click="details.deleteCustomQuest('studentSelfAssessment','sentenceFluency',$index)"></a>
-						<a class="editBtn right glyphicon glyphicon-pencil" href="" ng-click="details.editCustomQuest('studentSelfAssessment','sentenceFluency',$index)"></a>
-					</div>
-					<div class="col-sm-2 padding0" ng-if="ques.edit">
-						<a class="customBtn marginRight10" href="" ng-click="details.updateCustomQuest('studentSelfAssessment','sentenceFluency',$index)">Update</a>
-						<a class="customBtn" href="" ng-click="details.cancelCustomQuest('studentSelfAssessment','sentenceFluency',$index)">Cancel</a>
-					</div>
-
-
-					<div class="col-sm-12" ng-if="ques.type == 'check' && !ques.edit">
-						<span class="marginRight15" ng-repeat="option in ques.options">
-							<label class="checkbox-inline">
-								<input type="checkbox" ng-model="option.ans" value="option.ans">
-								<span ng-bind-html="option.value"></span>
-							</label>
-						</span>
-					</div>
-
-				</div>
-				<div class="col-sm-12 padding0" ng-if="details.assignmentData.studentSelfAssessment.sentenceFluency.length">
-
-					<div class="col-sm-10">
-						<input class="form-control height35 marginTop10" ng-model="details.customQues.qText" type="input">
-					</div>
-
-					<a class="addBtn" href="" ng-click="details.addCustomQuest('studentSelfAssessment','sentenceFluency')">Add</a>
-
-
-				</div>
-				<div class="col-sm-12 padding0" ng-if="!details.assignmentData.studentSelfAssessment.sentenceFluency.length">No Record Found</div>
-			</div>
-		</div>
-	</div>
-	<div class="panel panel-default">
-		<div class="panel-heading accordianSubHeading" data-target="#sub_collapse6">
-			<h4 class="panel-title">
-				Coventions
-			</h4>
-		</div>
-		<div id="sub_collapse6" class="panel-collapse collapse sub_collapse">
 			<div class="panel-body">
 				<div ng-if="details.assignmentData.studentSelfAssessment.conventions.length" class="col-sm-12 marginBtm15 padding0" ng-repeat="ques in details.assignmentData.studentSelfAssessment.conventions">
 					<div class="col-sm-10" ng-if="!ques.edit" ng-bind-html="ques.qText"></div>
@@ -265,7 +168,7 @@
 					</div>
 
 
-					<div class="col-sm-12" ng-if="ques.type == 'check'  && !ques.edit">
+					<div class="col-sm-12" ng-if="ques.type == 'check' && !ques.edit">
 						<span class="marginRight15" ng-repeat="option in ques.options">
 							<label class="checkbox-inline">
 								<input type="checkbox" ng-model="option.ans" value="option.ans">
@@ -289,4 +192,6 @@
 			</div>
 		</div>
 	</div>
+
+
 </div>
