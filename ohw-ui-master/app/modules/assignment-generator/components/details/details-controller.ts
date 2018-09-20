@@ -649,5 +649,10 @@ export default function (AppState, $state, $rootScope, Preferences, Wizard,
 	self.updateTotal = function () {
 		self.assignmentData.totalPoint = Number(self.assignmentData.publishPoint) + Number(self.assignmentData.sharePoint) + Number(self.assignmentData.evaluatePoint) + Number(self.assignmentData.writeFirstPoint) + Number(self.assignmentData.planOrgPoint)
 	}
-
+	self.validateScore =function(e){
+		var updatedValue = e.target.value + e.key;
+		if ((Number(updatedValue) > Number(99)) && e.keyCode != 8 && e.keyCode != 46 && e.keyCode != 17 && e.keyCode != 65) {
+			e.preventDefault();
+		}
+	}
 };

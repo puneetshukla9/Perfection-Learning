@@ -32,7 +32,7 @@
                 <div class="col-sm-2">
                     <div class="col-sm-6 padding0">
                         <input ng-model="change.gradeBookData.evaluate.score" ng-keydown="change.scoreKeyDown($event,change.gradeBookData.evaluate.outOfScore)"
-                            type="number" class="form-control" placeholder="0" max="{{change.gradeBookData.evaluate.outOfScore}}">
+                            type="number" class="form-control disabled" placeholder="0" max="{{change.gradeBookData.evaluate.outOfScore}}" disabled>
                     </div>
                     <div class="col-sm-6 padding0">
                         <label class="col-sm-12 control-label" style="text-align: left">/ {{change.gradeBookData.evaluate.outOfScore}}</label>
@@ -43,19 +43,19 @@
                                 <div class="questionsParent">
                                   <div class="questions">
                                     <div class="quesTitle">
-                                      <div class="quesTitleText"></div>
+                                      <div class="quesTitleText">{{change.currentTrait["name"]}}</div>
                                       <div class="bWrapper">
-                                        <div class="next">►</div>
-                                        <div class="panelNo">Trait 2 of 6 (Questions 9 of 28)</div>
-                                        <div class="prev">◄</div>
+                                        <div class="next" ng-click="change.navigate('next')" ng-class="{'disabled':change.nextDisable}">►</div>
+                                        <div class="panelNo">Trait {{(change.traitIndex+1)}} of {{change.trait.length}} (Questions {{change.questNo}} of {{change.studentSelfAssesment.totalQues}})</div>
+                                        <div class="prev" ng-click="change.navigate('prev')" ng-class="{'disabled':change.prevDisable}">◄</div>
                                       </div>
                                     </div>
-                                    <div class="questText"></div>
+                                    <div class="questText">{{change.studentSelfAssesment[change.currentTrait["type"]][change.currentQues]["qText"]}}</div>
                                     <div class="questionOptions">
-                                            <button type="button" class="btn btn-success">Success</button>
-                                            <button type="button" class="btn btn-info">Think So</button>
-                                            <button type="button" class="btn btn-warning">Needs Work</button>
-                                            <button type="button" class="btn btn-danger">No Idea</button>
+                                            <button type="button" class="btn btn-success" data-id='0' ng-class="{'selected':(change.studentSelfAssesment[change.currentTrait['type']][change.currentQues]['teacherScore']==4)}" ng-click="change.scoreQues(4)">Success</button>
+                                            <button type="button" class="btn btn-info" data-id='1'ng-class="{'selected':(change.studentSelfAssesment[change.currentTrait['type']][change.currentQues]['teacherScore']==3)}" ng-click="change.scoreQues(3)">Think So</button>
+                                            <button type="button" class="btn btn-warning" data-id='2' ng-class="{'selected':(change.studentSelfAssesment[change.currentTrait['type']][change.currentQues]['teacherScore']==2)}" ng-click="change.scoreQues(2)">Needs Work</button>
+                                            <button type="button" class="btn btn-danger" data-id='3' ng-class="{'selected':(change.studentSelfAssesment[change.currentTrait['type']][change.currentQues]['teacherScore']==1)}" ng-click="change.scoreQues(1)">No Idea</button>
                                     
                                     </div>
                                   </div>

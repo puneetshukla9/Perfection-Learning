@@ -76,7 +76,8 @@ margin-bottom: 10px;
 .evalQuestions {
     float: left;
     width: 100%;
-    padding: 8px 12px;
+	padding: 5px;
+	background-color: #fff;
 }
 .questionsParent {
     padding: 10px;
@@ -90,8 +91,11 @@ margin-bottom: 10px;
     width: 100%;
 }
 .quesTitleText {
-    width: auto;
-    font-weight: bold;
+	
+	font-weight: 700;
+	float:left;
+    max-width: calc(100% - 250px);
+    display: inline-block;
 }
 .quesTitle .bWrapper {
     float: right;
@@ -108,11 +112,31 @@ margin-bottom: 10px;
     color: #3498db;
 }
 .questText {
-    margin: 5px 0px 5px 0px;
+	margin: 10px 0px 10px 0px;
+	float: left;
 }
 .questionOptions{
 	display: inline-block;
     width: 100%;
 }
-
+.disabled{
+	opacity: 0.5;
+	pointer-events: none;
+	cursor:default;
+}
+.questionOptions .btn{
+	padding:5px 10px;
+}
+.btn.selected[data-id='0']{
+	background-color: #318839;
+}
+.btn.selected[data-id='1']{
+	background-color: #2e749c;
+}
+.btn.selected[data-id='2']{
+	background-color: #a07009;
+}
+.btn.selected[data-id='3']{
+	background-color:  #9a260e;
+}
 

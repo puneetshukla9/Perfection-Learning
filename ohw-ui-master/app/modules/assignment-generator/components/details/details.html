@@ -319,7 +319,7 @@
 										<input type="checkbox" ng-model="details.assignmentData.planOrg" value="">Plan and Organize Ideas</label>
 								</div>
 								<div class="col-sm-2 ">
-									<input class="form-control height34" ng-change="details.updateTotal()" ng-model="details.assignmentData.planOrgPoint" type="number">
+									<input class="form-control height34" ng-keydown="details.validateScore($event)" ng-change="details.updateTotal()" ng-model="details.assignmentData.planOrgPoint" type="number">
 
 								</div>
 							</div>
@@ -329,7 +329,7 @@
 										<input type="checkbox"  ng-model="details.assignmentData.writeFirst" value="">Write first draft</label>
 								</div>
 								<div class="col-sm-2 ">
-									<input class="form-control height34" ng-change="details.updateTotal()" ng-model="details.assignmentData.writeFirstPoint" id="ex1" type="number">
+									<input class="form-control height34" ng-keydown="details.validateScore($event)" ng-change="details.updateTotal()" ng-model="details.assignmentData.writeFirstPoint" id="ex1" type="number">
 
 								</div>
 							</div>
@@ -339,7 +339,7 @@
 										<input type="checkbox" ng-model="details.assignmentData.evaluate" value="">Evaluate and Revise</label>
 								</div>
 								<div class="col-sm-2 ">
-									<input class="form-control height34" ng-change="details.updateTotal()" ng-model="details.assignmentData.evaluatePoint" id="ex1" type="number">
+									<input class="form-control height34" ng-keydown="details.validateScore($event)" ng-change="details.updateTotal()" ng-model="details.assignmentData.evaluatePoint" id="ex1" type="number">
 
 								</div>
 							</div>
@@ -349,7 +349,7 @@
 										<input type="checkbox" ng-model="details.assignmentData.share" value="">Share & Edit</label>
 								</div>
 								<div class="col-sm-2 ">
-									<input class="form-control height34" ng-change="details.updateTotal()" ng-model="details.assignmentData.sharePoint" type="number">
+									<input class="form-control height34" ng-keydown="details.validateScore($event)" ng-change="details.updateTotal()" ng-model="details.assignmentData.sharePoint" type="number">
 
 								</div>
 							</div>
@@ -359,7 +359,7 @@
 										<input type="checkbox" ng-model="details.assignmentData.publish" value="">Publish</label>
 								</div>
 								<div class="col-sm-2 ">
-									<input class="form-control height34" ng-change="details.updateTotal()" ng-model="details.assignmentData.publishPoint" id="ex1" type="number">
+									<input class="form-control height34" ng-keydown="details.validateScore($event)" ng-change="details.updateTotal()" ng-model="details.assignmentData.publishPoint" id="ex1" type="number">
 
 								</div>
 							</div>

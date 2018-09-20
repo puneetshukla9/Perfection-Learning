@@ -250,14 +250,84 @@ export default function (Problems, Assignment, Preferences, State, PubSub, Hotke
 	self.gradeBookData;
 	$http.get("./app/modules/grade-change/config/settings.json").then(function (response) {
 		self.gradeBookData = response.data;
+		self.studentSelfAssesment = response.data["studentSelfAssessment"];
+		self.traitIndex = 0;
+		self.currentQues = 0;
+		
+		self.questNo=1;
+		self.trait = [{
+			name: "Organization, Structure, and Focus",
+			type: "organization_structure_and_focus"
+		}, {
+			name: "Content and Development of Ideas",
+			type: "content_and_development_of_ideas"
+		}, {
+			name: "Use of Language",
+			type: "use_of_language"
+		}, {
+			name: "Conventions",
+			type: "conventions"
+		}];
+		self.currentTrait = self.trait[self.traitIndex];
+		self.nextDisable = false;
+		self.prevDisable = true;
+
 
 	});
-	self.scoreKeyDown = function (e,maxScore) {
-		
-		var updatedValue=e.target.value + e.key;
-		if((Number(updatedValue) > Number(maxScore)) && e.keyCode != 8  && e.keyCode != 46&& e.keyCode != 17  && e.keyCode != 65){
+	self.navigate = function (type) {
+		switch (type) {
+			case "next":
+				self.currentQues++;
+				self.questNo++;
+				self.prevDisable = false;
+				if (((self.studentSelfAssesment[self.currentTrait["type"]].length - 1) == self.currentQues) && (self.traitIndex == (self.trait.length - 1))) {
+					self.nextDisable = true;
+
+				} else {
+					if ((self.studentSelfAssesment[self.currentTrait["type"]].length) == self.currentQues) {
+						self.traitIndex++;
+						self.currentQues = 0;
+						self.currentTrait = self.trait[self.traitIndex];
+					}
+				}
+				break;
+			case "prev":
+			self.currentQues--;
+			self.questNo--;
+			self.nextDisable = false;
+			if (((self.currentQues==0) && (self.traitIndex == 0)) {
+				self.prevDisable = true;
+
+			}else{
+				if (self.currentQues==-1) {
+					self.traitIndex--;
+					self.currentTrait = self.trait[self.traitIndex];
+					self.currentQues = self.studentSelfAssesment[self.currentTrait["type"]].length - 1;
+					
+				}
+			}
+				break
+		}
+	}
+	self.scoreKeyDown = function (e, maxScore) {
+
+		var updatedValue = e.target.value + e.key;
+		if ((Number(updatedValue) > Number(maxScore)) && e.keyCode != 8 && e.keyCode != 46 && e.keyCode != 17 && e.keyCode != 65) {
 			e.preventDefault();
 		}
+	}
+	self.scoreQues=function(score){
+		self.studentSelfAssesment[self.currentTrait["type"]][self.currentQues]["teacherScore"]=score;
+		updateScore();
+	}
+	var updateScore=function(){
+		var totalScore=0;
+		for(var i in self.studentSelfAssesment){
+			for(var j in self.studentSelfAssesment[i]){
+				totalScore += Number(self.studentSelfAssesment[i][j]["teacherScore"]);
+			}
+		}
+		self.gradeBookData.evaluate.score=totalScore;
 	}
 	self.closePopup = function () {
 		$('.wizard-fullscreen').css("z-index", "");
@@ -270,5 +340,6 @@ export default function (Problems, Assignment, Preferences, State, PubSub, Hotke
 		$('body').css("overflow", "hidden");
 
 	}
+
 
 };
