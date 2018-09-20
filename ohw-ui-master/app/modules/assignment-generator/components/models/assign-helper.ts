@@ -17,7 +17,6 @@ export default function($state, $rootScope, AppState, Assignment, ProblemHelper,
 	var metaData = {
 		id: TempID.get(),
 		name: '',			// Assignment name (string)
-		assignType:'',
 		mode: 'homework',		// Assignment mode (string)
 		submits: 1,				// Submission count (int >= 1)
 		scoringMode: 'full',	// 'full': Full score regardless of submissions, 'deduct': Deduct points
@@ -47,7 +46,6 @@ export default function($state, $rootScope, AppState, Assignment, ProblemHelper,
 		setTeacher();
 		setHasSubmissions(false);
 		setRoster();
-		setAssignType('');
 		initProblemList();
 	}
 
@@ -469,21 +467,7 @@ export default function($state, $rootScope, AppState, Assignment, ProblemHelper,
 
 		setMetaData('name', 'name', value, dontSave);
 	}
-// Sets assignment type
 
-function setAssignType(value, dontSave) {
-	value = value || '';
-
-	// The server can deal with proper sanitization.
-	// Just enforce a max length
-	if (value.length > maxLength)
-		value = value.substring(0, maxLength);
-
-	if (!value.length)
-		dontSave = true;
-
-	setMetaData('assignType', 'assignType', value, dontSave);
-}
 
 	// Sets metadata
 
@@ -716,13 +700,11 @@ function setAssignType(value, dontSave) {
 	}
 
 	function loadSuccess(data) {
-		console.log(data)
 		canSave = false;
 		initNew();
 		setID(data.id);  // Set the ID only after we've gotten the assignment data from the server.
 		// Add metadata -- Validate!
 		setName(data.name);
-		setAssignType(data.assignType);
 		setMode(data.mode);
 		setSubmits(data.submissions);
 		setScoring(data.scoring);
@@ -807,7 +789,6 @@ function setAssignType(value, dontSave) {
 		var data = {
 			id: metaData.id,
 			name: metaData.name,
-			assignType:metaData.assignType,
 			mode: metaData.mode,
 			assigned: metaData.assigned,
 			due: metaData.due,
@@ -835,7 +816,7 @@ function setAssignType(value, dontSave) {
 		if (data.name.length > 0) {	// Save assignment only if there's an entry in the name field.
 			// if (catchDuplicateSave(data) === false) {
 				$rootScope.$broadcast('wizard save start');
-				Assignment.save([	]).then((res) => {
+				Assignment.save([data]).then((res) => {
 					if (_.has(res, 'aid') && res.aid) {
 /*
 						var curId = getId();
@@ -911,8 +892,7 @@ function setAssignType(value, dontSave) {
 		addRosterDates: addRosterDates,
 		adjustSpacing: adjustSpacing,
 		formatDate: formatDate,
-		isLoading: self.isLoading,	// Check to see if a load is in progress
-		setAssignType:setAssignType // set assignment Type
+		isLoading: self.isLoading	// Check to see if a load is in progress
 	};
 
 };
