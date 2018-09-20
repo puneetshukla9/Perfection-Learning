@@ -295,7 +295,7 @@ export default function (Problems, Assignment, Preferences, State, PubSub, Hotke
 				self.currentQues--;
 				self.questNo--;
 				self.nextDisable = false;
-				if (((self.currentQues == 0) && (self.traitIndex == 0)) {
+				if (((self.currentQues == 0) && (self.traitIndex == 0))) {
 					self.prevDisable = true;
 
 				} else {
