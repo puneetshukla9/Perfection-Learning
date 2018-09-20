@@ -252,6 +252,23 @@ export default function (Problems, Assignment, Preferences, State, PubSub, Hotke
 		self.gradeBookData = response.data;
 
 	});
+	self.scoreKeyDown = function (e,maxScore) {
+		
+		var updatedValue=e.target.value + e.key;
+		if((Number(updatedValue) > Number(maxScore)) && e.keyCode != 8  && e.keyCode != 46&& e.keyCode != 17  && e.keyCode != 65){
+			e.preventDefault();
+		}
+	}
+	self.closePopup = function () {
+		$('.wizard-fullscreen').css("z-index", "");
+		$('.gradeChangeModalWrapper').removeClass('fade in').hide();
+		$('body').css("overflow", "auto");
+	}
+	self.showStudentReport = function () {
+		$('.wizard-fullscreen').css("z-index", "1050");
+		$('.studentReportModal').show().addClass('fade in');
+		$('body').css("overflow", "hidden");
 
+	}
 
 };

@@ -398,7 +398,7 @@ export default function (AppState, $state, $rootScope, Preferences, Wizard,
 	//self.fOwOptions = [{ "index": 0, "text": "- Select Form of Writing - " }, { "index": 1, "text": "Haiku" }, { "index": 2, "text": "Limerick" }, { "index": 3, "text": "Diamante" }, { "index": 4, "text": "Friendly Letter" }, { "index": 5, "text": "Business Letter" }, { "index": 6, "text": "Personal Narrative" }, { "index": 7, "text": "Short Story" }, { "index": 8, "text": "Cause/Effect Essay" }, { "index": 9, "text": "Compare/Contrast Essay" }, { "index": 10, "text": "Problem/Solution Essay" }, { "index": 11, "text": "How-to Essay" }, { "index": 12, "text": "Summary" }, { "index": 13, "text": "Book Review" }, { "index": 14, "text": "Research Report" }, { "index": 15, "text": "Describe a Person Essay" }, { "index": 16, "text": "Describe a Place Essay" }, { "index": 17, "text": "Describe an Object Essay" }, { "index": 18, "text": "Describe an Event Essay" }, { "index": 19, "text": "Persuasive Paragraph" }, { "index": 20, "text": "Persuasive Essay" }, { "index": 21, "text": "Timed Writing" }, { "index": 22, "text": "Other" }]
 	//self.formOfWriting = self.fOwOptions[0];
 	self.template = [{
-		text: "Six Traits Template"
+		text: "Essential Guide"
 	}, {
 		text: "Texas Middle School"
 	}, {

@@ -16,6 +16,7 @@
     "audience": "",
     "comment":"",
     "score":"",
+    "outOfScore":"20",
     "organizersList":true
   },
   "write": {
@@ -23,6 +24,7 @@
     "answer": "",
     "comment":"",
     "score":"",
+    "outOfScore":"20",
     "organizersList":true
   },
   "evaluate": {
@@ -31,6 +33,7 @@
     "traits": true,
     "comment":"",
     "score":"",
+    "outOfScore":"20",
     "organizersList":true
   },
   "share": {
@@ -39,6 +42,7 @@
     "traits": true,
     "comment":"",
     "score":"",
+    "outOfScore":"20",
     "organizersList":true
   },
   "publish": {
@@ -46,6 +50,7 @@
     "answer": "Testing World",
     "comment":"sample data",
     "score":"5",
+    "outOfScore":"20",
     "traits": true
   }
 }

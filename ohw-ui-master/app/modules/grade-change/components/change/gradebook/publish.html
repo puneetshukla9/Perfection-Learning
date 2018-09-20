@@ -21,9 +21,9 @@
                     <label class="col-sm-2 control-label">Points: </label>
                     <div class="col-sm-10">
                             <div class="col-sm-1 padding0">
-                        <input ng-model="change.gradeBookData.publish.score" type="input" class="form-control" placeholder="0"> 
+                        <input ng-model="change.gradeBookData.publish.score" ng-keydown="change.scoreKeyDown($event,change.gradeBookData.publish.outOfScore)" type="input" class="form-control" placeholder="0" max="{{change.gradeBookData.publish.outOfScore}}"> 
                         </div>
-                        <div class="col-sm-11 padding0">    <label class="col-sm-2 control-label" style="text-align: left">/ 5</label></div>
+                        <div class="col-sm-11 padding0">    <label class="col-sm-2 control-label" style="text-align: left">/ {{change.gradeBookData.publish.outOfScore}}</label></div>
                     </div>
                 </div>
             </form>
