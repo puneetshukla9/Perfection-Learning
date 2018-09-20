@@ -12,11 +12,12 @@
   },
   "studentSelfAssessment": {
      "totalQues":22,
+     "studentComment":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ullamcorper sapien sem. Pellentesque nec lorem quam. Vivamus malesuada quam vitae finibus semper. Nullam non ornare tellus. Vivamus at nunc vitae arcu molestie sollicitudin. Nullam orci nibh, pharetra vitae urna eu, luctus aliquet eros. Proin tempor, magna et placerat iaculis, enim.",
       "organization_structure_and_focus": [
         {
           "qText": "Do you have an interesting introduction that states the main idea of the composition and previews what is to follow?",
           "teacherScore":0,
-          "studentScore":0,
+          "studentScore":2,
           "options": [
             {
               "value": "Evaluate & Revise",
@@ -36,7 +37,7 @@
         {
           "qText": "Does your composition have unity? That is, do all your sentences relate to the main idea?",
           "teacherScore":0,
-          "studentScore":0,
+          "studentScore":3,
           "options": [
             {
               "value": "Evaluate & Revise",
@@ -56,7 +57,7 @@
         {
           "qText": "Is your composition coherent? That is, are your ideas arranged logically with transitions that clarify the relationships among them?",
           "teacherScore":0,
-          "studentScore":0,
+          "studentScore":1,
           "options": [
             {
               "value": "Evaluate & Revise",
@@ -76,7 +77,7 @@
         {
           "qText": "Do you have a strong conclusion that follows from and supports your main idea?",
           "teacherScore":0,
-          "studentScore":0,
+          "studentScore":4,
           "options": [
             {
               "value": "Evaluate & Revise",
@@ -98,7 +99,7 @@
         {
           "qText": "Are your ideas clear and interesting?",
           "teacherScore":0,
-          "studentScore":0,
+          "studentScore":2,
           "options": [
             {
               "value": "Evaluate & Revise",
@@ -118,7 +119,7 @@
         {
           "qText": "Is your main idea well defined and focused?",
           "teacherScore":0,
-          "studentScore":0,
+          "studentScore":3,
           "options": [
             {
               "value": "Evaluate & Revise",
@@ -138,7 +139,7 @@
         {
           "qText": "Have you supported your main idea with relevant facts, definitions, quotations, and other supporting information?",
           "teacherScore":0,
-          "studentScore":0,
+          "studentScore":2,
           "options": [
             {
               "value": "Evaluate & Revise",
@@ -158,7 +159,7 @@
         {
           "qText": "Have you added depth to your ideas by including a variety of viewpoints and making connections among key ideas?",
           "teacherScore":0,
-          "studentScore":0,
+          "studentScore":2,
           "options": [
             {
               "value": "Evaluate & Revise",
@@ -180,7 +181,7 @@
         {
           "qText": "Did you establish and maintain a style appropriate to the occasion and purpose?",
           "teacherScore":0,
-          "studentScore":0,
+          "studentScore":4,
           "heading": "Style and Voice",
           "options": [
             {
@@ -201,7 +202,7 @@
         {
           "qText": "Does the composition sound as though you wrote it? (Is the voice appropriate for the topic and purpose?)",
           "teacherScore":0,
-          "studentScore":0,
+          "studentScore":3,
           "options": [
             {
               "value": "Evaluate & Revise",
@@ -221,7 +222,7 @@
         {
           "qText": "Does your writing show that you care about your subject?",
           "teacherScore":0,
-          "studentScore":0,
+          "studentScore":4,
           "options": [
             {
               "value": "Evaluate & Revise",
@@ -241,7 +242,7 @@
         {
           "qText": "Are your words precise, vivid, and specific?",
           "teacherScore":0,
-          "studentScore":0,
+          "studentScore":2,
           "heading": "Word Choice",
           "options": [
             {
@@ -262,7 +263,7 @@
         {
           "qText": "Have you used strong verbs in the active voice when possible?",
           "teacherScore":0,
-          "studentScore":0,
+          "studentScore":3,
           "options": [
             {
               "value": "Evaluate & Revise",
@@ -282,7 +283,7 @@
         {
           "qText": "Do your words create pictures for the reader or appeal to the reader's senses?",
           "teacherScore":0,
-          "studentScore":0,
+          "studentScore":4,
           "options": [
             {
               "value": "Evaluate & Revise",
@@ -302,7 +303,7 @@
         {
           "qText": "Did you eliminate short, choppy sentences by combining related sentences?",
           "teacherScore":0,
-          "studentScore":0,
+          "studentScore":1,
           "heading": "Sentence Fluency",
           "options": [
             {
@@ -323,7 +324,7 @@
         {
           "qText": "Did you vary the length and beginnings of your sentences?",
           "teacherScore":0,
-          "studentScore":0,
+          "studentScore":2,
           "options": [
             {
               "value": "Evaluate & Revise",
@@ -343,7 +344,7 @@
         {
           "qText": "Did you eliminate rambling sentences?",
           "teacherScore":0,
-          "studentScore":0,
+          "studentScore":4,
           "options": [
             {
               "value": "Evaluate & Revise",
@@ -363,7 +364,7 @@
         {
           "qText": "Are your sentences free of redundancy and empty expressions?",
           "teacherScore":0,
-          "studentScore":0,
+          "studentScore":3,
           "options": [
             {
               "value": "Evaluate & Revise",
@@ -385,7 +386,7 @@
         {
           "qText": "Are your sentences free of errors in grammar and usage?",
           "teacherScore":0,
-          "studentScore":0,
+          "studentScore":2,
           "options": [
             {
               "value": "Evaluate & Revise",
@@ -405,7 +406,7 @@
         {
           "qText": "Did you spell each word correctly?",
           "teacherScore":0,
-          "studentScore":0,
+          "studentScore":3,
           "options": [
             {
               "value": "Evaluate & Revise",
@@ -425,7 +426,7 @@
         {
           "qText": "Did you use capital letters where needed?",
           "teacherScore":0,
-          "studentScore":0,
+          "studentScore":1,
           "options": [
             {
               "value": "Evaluate & Revise",
@@ -445,7 +446,7 @@
         {
           "qText": "Did you punctuate sentences correctly?",
           "teacherScore":0,
-          "studentScore":0,
+          "studentScore":2,
           "options": [
             {
               "value": "Evaluate & Revise",

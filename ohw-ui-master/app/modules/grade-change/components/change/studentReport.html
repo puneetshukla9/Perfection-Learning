@@ -8,21 +8,40 @@
                 <h4 class="modal-title">Score and Comment</h4>
             </div>
             <div class="modal-body">
-                    <div class="scoreParent">
-                            <div class="scoreCard">
-                              <span class="sHeading">Score: </span>
-                              <span class="studentScore">2/10</span>
-                            </div>
-                            <div class="commentCard">
-                              <span class="sHeading">Comment: </span>
-                              <span class="commentWrap">
-                                <span class="studentComment">asasas</span>
-                              </span>
-                            </div>
-                          </div>
-               
+                <div class="scoreParent">
+                    <div class="scoreCard">
+                        <span class="sHeading">Score: </span>
+                        <span class="studentScore" ng-if="change.studentView">55</span>
+                        <span class="studentScore" ng-if="!change.studentView">{{change.gradeBookData.evaluate.score}}</span>
+                    </div>
+                    <div class="commentCard">
+                        <span class="sHeading">Comment: </span>
+                        <span class="commentWrap">
+                            <span class="studentComment" ng-if="change.studentView" ng-bind-html="change.studentSelfAssesment.studentComment"></span>
+                            <span class="studentComment" ng-if="!change.studentView" ng-bind-html="change.gradeBookData.evaluate.comment"></span>
+                       
+                        </span>
+                    </div>
+                </div>
+                <div class="tblContainer">
+                    <div class="questionWrapper">
+                        <div class="col-sm-10 questionHead">Questions</div>
+                        <div class="col-sm-2 center scoreText">Score</div>
+
+                    </div>
+                    <div class="tblWrap">
+                    <div  ng-repeat="data in change.trait track by $index">
+                        <div class="quesRow" ng-repeat="quest in change.studentSelfAssesment[data.type]">
+                            <div class="col-sm-10 questionText">{{quest.qText}}</div>
+                            <div ng-if="change.studentView" class="col-sm-2 center questScore" ng-class="{'green':(quest.studentScore==4),'blue':(quest.studentScore==3),'orange':(quest.studentScore==2),'red':(quest.studentScore==1 || quest.studentScore==0)}">{{quest.studentScore}}</div>
+                            <div ng-if="!change.studentView" class="col-sm-2 center questScore" ng-class="{'green':(quest.teacherScore==4),'blue':(quest.teacherScore==3),'orange':(quest.teacherScore==2),'red':(quest.teacherScore==1 || quest.teacherScore==0)}">{{quest.teacherScore}}</div>
+                       
+                        </div>
+                    </div>
+                    </div>
+                </div>
             </div>
-            
+
         </div>
 
     </div>

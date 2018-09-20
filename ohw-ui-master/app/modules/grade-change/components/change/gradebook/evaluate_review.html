@@ -21,7 +21,7 @@
             <label class="col-sm-2 control-label">Student Score:</label>
             <div class="col-sm-10 marginTop10">
                 5 out of 20
-                <a href="" ng-click="change.showStudentReport()">See Report</a>
+                <a href="" ng-click="change.showReport('student')">See Report</a>
             </div>
 
 
@@ -29,16 +29,18 @@
         <div class="form-group">
             <label class="col-sm-2 control-label">Points: </label>
             <div class="col-sm-10">
-                <div class="col-sm-2">
-                    <div class="col-sm-6 padding0">
+                <div class="col-sm-4 padding0">
+                    <div class="col-sm-4 padding0">
                         <input ng-model="change.gradeBookData.evaluate.score" ng-keydown="change.scoreKeyDown($event,change.gradeBookData.evaluate.outOfScore)"
                             type="number" class="form-control disabled" placeholder="0" max="{{change.gradeBookData.evaluate.outOfScore}}" disabled>
-                    </div>
-                    <div class="col-sm-6 padding0">
-                        <label class="col-sm-12 control-label" style="text-align: left">/ {{change.gradeBookData.evaluate.outOfScore}}</label>
+                           
+                        </div>
+                    <div class="col-sm-8 padding0">
+                        <label class="col-sm-4 control-label paddingRight0" style="text-align: left">/ {{change.gradeBookData.evaluate.outOfScore}}  </label>
+                        <a  class="displayInlineBlock marginTop10" href="" ng-click="change.showReport('teacher')">See Report</a>
                     </div>
                 </div>
-                <div class="col-sm-10">
+                <div class="col-sm-8">
                         <div class="evalQuestions">
                                 <div class="questionsParent">
                                   <div class="questions">

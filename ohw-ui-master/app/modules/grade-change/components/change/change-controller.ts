@@ -253,8 +253,8 @@ export default function (Problems, Assignment, Preferences, State, PubSub, Hotke
 		self.studentSelfAssesment = response.data["studentSelfAssessment"];
 		self.traitIndex = 0;
 		self.currentQues = 0;
-		
-		self.questNo=1;
+		self.studentView = true;
+		self.questNo = 1;
 		self.trait = [{
 			name: "Organization, Structure, and Focus",
 			type: "organization_structure_and_focus"
@@ -292,20 +292,20 @@ export default function (Problems, Assignment, Preferences, State, PubSub, Hotke
 				}
 				break;
 			case "prev":
-			self.currentQues--;
-			self.questNo--;
-			self.nextDisable = false;
-			if (((self.currentQues==0) && (self.traitIndex == 0)) {
-				self.prevDisable = true;
+				self.currentQues--;
+				self.questNo--;
+				self.nextDisable = false;
+				if (((self.currentQues == 0) && (self.traitIndex == 0)) {
+					self.prevDisable = true;
 
-			}else{
-				if (self.currentQues==-1) {
-					self.traitIndex--;
-					self.currentTrait = self.trait[self.traitIndex];
-					self.currentQues = self.studentSelfAssesment[self.currentTrait["type"]].length - 1;
-					
+				} else {
+					if (self.currentQues == -1) {
+						self.traitIndex--;
+						self.currentTrait = self.trait[self.traitIndex];
+						self.currentQues = self.studentSelfAssesment[self.currentTrait["type"]].length - 1;
+
+					}
 				}
-			}
 				break
 		}
 	}
@@ -316,25 +316,33 @@ export default function (Problems, Assignment, Preferences, State, PubSub, Hotke
 			e.preventDefault();
 		}
 	}
-	self.scoreQues=function(score){
-		self.studentSelfAssesment[self.currentTrait["type"]][self.currentQues]["teacherScore"]=score;
-		updateScore();
+	self.scoreQues = function (score) {
+		self.studentSelfAssesment[self.currentTrait["type"]][self.currentQues]["teacherScore"] = score;
+		updateTeacherScore();
 	}
-	var updateScore=function(){
-		var totalScore=0;
-		for(var i in self.studentSelfAssesment){
-			for(var j in self.studentSelfAssesment[i]){
-				totalScore += Number(self.studentSelfAssesment[i][j]["teacherScore"]);
+	var updateTeacherScore = function () {
+		var totalScore = 0;
+		for (var i in self.studentSelfAssesment) {
+			for (var j in self.studentSelfAssesment[i]) {
+				if (self.studentSelfAssesment[i][j]["teacherScore"] != undefined) {
+					totalScore += Number(self.studentSelfAssesment[i][j]["teacherScore"]);
+				}
 			}
 		}
-		self.gradeBookData.evaluate.score=totalScore;
+		console.log(totalScore)
+		self.gradeBookData.evaluate.score = totalScore;
 	}
 	self.closePopup = function () {
 		$('.wizard-fullscreen').css("z-index", "");
 		$('.gradeChangeModalWrapper').removeClass('fade in').hide();
 		$('body').css("overflow", "auto");
 	}
-	self.showStudentReport = function () {
+	self.showReport = function (type) {
+		if (type == "student") {
+			self.studentView = true;
+		} else {
+			self.studentView = false;
+		}
 		$('.wizard-fullscreen').css("z-index", "1050");
 		$('.studentReportModal').show().addClass('fade in');
 		$('body').css("overflow", "hidden");
