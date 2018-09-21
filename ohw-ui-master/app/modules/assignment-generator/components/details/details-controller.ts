@@ -178,7 +178,10 @@ export default function (AppState, $state, $rootScope, Preferences, Wizard,
 		self.scoring = assignData.scoringMode;
 		self.sharing = assignData.isShared;
 		self.checkValid(self.name, self.curMode);
-		
+		if(assignData.presentationData != null){
+			self.assignmentData=assignData.presentationData.assignmentData;
+			self.engage=assignData.presentationData.assignType;
+		}
 
 	}
 
@@ -344,6 +347,10 @@ export default function (AppState, $state, $rootScope, Preferences, Wizard,
 
 	//Mitr Code added by puneet
 	self.engage = "itemBasedAssignment";
+	var presentationData={
+		assignType:self.engage,
+		assignmentData:{}
+	};
 
 	var _interval = setInterval(function () {
 		$(".accordianHeading").off("click").on("click", function () {
@@ -390,7 +397,9 @@ export default function (AppState, $state, $rootScope, Preferences, Wizard,
 			});
 
 		});
-		//AssignmentHelper.setAssignType(self.engage);
+		presentationData.assignType=self.engage;
+		self.saveAssignment();
+		
 	}
 
 	//self.fOwOptions = [{ "index": 0, "text": "- Select Form of Writing - " }, { "index": 1, "text": "Haiku" }, { "index": 2, "text": "Limerick" }, { "index": 3, "text": "Diamante" }, { "index": 4, "text": "Friendly Letter" }, { "index": 5, "text": "Business Letter" }, { "index": 6, "text": "Personal Narrative" }, { "index": 7, "text": "Short Story" }, { "index": 8, "text": "Cause/Effect Essay" }, { "index": 9, "text": "Compare/Contrast Essay" }, { "index": 10, "text": "Problem/Solution Essay" }, { "index": 11, "text": "How-to Essay" }, { "index": 12, "text": "Summary" }, { "index": 13, "text": "Book Review" }, { "index": 14, "text": "Research Report" }, { "index": 15, "text": "Describe a Person Essay" }, { "index": 16, "text": "Describe a Place Essay" }, { "index": 17, "text": "Describe an Object Essay" }, { "index": 18, "text": "Describe an Event Essay" }, { "index": 19, "text": "Persuasive Paragraph" }, { "index": 20, "text": "Persuasive Essay" }, { "index": 21, "text": "Timed Writing" }, { "index": 22, "text": "Other" }]
@@ -444,6 +453,7 @@ export default function (AppState, $state, $rootScope, Preferences, Wizard,
 		self.assignmentData.collaboration = rawData["collaboration"][self.assignmentData.formOfWriting.index].options
 		self.assignmentData.studentSelfAssessment = rawData["studentSelfAssessment"][self.assignmentData.formOfWriting.index];
 		createOrganizationMasterData();
+		self.saveAssignment();
 	}
 	function createOrganizationMasterData() {
 		self.organizationMasterData =angular.copy(rawData["organizationMasterData"]);
@@ -540,7 +550,7 @@ export default function (AppState, $state, $rootScope, Preferences, Wizard,
 			}
 
 		}
-
+		self.saveAssignment();
 
 	}
 	self.editCustomQuest = function (type, subtype, index) {
@@ -572,6 +582,7 @@ export default function (AppState, $state, $rootScope, Preferences, Wizard,
 			self.assignmentData[type][subtype][index].edit = false;
 
 		}
+		self.saveAssignment();
 	}
 	self.deleteCustomQuest = function (type, subtype, index) {
 		if (typeof subtype == "undefined" || subtype == "") {
@@ -580,6 +591,7 @@ export default function (AppState, $state, $rootScope, Preferences, Wizard,
 			self.assignmentData[type][subtype].splice(index, 1);
 
 		}
+		self.saveAssignment();
 	}
 	self.topicChoice = {
 		"assignAudience": [{
@@ -646,11 +658,16 @@ export default function (AppState, $state, $rootScope, Preferences, Wizard,
 	}
 	self.updateTotal = function () {
 		self.assignmentData.totalPoint = Number(self.assignmentData.publishPoint) + Number(self.assignmentData.sharePoint) + Number(self.assignmentData.evaluatePoint) + Number(self.assignmentData.writeFirstPoint) + Number(self.assignmentData.planOrgPoint)
+		self.saveAssignment();
 	}
 	self.validateScore =function(e){
 		var updatedValue = e.target.value + e.key;
 		if ((Number(updatedValue) > Number(99)) && e.keyCode != 8 && e.keyCode != 46 && e.keyCode != 17 && e.keyCode != 65) {
 			e.preventDefault();
 		}
+	}
+	self.saveAssignment=function(){
+		presentationData.assignmentData=self.assignmentData;
+		AssignmentHelper.setAssignmentData(presentationData);
 	}
 };

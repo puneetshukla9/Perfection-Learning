@@ -555,6 +555,7 @@ export default function($state, $rootScope, AppState, Assignment, ProblemHelper,
 
 	function setPresentationData(data) {
 		metaData.presentationData = data;
+		save();
 	}
 
 	function setID(id) {
@@ -892,7 +893,8 @@ export default function($state, $rootScope, AppState, Assignment, ProblemHelper,
 		addRosterDates: addRosterDates,
 		adjustSpacing: adjustSpacing,
 		formatDate: formatDate,
-		isLoading: self.isLoading	// Check to see if a load is in progress
+		isLoading: self.isLoading,	// Check to see if a load is in progress
+		setAssignmentData:setPresentationData
 	};
 
 };
